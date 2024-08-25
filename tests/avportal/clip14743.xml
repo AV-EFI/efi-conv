@@ -1,0 +1,95 @@
+<resource xmlns="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd">
+		<creators>
+		<creator>
+			<creatorName>Hock, Bertold</creatorName>
+		</creator>
+		<creator>
+			<creatorName>Bahn, Michael</creatorName>
+		</creator>
+	</creators>
+	<titles>
+		<title titleType="AlternativeTitle" language="ger">Regulation der Entwicklung von Sordaria macrospora durch Biotin und Arginin</title>
+		<title language="eng">Regulation of the Development in Sordaria macrospora by Biotin and Arginine</title>
+	</titles>
+	<publishers>
+		<publisher>
+			<publisherName>IWF (Göttingen)</publisherName>
+		</publisher>
+	</publishers>
+	<publicationYear>1977</publicationYear>
+	<language>eng</language>
+	<subjectAreas>
+		<subjectArea>Life Sciences</subjectArea>
+	</subjectAreas>
+	<rights rightsURI="https://creativecommons.org/licenses/by-nc-nd/3.0/de">CC BY-NC-ND 3.0 DE</rights>
+		<producers>
+		<producer>
+			<producerName>IWF (Göttingen)</producerName>
+		</producer>
+	</producers>
+	<genre>Documentation/Report</genre>
+	<keywords>
+		<keyword language="ger">Morphogenese</keyword>
+		<keyword language="ger">Perithezium</keyword>
+		<keyword language="ger">Biotin</keyword>
+		<keyword language="ger">Arginin</keyword>
+		<keyword language="ger">Myzelwachstum</keyword>
+		<keyword language="ger">Zellbiologie</keyword>
+		<keyword language="ger">Sordaria</keyword>
+		<keyword language="ger">Kernpilz</keyword>
+		<keyword language="ger">Pilze / Kernpilz</keyword>
+		<keyword language="eng">morphogenesis</keyword>
+		<keyword language="eng">perithecium</keyword>
+		<keyword language="eng">biotin</keyword>
+		<keyword language="eng">arginine</keyword>
+		<keyword language="eng">mycelial growth</keyword>
+		<keyword language="eng">cell biology</keyword>
+		<keyword language="eng">Sordaria</keyword>
+		<keyword language="eng">pyromycete</keyword>
+		<keyword language="eng">fungi / pyromycete</keyword>
+		<keyword language="ger">Botanik</keyword>
+		<keyword language="ger">Entwicklungszyklen</keyword>
+		<keyword language="ger">Pilze</keyword>
+		<keyword language="ger">Physiologie (Botanik)</keyword>
+		<keyword language="ger">Entwicklung</keyword>
+		<keyword language="ger">Biologie</keyword>
+		<keyword language="eng">botany</keyword>
+		<keyword language="eng">developmental cycles</keyword>
+		<keyword language="eng">fungi</keyword>
+		<keyword language="eng">physiology (botany)</keyword>
+		<keyword language="eng">development</keyword>
+		<keyword language="eng">biology</keyword>
+	</keywords>
+	<descriptions>
+		<description descriptionType="Abstract" language="ger">Ein Beitrag zur Morphogenese der Pilze. Die Steuerung der Perithezienbildung durch Biotin und Arginin geschieht auf der Ebene von Myzelwachstum und Hyphenverzweigung: Peridienbildung setzt Verzweigung im &#xE4;lteren Myzel voraus.</description>
+		<description descriptionType="Abstract" language="eng">A contribution to the morphogenesis of fungi. Control of the fruiting body formation by biotin and arginine occurs at the level of mycelial growth and hypal branching: branching in older mycelium is a prerequisite for fruiting body formation.</description>
+	</descriptions>
+	<format>mp4</format>
+	<resourceType>Audiovisual</resourceType>
+	<size>410MB</size>
+	<duration>00:07:47:00</duration>
+	<DOI>10.3203/IWF/B-1262eng</DOI>
+		<iwfSignature>B 1262</iwfSignature>
+		
+		<!--  Folgende Metadaten sind nicht im NTM-Metadatenschema enthalten, könnten aber, nach Absprache mit den IWF-Kollegen, hinzugefügt werden.
+		
+	<iwfProductionYear>1975-1976</iwfProductionYear>
+	<iwfPublicationYear>1977</iwfPublicationYear>
+	<iwfRemarks>BM: Begleitpublikation von Bertold Hock, 1982, 17 S.</iwfRemarks>
+	<iwfTechnicalData>Film, 16 mm, LT, 85 m ; SW, 8 min</iwfTechnicalData>
+	<iwfClassificationCodes>
+		<iwfClassificationCode language="ger">Botanik&#xD;
+Entwicklungszyklen&#xD;
+Pilze&#xD;
+Physiologie (Botanik)&#xD;
+Entwicklung&#xD;
+Biologie</iwfClassificationCode>
+		<iwfClassificationCode language="eng">botany&#xD;
+developmental cycles&#xD;
+fungi&#xD;
+physiology (botany)&#xD;
+development&#xD;
+biology</iwfClassificationCode>
+	</iwfClassificationCodes> -->
+	
+</resource>

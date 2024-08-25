@@ -1,0 +1,27 @@
+[project]
+name = "efi-conv"
+version = "0.1.0"
+description = "Convert from other metadata schemas to AVefi (and possibly back again)"
+authors = [
+    {name = "AVefi Working Group", email = "contact@av-efi.net"},
+]
+repository = "https://github.com/AV-EFI/efi-agent"
+documentation = "https://github.com/AV-EFI/efi-agent"
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = [
+    "avefi-schema @ git+https://github.com/AV-EFI/av-efi-schema.git",
+    "xsdata[cli,lxml]>=24.7",
+    "click>=8.1.7",
+]
+
+[project.scripts]
+efi-from = "efi_conv.cli:efi_from"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true

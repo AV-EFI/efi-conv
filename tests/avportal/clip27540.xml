@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<resource xmlns="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd">
+		<creators>
+		<creator>
+			<creatorName>Schlenker, Hermann</creatorName>
+		</creator>
+	</creators>
+	<titles>
+		<title language="ger">Iatmul (Neuguinea, Mittlerer Sepik) - &#xDC;bermodellieren und Bemalen eines Sch&#xE4;dels</title>
+		<title titleType="AlternativeTitle" language="eng">Iatmul (New Guinea, Middle Sepik) - Overmodelling and Painting a Skull</title>
+	</titles>
+	<publishers>
+		<publisher>
+			<publisherName>IWF (Göttingen)</publisherName>
+		</publisher>
+	</publishers>
+	<publicationYear>1989</publicationYear>
+	<language>qot</language>
+	<subjectAreas>
+		<subjectArea>Ethnology</subjectArea>
+	</subjectAreas>
+	<alternateIdentifiers>
+		<alternateIdentifier alternateIdentifierType="EIDR">10.5240/92F6-0468-AEFE-530F-02E3-L</alternateIdentifier>
+	</alternateIdentifiers>
+	<productionYear>1974</productionYear>
+	<contributors>
+		<contributor>
+			<contributorName>Dore Kleindienst-Andr&#xE9;e (Redaktion)</contributorName>
+		</contributor>
+		<contributor>
+			<contributorName>E. Fischer (Schnitt)</contributorName>
+		</contributor>
+	</contributors>
+	<producers>
+		<producer>
+			<producerName>Hermann Schlenker Filmproduktion (K&#xF6;nigsfeld)</producerName>
+		</producer>
+	</producers>
+	<genre>Documentation/Report</genre>
+	<keywords>
+		<keyword language="ger">Ahnenkult</keyword>
+		<keyword language="ger">Brauchtum / Lebenskreis</keyword>
+		<keyword language="ger">Farbstoff, Farbe</keyword>
+		<keyword language="ger">Initiation</keyword>
+		<keyword language="ger">Klebstoff, Kleben</keyword>
+		<keyword language="ger">Menschenhaar</keyword>
+		<keyword language="ger">Malen, Malerei</keyword>
+		<keyword language="ger">Sch&#xE4;del, &#xFC;bermodellierter</keyword>
+		<keyword language="ger">&#xDC;bermodellieren eines Sch&#xE4;dels</keyword>
+		<keyword language="ger">Ritus / Initiation</keyword>
+		<keyword language="ger">Iatmul</keyword>
+		<keyword language="eng">ancestor worship</keyword>
+		<keyword language="eng">custom / circle of life</keyword>
+		<keyword language="eng">dye</keyword>
+		<keyword language="eng">colour</keyword>
+		<keyword language="eng">initiation</keyword>
+		<keyword language="eng">adhesive, adhesion</keyword>
+		<keyword language="eng">human hair</keyword>
+		<keyword language="eng">painting</keyword>
+		<keyword language="eng">skull, over modelling</keyword>
+		<keyword language="eng">rite / initiation</keyword>
+		<keyword language="eng">Iatmul</keyword>
+		<keyword language="eng">Encyclopaedia Cinematographica</keyword>
+		<keyword language="ger">Kulturwissenschaften</keyword>
+		<keyword language="ger">K&#xFC;nste (Ethnologie)</keyword>
+		<keyword language="ger">Kunst</keyword>
+		<keyword language="ger">Gesellschaft</keyword>
+		<keyword language="ger">Br&#xE4;uche</keyword>
+		<keyword language="ger">Lebenslauf</keyword>
+		<keyword language="ger">Tod</keyword>
+		<keyword language="ger">Ethnologie/Kulturanthropologie</keyword>
+		<keyword language="ger">Malen</keyword>
+		<keyword language="ger">Initiation</keyword>
+		<keyword language="ger">Totenkult/Ahnenkult</keyword>
+		<keyword language="ger">Papua-Neuguinea</keyword>
+		<keyword language="ger">Sepik-Gebiet</keyword>
+		<keyword language="ger">Australien/Ozeanien</keyword>
+		<keyword language="eng">Australia/Oceania</keyword>
+		<keyword language="eng">Papua New Guinea</keyword>
+		<keyword language="eng">Sepik Region</keyword>
+		<keyword language="eng">cultural studies</keyword>
+		<keyword language="eng">ethnology/cultural anthropology</keyword>
+		<keyword language="eng">society</keyword>
+		<keyword language="eng">course of life</keyword>
+		<keyword language="eng">initiation</keyword>
+		<keyword language="eng">death</keyword>
+		<keyword language="eng">cult of the dead/ancestor worship</keyword>
+		<keyword language="eng">customs</keyword>
+		<keyword language="eng">arts (ethnology)</keyword>
+		<keyword language="eng">art</keyword>
+		<keyword language="eng">painting (ethnology)</keyword>
+	</keywords>
+	<descriptions>
+		<description descriptionType="Abstract" language="ger">W&#xE4;hrend einer Initiation tr&#xE4;gt ein Mann aus Japanaut Modelliermasse auf einen Sch&#xE4;del auf. Von einem Baum im Wald holt er Baumsaft. Die Modelliermasse mischt er aus Erde, Baumsaft und gebranntem Kalk. Dann befestigt er am Sch&#xE4;del Kauri-Schneckengeh&#xE4;use, Conus-Schneckenb&#xF6;den und Menschenhaare. Anschlie&#xDF;end wird der Sch&#xE4;del mit schwarzer, gelber und roter Farbe bemalt.</description>
+		<description descriptionType="Abstract" language="eng">During an initiation ceremony a man modells on a skull a mixture of clay. He taps a tree for some tree-sap. The mixture on the skull consists of earth, tree-sap, and burned chalk. Different shells like cowrie shells and conus shells and human hair fixed on the skull. Finally he paints the overmodelled skull with black, yellow and red.</description>
+	</descriptions>
+	<format>VOB</format>
+	<resourceType>Audiovisual</resourceType>
+	<size>1612MB</size>
+	<duration>00:29:21:21</duration>
+	<DOI>10.3203/IWF/E-2905</DOI>
+	
+	<iwfSignature>E 2905</iwfSignature>
+	
+	<!--  Folgende Metadaten sind nicht im NTM-Metadatenschema enthalten, könnten aber, nach Absprache mit den IWF-Kollegen, hinzugefügt werden.
+		<iwfProductionYear>1974</iwfProductionYear>
+	<iwfPublicationYear>1989</iwfPublicationYear>
+	<iwfRemarks>BM: Begleitpublikation von Markus Schindlbeck; 1989, 63-74.</iwfRemarks>
+	<iwfTechnicalData>Film, 16 mm, LT, 334 m ; F, 30 1/2 min</iwfTechnicalData>
+	<iwfClassificationCodes>
+		<iwfClassificationCode language="ger">Kulturwissenschaften&#xD;
+K&#xFC;nste (Ethnologie)&#xD;
+Kunst&#xD;
+Gesellschaft&#xD;
+Br&#xE4;uche&#xD;
+Lebenslauf&#xD;
+Tod&#xD;
+Ethnologie/Kulturanthropologie&#xD;
+Malen&#xD;
+Initiation&#xD;
+Totenkult/Ahnenkult&#xD;
+Papua-Neuguinea&#xD;
+Sepik-Gebiet&#xD;
+Australien/Ozeanien</iwfClassificationCode>
+		<iwfClassificationCode language="eng">Australia/Oceania&#xD;
+Papua New Guinea&#xD;
+Sepik Region&#xD;
+cultural studies&#xD;
+ethnology/cultural anthropology&#xD;
+society&#xD;
+course of life&#xD;
+initiation&#xD;
+death&#xD;
+cult of the dead/ancestor worship&#xD;
+customs&#xD;
+arts (ethnology)&#xD;
+art&#xD;
+painting (ethnology)</iwfClassificationCode>
+	</iwfClassificationCodes> -->
+
+</resource>
