@@ -165,12 +165,20 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
         manifestation.has_extent = efi.Extent(
             has_value=value, has_unit=size_mapping[unit])
     if input.duration:
-        match = re.search(r"^(\d\d:\d\d:\d\d):\d\d$", input.duration)
+        duration_value = re.sub(
+            r"^(\d\d):(\d\d):(\d\d):\d\d$", 'PT\1H\2M\3S', input.duration)
+        match = re.search(r"^(\d\d):(\d\d):(\d\d):\d\d$", input.duration)
         if match is None:
             raise RuntimeError(
                 f"No idea how to parse duration={input.duration}")
+        duration_str = ''
+        for val, suffix in zip(match.groups(), ('H', 'M', 'S')):
+            i = int(val)
+            if i or (not duration_str and suffix == 'S'):
+                duration_str += f"{str(i)}{suffix}"
+        duration_str = f"PT{duration_str}"
         manifestation.has_duration = efi.Duration(
-            has_value=match.groups()[0])
+            has_value=duration_str)
     manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
     manifestation.has_identifier.append(manifestation_id)
     manifestation.has_source_key.append(source_key)
