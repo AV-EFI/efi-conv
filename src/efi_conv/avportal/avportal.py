@@ -1,3 +1,4 @@
+from collections import defaultdict
 import copy
 import logging
 import os
@@ -75,6 +76,45 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             efi.ProducingActivity(
                 type=efi.ProducingActivityTypeEnum('ProductionCompany'),
                 has_agent=production_companies))
+    if input.contributors:
+        contrib_dict = defaultdict(list)
+        for contributor in input.contributors.contributor:
+            match = re.search(
+                r'^([^(]*) \(([^)]*)\)$', contributor.contributor_name)
+            if match:
+                name, role = match.groups()
+            else:
+                name = contributor.contributor_name
+                role = 'Unknown'
+            name_components = name.split(',')
+            if len(name_components) == 1:
+                name_components = name.rsplit(maxsplit=1)
+                orig_name = name
+                name = ', '.join(reversed(name_components))
+                log.warning(
+                    f"Please check if correct: Replaced name '{orig_name}'"
+                    f" by '{name}'")
+            elif len(name_components) != 2:
+                raise ValueError(
+                    f"Name probably not in correct format (family_name,"
+                    f" given_name): {name}")
+            double_role = re.search(r'^(.*) und (.*)$', role)
+            if double_role:
+                roles = double_role.groups()
+            else:
+                roles = (role,)
+            for role in roles:
+                contrib_dict[role].append(name)
+        for role, names in contrib_dict.items():
+            activity_type = role_mapping[role]
+            # drop TypeEnum siffux to get the required class name
+            activity_class_name = activity_type.__class__.__name__[:-8]
+            activity = getattr(efi, activity_class_name)(
+                type=activity_type,
+                has_agent=[
+                    efi.Agent(type=efi.AgentTypeEnum('Person'), has_name=name)
+                    for name in names])
+            event.has_activity.append(activity)
     if input.genre and input.genre.value:
         work.has_genre.append(efi.Genre(has_name=input.genre.value))
     # SubjectAreaTYpes
@@ -208,6 +248,15 @@ def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
 articles = {
     'eng': ['a', 'an', 'the'],
     'ger': ['das', 'der', 'die', 'ein', 'eine']
+}
+
+
+role_mapping = {
+    'Kamera': efi.CinematographyActivityTypeEnum('Cinematographer'),
+    'Redaktion': efi.EditingActivityTypeEnum('Editor'),
+    'Schnitt': efi.EditingActivityTypeEnum('FilmEditor'),
+    'Ton': efi.SoundActivityTypeEnum('SoundRecorderMixer'),
+    'Unknown': efi.ManifestationActivityTypeEnum('UnknownActivity'),
 }
 
 
