@@ -27,7 +27,7 @@ $ git clone hppts://github.com/AV-EFI/efi-conv.git
 ## [...]
 $ cd efi-conv
 $ pip install -e .
-$ efi-conv --help
+$ efi-from --help
 Usage: efi-from [OPTIONS] OUTPUT_FILE [INPUT_FILES]...
 
   Convert files from some schema into a JSON file with AVefi records.
@@ -39,7 +39,7 @@ $ efi-from -f avportal /tmp/efi_records.json tests/avportal/*.xml
 ## Or, instead of using pip above, proceed with pdm:
 $ pdm install
 ## [...]
-$ pdm run efi-conv --help
+$ pdm run efi-from --help
 ## Same output as above
 $ pdm run efi-from -f avportal /tmp/efi_records.json tests/avportal/*.xml
 ```
