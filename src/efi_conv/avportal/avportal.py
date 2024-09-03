@@ -75,7 +75,7 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             efi.ProducingActivity(
                 type=efi.ProducingActivityTypeEnum('ProductionCompany'),
                 has_agent=production_companies))
-    if input.genre.value:
+    if input.genre and input.genre.value:
         work.has_genre.append(efi.Genre(has_name=input.genre.value))
     # SubjectAreaTYpes
     # contributors
