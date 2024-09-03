@@ -42,10 +42,20 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
         type=efi.WorkVariantTypeEnum('Monographic'),
         has_primary_title=primary_title,
         has_alternative_title=alternative_titles)
-    production_year = input.production_year
-    # Todo: Use iwf_production_year when we have the complete schema
-    # if not production_year:
-    #     raise RuntimeError(f"No production year")
+    production_year = input.iwf_production_year or input.production_year
+    if production_year:
+        if input.production_year and input.iwf_production_year \
+           and input.production_year not in input.iwf_production_year:
+            log.warning(
+                f"Contradicting values:"
+                f" productionYear={input.production_year},"
+                f" iwfProductionYear={input.iwf_production_year}")
+        production_year = str(production_year)
+        if '-' in production_year:
+            production_year = production_year.replace('-', '/')
+        verify_iso_date(production_year)
+    else:
+        raise RuntimeError(f"No production year")
     event = efi.ProductionEvent(has_date=production_year)
     work.has_event.append(event)
     producers = []
@@ -166,7 +176,8 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
                     for text in description.content
                     if isinstance(text, str)
                 ]))
-    if input.publication_year or input.publishers.publisher:
+    publication_year = input.iwf_publication_year or input.publication_year
+    if publication_year or input.publishers.publisher:
         publication = efi.PublicationEvent(
             type=efi.PublicationEventTypeEnum('ReleaseEvent'))
         manifestation.has_event.append(publication)
@@ -183,8 +194,10 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
                 efi.ManifestationActivity(
                     type=efi.ManifestationActivityTypeEnum('Publisher'),
                     has_agent=publishers))
-        if input.publication_year:
-            publication.has_date = str(input.publication_year)
+        if publication_year:
+            publication_year = str(publication_year)
+            verify_iso_date(publication_year)
+            publication.has_date = publication_year
     if input.language:
         if input.language == "qot":
             manifestation.has_sound_type = efi.SoundTypeEnum('Sound')
@@ -232,6 +245,17 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
     item.has_source_key.append(source_key)
     efi_records.append(item)
     return efi_records
+
+
+def verify_iso_date(date_str):
+    if not re.search(
+            r'^-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])'
+            '(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})'
+            '(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$',
+            date_str):
+        raise ValueError(
+            f"Expected date or interval according to ISO 8601,"
+            f" got: {date_str}")
 
 
 def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
