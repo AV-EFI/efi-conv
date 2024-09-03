@@ -231,6 +231,11 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
         duration_str = f"PT{duration_str}"
         manifestation.has_duration = efi.Duration(
             has_value=duration_str)
+    # links
+    if input.links:
+        for link in input.links.link:
+            if link.link_type == ntm.LinkType.AV_PORTAL:
+                manifestation.has_webresource.append(link.value)
     manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
     manifestation.has_identifier.append(manifestation_id)
     manifestation.has_source_key.append(source_key)
