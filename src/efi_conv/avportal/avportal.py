@@ -86,8 +86,8 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             efi.ProducingActivity(
                 type=efi.ProducingActivityTypeEnum('ProductionCompany'),
                 has_agent=production_companies))
+    contrib_dict = defaultdict(list)
     if input.contributors:
-        contrib_dict = defaultdict(list)
         for contributor in input.contributors.contributor:
             match = re.search(
                 r'^([^(]*) \(([^)]*)\)$', contributor.contributor_name)
@@ -116,6 +116,9 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             for role in roles:
                 contrib_dict[role].append(name)
         for role, names in contrib_dict.items():
+            if role == 'Unknown':
+                # Handled on manifestation level below
+                continue
             activity_type = role_mapping[role]
             # drop TypeEnum siffux to get the required class name
             activity_class_name = activity_type.__class__.__name__[:-8]
@@ -177,7 +180,8 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
                     if isinstance(text, str)
                 ]))
     publication_year = input.iwf_publication_year or input.publication_year
-    if publication_year or input.publishers.publisher:
+    if publication_year or input.publishers.publisher \
+       or contrib_dict.get('Unknown'):
         publication = efi.PublicationEvent(
             type=efi.PublicationEventTypeEnum('ReleaseEvent'))
         manifestation.has_event.append(publication)
@@ -194,6 +198,14 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
                 efi.ManifestationActivity(
                     type=efi.ManifestationActivityTypeEnum('Publisher'),
                     has_agent=publishers))
+        if contrib_dict['Unknown']:
+            publication.has_activity.append(
+                efi.ManifestationActivity(
+                    type=efi.ManifestationActivityTypeEnum('UnknownActivity'),
+                    has_agent=[
+                        efi.Agent(
+                            type=efi.AgentTypeEnum('Person'), has_name=name)
+                        for name in contrib_dict['Unknown']]))
         if publication_year:
             publication_year = str(publication_year)
             verify_iso_date(publication_year)
