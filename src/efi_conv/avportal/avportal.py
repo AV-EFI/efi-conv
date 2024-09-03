@@ -7,11 +7,11 @@ from typing import List
 from avefi_schema import model as efi
 from xsdata.formats.dataclass.parsers import XmlParser
 
-from .generated import ntm_metadata_schema_basic_v_2_5 as ntm
-from .generated import ntm_metadata_schema_v_2_5
+from .ntm_4_avefi import ntm_4_av_efi as ntm
+from .ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
 
 
-ROOT_CLASS = ntm_metadata_schema_v_2_5.Resource
+ROOT_CLASS = ntm_main.Resource
 log = logging.getLogger(__name__)
 parser = XmlParser()
 
@@ -20,8 +20,7 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
     efi_records = []
     input = parser.parse(input_file, ROOT_CLASS)
     # Use input.identifier once we have complete iwf schema
-    source_key = re.search(
-        r'clip(\d+)\.xml', os.path.basename(input_file)).groups()[0]
+    source_key = input.identifier
 
     # work
     titles = input.titles.title
