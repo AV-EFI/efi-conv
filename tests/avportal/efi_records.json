@@ -36,17 +36,18 @@
             ],
             "type": "ProductionCompany"
           }
-        ]
+        ],
+        "has_date": "1975/1976"
       }
     ],
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/B-1262eng_work"
+        "id": "14743_work"
       }
     ],
     "has_source_key": [
-      "10.3203/IWF/B-1262eng"
+      14743
     ],
     "has_alternative_title": [
       {
@@ -203,11 +204,7 @@
     "category": "avefi:Manifestation",
     "has_primary_title": {
       "has_name": "Regulation of the Development in Sordaria macrospora by Biotin and Arginine",
-      "type": {
-        "text": "TitleProper",
-        "description": "FIAF Moving Image Cataloguing Manual A.2.2",
-        "meaning": "https://fiafcore.org/ontology/TitleProper"
-      }
+      "type": "TitleProper"
     },
     "has_event": [
       {
@@ -232,11 +229,11 @@
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/B-1262eng_manifestation"
+        "id": "14743_manifestation"
       }
     ],
     "has_source_key": [
-      "10.3203/IWF/B-1262eng"
+      14743
     ],
     "in_language": {
       "code": "eng",
@@ -245,7 +242,7 @@
       ]
     },
     "has_duration": {
-      "has_value": "00:07:47"
+      "has_value": "PT7M47S"
     },
     "has_extent": {
       "has_unit": "MegaByte",
@@ -258,7 +255,7 @@
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/B-1262eng_work"
+        "id": "14743_work"
       }
     ]
   },
@@ -266,24 +263,20 @@
     "category": "avefi:Item",
     "has_primary_title": {
       "has_name": "Regulation of the Development in Sordaria macrospora by Biotin and Arginine",
-      "type": {
-        "text": "TitleProper",
-        "description": "FIAF Moving Image Cataloguing Manual A.2.2",
-        "meaning": "https://fiafcore.org/ontology/TitleProper"
-      }
+      "type": "TitleProper"
     },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/B-1262eng_item"
+        "id": "14743_item"
       }
     ],
     "has_source_key": [
-      "10.3203/IWF/B-1262eng"
+      14743
     ],
     "is_item_of": {
       "category": "avefi:LocalResource",
-      "id": "10.3203/IWF/B-1262eng_manifestation"
+      "id": "14743_manifestation"
     }
   },
   {
@@ -317,6 +310,28 @@
               }
             ],
             "type": "ProductionCompany"
+          },
+          {
+            "category": "avefi:EditingActivity",
+            "has_agent": [
+              {
+                "category": "avefi:Agent",
+                "has_name": "Kleindienst-Andrée, Dore",
+                "type": "Person"
+              }
+            ],
+            "type": "Editor"
+          },
+          {
+            "category": "avefi:EditingActivity",
+            "has_agent": [
+              {
+                "category": "avefi:Agent",
+                "has_name": "Fischer, E.",
+                "type": "Person"
+              }
+            ],
+            "type": "FilmEditor"
           }
         ],
         "has_date": "1974"
@@ -325,11 +340,11 @@
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/E-2905_work"
+        "id": "27540_work"
       }
     ],
     "has_source_key": [
-      "10.3203/IWF/E-2905"
+      27540
     ],
     "has_alternative_title": [
       {
@@ -574,11 +589,7 @@
     "category": "avefi:Manifestation",
     "has_primary_title": {
       "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
-      "type": {
-        "text": "TitleProper",
-        "description": "FIAF Moving Image Cataloguing Manual A.2.2",
-        "meaning": "https://fiafcore.org/ontology/TitleProper"
-      }
+      "type": "TitleProper"
     },
     "has_event": [
       {
@@ -603,14 +614,14 @@
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/E-2905_manifestation"
+        "id": "27540_manifestation"
       }
     ],
     "has_source_key": [
-      "10.3203/IWF/E-2905"
+      27540
     ],
     "has_duration": {
-      "has_value": "00:29:21"
+      "has_value": "PT29M21S"
     },
     "has_extent": {
       "has_unit": "MegaByte",
@@ -623,37 +634,29 @@
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/E-2905_work"
+        "id": "27540_work"
       }
     ],
-    "has_sound_type": {
-      "text": "Sound",
-      "description": "FIAF Moving Image Cataloguing Manual D.7.4",
-      "meaning": "https://fiafcore.org/ontology/Sound"
-    }
+    "has_sound_type": "Sound"
   },
   {
     "category": "avefi:Item",
     "has_primary_title": {
       "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
-      "type": {
-        "text": "TitleProper",
-        "description": "FIAF Moving Image Cataloguing Manual A.2.2",
-        "meaning": "https://fiafcore.org/ontology/TitleProper"
-      }
+      "type": "TitleProper"
     },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
-        "id": "10.3203/IWF/E-2905_item"
+        "id": "27540_item"
       }
     ],
     "has_source_key": [
-      "10.3203/IWF/E-2905"
+      27540
     ],
     "is_item_of": {
       "category": "avefi:LocalResource",
-      "id": "10.3203/IWF/E-2905_manifestation"
+      "id": "27540_manifestation"
     }
   }
 ]

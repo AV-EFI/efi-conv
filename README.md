@@ -27,21 +27,34 @@ $ git clone hppts://github.com/AV-EFI/efi-conv.git
 ## [...]
 $ cd efi-conv
 $ pip install -e .
-$ efi-from --help
-Usage: efi-from [OPTIONS] OUTPUT_FILE [INPUT_FILES]...
+$ efi-conv --help
+Usage: efi-conv [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+  
+Commands:
+  check  Sanity check EFI_FILE and optionally remove invalid records.
+  from   Convert files from some schema into a JSON file with AVefi records.
+$ efi-conv from --help
+Usage: efi-conv from [OPTIONS] OUTPUT_FILE [INPUT_FILES]...
 
   Convert files from some schema into a JSON file with AVefi records.
-  
+
 Options:
   -f, --format [avportal]  Source data format.
   --help                   Show this message and exit.
-$ efi-from -f avportal /tmp/efi_records.json tests/avportal/*.xml
+$ efi-conv from -f avportal /tmp/efi_records.json tests/avportal/*.xml
+$ efi-conv check tests/avportal/efi_records.json
+INFO efi_conv.cli: All 6 records passed the checks successfully
 ## Or, instead of using pip above, proceed with pdm:
 $ pdm install
 ## [...]
-$ pdm run efi-from --help
+$ pdm run efi-conv --help
 ## Same output as above
-$ pdm run efi-from -f avportal /tmp/efi_records.json tests/avportal/*.xml
+$ pdm run efi-conv from -f avportal /tmp/efi_records.json tests/avportal/*.xml
+$ pdm run efi-conv check tests/avportal/efi_records.json
+INFO efi_conv.cli: All 6 records passed the checks successfully
 ```
 
 [pdm]: https://pdm-project.org/en/latest/#installation

@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.scripts]
-efi-from = "efi_conv.cli:efi_from"
+efi-conv = "efi_conv.cli:cli_main"
 
 [build-system]
 requires = ["pdm-backend"]

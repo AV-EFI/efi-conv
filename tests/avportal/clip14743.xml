@@ -1,4 +1,6 @@
-<resource xmlns="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xsi:schemaLocation="http://www.tib.eu/fileadmin/extern/knm/NTM_4_AV-EFI_Schema.xsd http://www.tib.eu/fileadmin/extern/knm/NTM_4_AV-EFI_Schema.xsd" xmlns="http://www.tib.eu/fileadmin/extern/knm/NTM_4_AV-EFI_Schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<identifier>14743</identifier>
 		<creators>
 		<creator>
 			<creatorName>Hock, Bertold</creatorName>
@@ -70,13 +72,10 @@
 	<duration>00:07:47:00</duration>
 	<DOI>10.3203/IWF/B-1262eng</DOI>
 		<iwfSignature>B 1262</iwfSignature>
-		
-		<!--  Folgende Metadaten sind nicht im NTM-Metadatenschema enthalten, könnten aber, nach Absprache mit den IWF-Kollegen, hinzugefügt werden.
-		
+			
 	<iwfProductionYear>1975-1976</iwfProductionYear>
 	<iwfPublicationYear>1977</iwfPublicationYear>
-	<iwfRemarks>BM: Begleitpublikation von Bertold Hock, 1982, 17 S.</iwfRemarks>
-	<iwfTechnicalData>Film, 16 mm, LT, 85 m ; SW, 8 min</iwfTechnicalData>
+		<iwfTechnicalData>Film, 16 mm, LT, 85 m ; SW, 8 min</iwfTechnicalData>
 	<iwfClassificationCodes>
 		<iwfClassificationCode language="ger">Botanik&#xD;
 Entwicklungszyklen&#xD;
@@ -90,6 +89,6 @@ fungi&#xD;
 physiology (botany)&#xD;
 development&#xD;
 biology</iwfClassificationCode>
-	</iwfClassificationCodes> -->
+	</iwfClassificationCodes> 
 	
 </resource>

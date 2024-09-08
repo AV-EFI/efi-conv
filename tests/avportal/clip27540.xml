@@ -1,5 +1,6 @@
-<?xml version="1.0"?>
-<resource xmlns="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xsi:schemaLocation="http://www.tib.eu/fileadmin/extern/knm/NTM_4_AV-EFI_Schema.xsd http://www.tib.eu/fileadmin/extern/knm/NTM_4_AV-EFI_Schema.xsd" xmlns="http://www.tib.eu/fileadmin/extern/knm/NTM_4_AV-EFI_Schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<identifier>27540</identifier>
 		<creators>
 		<creator>
 			<creatorName>Schlenker, Hermann</creatorName>
@@ -102,11 +103,10 @@
 	
 	<iwfSignature>E 2905</iwfSignature>
 	
-	<!--  Folgende Metadaten sind nicht im NTM-Metadatenschema enthalten, könnten aber, nach Absprache mit den IWF-Kollegen, hinzugefügt werden.
+
 		<iwfProductionYear>1974</iwfProductionYear>
 	<iwfPublicationYear>1989</iwfPublicationYear>
-	<iwfRemarks>BM: Begleitpublikation von Markus Schindlbeck; 1989, 63-74.</iwfRemarks>
-	<iwfTechnicalData>Film, 16 mm, LT, 334 m ; F, 30 1/2 min</iwfTechnicalData>
+		<iwfTechnicalData>Film, 16 mm, LT, 334 m ; F, 30 1/2 min</iwfTechnicalData>
 	<iwfClassificationCodes>
 		<iwfClassificationCode language="ger">Kulturwissenschaften&#xD;
 K&#xFC;nste (Ethnologie)&#xD;
@@ -136,6 +136,6 @@ customs&#xD;
 arts (ethnology)&#xD;
 art&#xD;
 painting (ethnology)</iwfClassificationCode>
-	</iwfClassificationCodes> -->
+	</iwfClassificationCodes> 
 
 </resource>

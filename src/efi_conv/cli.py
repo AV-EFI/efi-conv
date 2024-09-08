@@ -1,11 +1,49 @@
 import importlib
+import logging
+import logging.config
+import os
+import sys
 
 import click
 
 from . import avefi
 
 
-@click.command()
+log = logging.getLogger(__name__)
+loglevel = os.environ.get(
+    f"{__package__.upper()}_LOGLEVEL", 'INFO').upper()
+logging_config = {
+    'version': 1,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(name)s: %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': loglevel,
+            'formatter': 'simple',
+            'stream': 'ext://sys.stderr',
+        },
+    },
+    'loggers': {
+        __package__: {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+    'disable_existing_loggers': False,
+}
+logging.config.dictConfig(logging_config)
+
+
+@click.group()
+def cli_main():
+    pass
+
+
+@cli_main.command('from')
 @click.option(
     '-f', '--format', type=click.Choice(['avportal']),
     help='Source data format.')
@@ -32,3 +70,29 @@ def efi_from(output_file, input_files, **kwargs):
         generated_records.extend(result)
     if generated_records:
         avefi.dump(generated_records, output_file)
+
+
+@cli_main.command()
+@click.option(
+    '--remove-invalid/--no-remove-invalid', '-r', default=False,
+    help='Remove invalid records modifying EFI_FILE in place.')
+@click.argument('efi_file', type=click.Path(dir_okay=False, exists=True))
+def check(efi_file, *, remove_invalid=False):
+    """Sanity check EFI_FILE and optionally remove invalid records."""
+    from . import check
+
+    efi_records = avefi.load(efi_file)
+    old_count = len(efi_records)
+    if not check.pass_checks(efi_records, remove_invalid=True):
+        if remove_invalid:
+            avefi.dump(efi_records, efi_file)
+            log.info(
+                f"Successfully removed {old_count-len(efi_records)} invalid"
+                f" records")
+        else:
+            log.error(
+                f"Found {old_count-len(efi_records)} invalid records"
+                f" (no action taken)")
+            sys.exit(1)
+    else:
+        log.info(f"All {old_count} records passed the checks successfully")
