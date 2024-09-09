@@ -53,7 +53,7 @@ def pass_checks(
                 ref = HashableId(**as_dict(identifier))
                 dependants_by_ref[ref].append(record_id)
 
-    for ref in dependants_by_ref:
+    for ref in list(dependants_by_ref.keys()):
         if ref not in id_lookup and ref.category == 'avefi:LocalResource':
             log.error(f"Unresolvable reference: {ref}")
             if all_was_fine:
