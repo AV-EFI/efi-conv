@@ -17,7 +17,7 @@ def pass_checks(
     dependants_by_ref = defaultdict(list)
     all_was_fine = True
 
-    for rec in efi_records:
+    for rec in efi_records.copy():
         if exceeds_field_limit(rec):
             if all_was_fine:
                 all_was_fine = False
@@ -53,7 +53,7 @@ def pass_checks(
                 ref = HashableId(**as_dict(identifier))
                 dependants_by_ref[ref].append(record_id)
 
-    for ref in list(dependants_by_ref.keys()):
+    for ref in dependants_by_ref:
         if ref not in id_lookup and ref.category == 'avefi:LocalResource':
             log.error(f"Unresolvable reference: {ref}")
             if all_was_fine:
