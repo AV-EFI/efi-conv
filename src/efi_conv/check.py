@@ -55,7 +55,7 @@ def pass_checks(
 
     for ref in list(dependants_by_ref.keys()):
         if ref not in id_lookup and ref.category == 'avefi:LocalResource':
-            log.error(f"Unresolvable reference: {ref}")
+            log.error(f"Unresolvable reference: {ref.id}")
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
@@ -73,6 +73,7 @@ def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
         record_list.remove(rec)
         for record_id in ids:
             del id_lookup[record_id]
+            log.error(f"Reference to removed record: {record_id.id}")
             purge_dependant_records(
                 record_id, record_list, id_lookup, dependants_by_ref)
 
