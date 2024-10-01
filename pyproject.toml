@@ -5,8 +5,8 @@ description = "Convert from other metadata schemas to AVefi (and possibly back a
 authors = [
     {name = "AVefi Working Group", email = "contact@av-efi.net"},
 ]
-repository = "https://github.com/AV-EFI/efi-agent"
-documentation = "https://github.com/AV-EFI/efi-agent"
+repository = "https://github.com/AV-EFI/efi-conv"
+documentation = "https://github.com/AV-EFI/efi-conv"
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
