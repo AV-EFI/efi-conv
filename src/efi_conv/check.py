@@ -1,5 +1,6 @@
 from collections import defaultdict
 import logging
+import re
 from typing import List
 
 from avefi_schema import model as efi
@@ -18,7 +19,7 @@ def pass_checks(
     all_was_fine = True
 
     for rec in efi_records.copy():
-        if exceeds_field_limit(rec):
+        if exceeds_field_limit(rec) or has_invalid_date(rec):
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
@@ -102,5 +103,18 @@ def exceeds_field_limit(efi_record):
             log.error(
                 f"Record {efi_record.has_identifier[0].id} violates limit of"
                 f" 250 characters on title length: {title.has_name}")
+            return True
+    return False
+
+
+def has_invalid_date(efi_record):
+    for event in efi_record.has_event:
+        if event.has_date \
+           and not re.search(
+               r'^-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$',
+               event.has_date):
+            log.error(
+                f"Record {efi_record.has_identifier[0].id} has event(s) with"
+                f" invalid value in has_date: {event.has_date}")
             return True
     return False
