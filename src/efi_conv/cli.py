@@ -45,7 +45,7 @@ def cli_main():
 
 @cli_main.command('from')
 @click.option(
-    '-f', '--format', type=click.Choice(['avportal']),
+    '-f', '--format', type=click.Choice(['avportal', 'fmdu']),
     help='Source data format.')
 @click.argument('output_file', type=click.Path(dir_okay=False, writable=True))
 @click.argument('input_files', nargs=-1, type=click.Path(exists=True))
