@@ -217,9 +217,9 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
         elif input.language == "qno":
             manifestation.has_sound_type = efi.SoundTypeEnum('Silent')
         else:
-            manifestation.in_language = efi.Language(
+            manifestation.in_language.append(efi.Language(
                 code=input.language,
-                usage=efi.LanguageUsageEnum.SpokenLanguage)
+                usage=efi.LanguageUsageEnum('SpokenLanguage')))
     # Todo: format
     if input.size:
         match = re.search(r"^(\d+) *(\w+)$", input.size)
@@ -302,8 +302,8 @@ role_mapping = {
 
 
 size_mapping = {
-    "GB": efi.UnitEnum.GigaByte,
-    "MB": efi.UnitEnum.MegaByte,
+    "GB": efi.UnitEnum('GigaByte'),
+    "MB": efi.UnitEnum('MegaByte'),
 }
 
 
