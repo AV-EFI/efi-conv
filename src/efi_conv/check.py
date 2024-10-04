@@ -19,7 +19,7 @@ def pass_checks(
     all_was_fine = True
 
     for rec in efi_records.copy():
-        if exceeds_field_limit(rec) or has_invalid_date(rec):
+        if has_invalid_value(rec):
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
@@ -93,6 +93,32 @@ class HashableId:
 
     def __str__(self):
         return self.name
+
+
+def has_invalid_value(efi_record):
+    def any_empty_has_name(elem_generator):
+        if any([not elem.has_name for elem in elem_generator]):
+            log.error(
+                f"Empty has_name in {efi_record.has_identifier[0].id}")
+            return True
+        return False
+
+    if exceeds_field_limit(efi_record):
+        return True
+    for event in efi_record.has_event:
+        if has_invalid_date(efi_record):
+            return True
+        for activity in event.has_activity:
+            if any_empty_has_name(activity.has_agent):
+                return True
+        if any_empty_has_name(event.located_in):
+            return True
+    if isinstance(efi_record, efi.WorkVariant):
+        if any_empty_has_name(efi_record.has_genre):
+            return True
+        if any_empty_has_name(efi_record.has_subject):
+            return True
+    return False
 
 
 def exceeds_field_limit(efi_record):
