@@ -120,7 +120,7 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
                 # Handled on manifestation level below
                 continue
             activity_type = role_mapping[role]
-            # drop TypeEnum siffux to get the required class name
+            # drop TypeEnum suffix to get the required class name
             activity_class_name = activity_type.__class__.__name__[:-8]
             activity = getattr(efi, activity_class_name)(
                 type=activity_type,
