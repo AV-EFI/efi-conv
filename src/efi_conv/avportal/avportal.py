@@ -203,7 +203,8 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
     if input.language:
         if input.language == "qot":
             manifestation.has_sound_type = efi.SoundTypeEnum('Sound')
-            # Todo: should in_language.usage == NoDialogue?
+            manifestation.in_language.append(efi.Language(
+                usage=efi.LanguageUsageEnum('NoDialogue')))
         elif input.language == "qno":
             manifestation.has_sound_type = efi.SoundTypeEnum('Silent')
         else:
