@@ -233,11 +233,6 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
         duration_str = f"PT{duration_str}"
         manifestation.has_duration = efi.Duration(
             has_value=duration_str)
-    # links
-    if input.links:
-        for link in input.links.link:
-            if link.link_type == ntm.LinkType.AV_PORTAL:
-                manifestation.has_webresource.append(link.value)
     manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
     manifestation.has_identifier.append(manifestation_id)
     manifestation.has_source_key.append(source_key)
@@ -257,6 +252,13 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             if id.alternate_identifier_type != "EIDR":
                 raise RuntimeError(f"Cannot handle identifier_type: {id}")
             item.is_copy_of.append(efi.EIDRResource(id=id.value))
+
+    # links
+    if input.links:
+        for link in input.links.link:
+            if link.link_type == ntm.LinkType.AV_PORTAL:
+                item.has_webresource.append(link.value)
+
     item_id = efi.LocalResource(id=f"{source_key}_item")
     item.has_identifier.append(item_id)
     item.has_source_key.append(source_key)
