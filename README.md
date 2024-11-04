@@ -23,7 +23,7 @@ contributing and might need to add dependencies at some point.
 Here is how to convert some test data:
 
 ```console
-$ git clone hppts://github.com/AV-EFI/efi-conv.git
+$ git clone https://github.com/AV-EFI/efi-conv.git
 ## [...]
 $ cd efi-conv
 $ pip install -e .
