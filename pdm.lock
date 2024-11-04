@@ -43,7 +43,7 @@ name = "avefi-schema"
 version = "0.1.0"
 requires_python = ">=3.10"
 git = "https://github.com/AV-EFI/av-efi-schema.git"
-revision = "5e6e88bc3736e581c3d86a6de13ff5908e817eba"
+revision = "b1be3a08048c24f0b7c9c377e754af93b318b783"
 summary = "Schema for persistent film identifiers developed in the AVefi project"
 groups = ["default"]
 dependencies = [
@@ -858,23 +858,23 @@ files = [
 
 [[package]]
 name = "xsdata"
-version = "24.7"
-requires_python = ">=3.8"
+version = "24.11"
+requires_python = ">=3.9"
 summary = "Python XML Binding"
 groups = ["default"]
 dependencies = [
     "typing-extensions>=4.7.0",
 ]
 files = [
-    {file = "xsdata-24.7-py3-none-any.whl", hash = "sha256:19022456c59358cef32573f6aef22eebd0a9e52625ec8d8c6f36b7b083077958"},
-    {file = "xsdata-24.7.tar.gz", hash = "sha256:80bf84d7ec8d6f1d021c6d1acf8bfe6ade7a9b70eac7c1c197d4b858c990ea85"},
+    {file = "xsdata-24.11-py3-none-any.whl", hash = "sha256:bb0ba63daab93c190cfc7d8bb3c2392422cc2ad0b7214f3061cf4cde231cce97"},
+    {file = "xsdata-24.11.tar.gz", hash = "sha256:011193f775877d832d736b68e8553de3fe35b8447974effce08fc6cc3305d206"},
 ]
 
 [[package]]
 name = "xsdata"
-version = "24.7"
+version = "24.11"
 extras = ["cli", "lxml"]
-requires_python = ">=3.8"
+requires_python = ">=3.9"
 summary = "Python XML Binding"
 groups = ["default"]
 dependencies = [
@@ -885,9 +885,9 @@ dependencies = [
     "lxml>=4.5.0",
     "ruff>=0.3.0",
     "toposort>=1.5",
-    "xsdata==24.7",
+    "xsdata==24.11",
 ]
 files = [
-    {file = "xsdata-24.7-py3-none-any.whl", hash = "sha256:19022456c59358cef32573f6aef22eebd0a9e52625ec8d8c6f36b7b083077958"},
-    {file = "xsdata-24.7.tar.gz", hash = "sha256:80bf84d7ec8d6f1d021c6d1acf8bfe6ade7a9b70eac7c1c197d4b858c990ea85"},
+    {file = "xsdata-24.11-py3-none-any.whl", hash = "sha256:bb0ba63daab93c190cfc7d8bb3c2392422cc2ad0b7214f3061cf4cde231cce97"},
+    {file = "xsdata-24.11.tar.gz", hash = "sha256:011193f775877d832d736b68e8553de3fe35b8447974effce08fc6cc3305d206"},
 ]
