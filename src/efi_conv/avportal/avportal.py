@@ -283,9 +283,10 @@ def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
     result = efi.Title(type=title_type, has_name=display_title)
     first, rest = display_title.split(maxsplit=1)
     if first.lower() in articles[input_title.language]:
-        result.has_ordering_name = rest
+        result.has_ordering_name = f"{rest}, {first}"
         log.warning(
-            f"Dropped {first} in ordering name for title: {display_title}")
+            f"Pushing article to back of ordering name for title:"
+            f" {result.has_ordering_name}")
     return result
 
 
