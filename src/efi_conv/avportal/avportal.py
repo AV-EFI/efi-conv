@@ -130,8 +130,6 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             event.has_activity.append(activity)
     if input.genre and input.genre.value:
         work.has_genre.append(efi.Genre(has_name=input.genre.value))
-    # SubjectAreaTYpes
-    # contributors
     if input.doi:
         work.same_as.append(efi.DOIResource(id=input.doi))
     identifiers = input.alternate_identifiers
