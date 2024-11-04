@@ -130,14 +130,6 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             event.has_activity.append(activity)
     if input.genre and input.genre.value:
         work.has_genre.append(efi.Genre(has_name=input.genre.value))
-    if input.doi:
-        work.same_as.append(efi.DOIResource(id=input.doi))
-    identifiers = input.alternate_identifiers
-    if identifiers:
-        for id in identifiers.alternate_identifier:
-            if id.alternate_identifier_type != "EIDR":
-                raise RuntimeError(f"Cannot handle identifier_type: {id}")
-            work.same_as.append(efi.EIDRResource(id=id.value))
     for subject_area in input.subject_areas.subject_area:
         if subject_area.value == "Arts and Media":
             keywords = ["Arts", "Media"]
@@ -255,6 +247,16 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
     item = efi.Item(
         is_item_of=manifestation_id,
         has_primary_title=copy.deepcopy(manifestation.has_primary_title))
+
+    # External identifiers
+    if input.doi:
+        item.is_copy_of.append(efi.DOIResource(id=input.doi))
+    identifiers = input.alternate_identifiers
+    if identifiers:
+        for id in identifiers.alternate_identifier:
+            if id.alternate_identifier_type != "EIDR":
+                raise RuntimeError(f"Cannot handle identifier_type: {id}")
+            item.is_copy_of.append(efi.EIDRResource(id=id.value))
     item_id = efi.LocalResource(id=f"{source_key}_item")
     item.has_identifier.append(item_id)
     item.has_source_key.append(source_key)
