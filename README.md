@@ -44,7 +44,7 @@ Usage: efi-conv from [OPTIONS] OUTPUT_FILE [INPUT_FILES]...
 Options:
   -f, --format [avportal]  Source data format.
   --help                   Show this message and exit.
-$ efi-conv from -f avportal /tmp/efi_records.json tests/avportal/*.xml
+$ efi-conv from -f avportal efi_records.json tests/avportal/*.xml
 $ efi-conv check tests/avportal/efi_records.json
 INFO efi_conv.cli: All 6 records passed the checks successfully
 ## Or, instead of using pip above, proceed with pdm:
@@ -52,7 +52,7 @@ $ pdm install
 ## [...]
 $ pdm run efi-conv --help
 ## Same output as above
-$ pdm run efi-conv from -f avportal /tmp/efi_records.json tests/avportal/*.xml
+$ pdm run efi-conv from -f avportal efi_records.json tests/avportal/*.xml
 $ pdm run efi-conv check tests/avportal/efi_records.json
 INFO efi_conv.cli: All 6 records passed the checks successfully
 ```
