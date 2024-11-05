@@ -21,7 +21,7 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
     efi_records = []
     input = parser.parse(input_file, ROOT_CLASS)
     # Use input.identifier once we have complete iwf schema
-    source_key = input.identifier
+    source_key = str(input.identifier)
 
     # work
     titles = input.titles.title
