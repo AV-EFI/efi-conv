@@ -2,7 +2,8 @@ import logging
 import logging.config
 import os
 
-import click
+from . import check, from_
+from .cli import cli_main
 
 
 log = logging.getLogger(__name__)
@@ -32,8 +33,3 @@ logging_config = {
     'disable_existing_loggers': False,
 }
 logging.config.dictConfig(logging_config)
-
-
-@click.group()
-def cli_main():
-    pass

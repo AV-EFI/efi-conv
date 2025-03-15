@@ -1,14 +1,43 @@
 from collections import defaultdict
 import logging
 import re
+import sys
 from typing import List
 
 from avefi_schema import model as efi
+import click
 from jsonasobj2 import as_dict
 from linkml_runtime.loaders import json_loader
 
+from . import avefi
+from .cli import cli_main
+
 
 log = logging.getLogger(__name__)
+
+
+@cli_main.command()
+@click.option(
+    '--remove-invalid/--no-remove-invalid', '-r', default=False,
+    help='Remove invalid records modifying EFI_FILE in place.')
+@click.argument('efi_file', type=click.Path(dir_okay=False, exists=True))
+def check(efi_file, *, remove_invalid=False):
+    """Sanity check EFI_FILE and optionally remove invalid records."""
+    efi_records = avefi.load(efi_file)
+    old_count = len(efi_records)
+    if not check.pass_checks(efi_records, remove_invalid=True):
+        if remove_invalid:
+            avefi.dump(efi_records, efi_file)
+            log.info(
+                f"Successfully removed {old_count-len(efi_records)} invalid"
+                f" records")
+        else:
+            log.error(
+                f"Found {old_count-len(efi_records)} invalid records"
+                f" (no action taken)")
+            sys.exit(1)
+    else:
+        log.info(f"All {old_count} records passed the checks successfully")
 
 
 def pass_checks(
