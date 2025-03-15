@@ -1,31 +1,46 @@
 from collections import defaultdict
+import json
 import logging
+import pathlib
 import re
 import sys
 from typing import List
 
+import appdirs
 from avefi_schema import model as efi
 import click
 from jsonasobj2 import as_dict
+from jsonschema.validators import validator_for
+from jsonschema.exceptions import best_match
 from linkml_runtime.loaders import json_loader
+from linkml_runtime.utils.formatutils import remove_empty_items
+import requests
 
 from . import avefi
 from .cli import cli_main
 
 
 log = logging.getLogger(__name__)
+SCHEMA_SOURCE = 'https://raw.githubusercontent.com/AV-EFI/av-efi-schema/main/project/jsonschema/avefi_schema/model.schema.json'
+CACHE_DIR = pathlib.Path(appdirs.user_cache_dir(
+    appname=__package__))
+SCHEMA_FILE = CACHE_DIR / 'avefi_schema.json'
 
 
 @cli_main.command()
 @click.option(
     '--remove-invalid/--no-remove-invalid', '-r', default=False,
     help='Remove invalid records modifying EFI_FILE in place.')
+@click.option(
+    '--update-schema', '-u', is_flag=True, default=False,
+    help='Fetch latest version of the AVefi schema from upstream repo.')
 @click.argument('efi_file', type=click.Path(dir_okay=False, exists=True))
-def check(efi_file, *, remove_invalid=False):
+def check(efi_file, *, remove_invalid=False, update_schema=False):
     """Sanity check EFI_FILE and optionally remove invalid records."""
+    schema_validator = get_schema_validator(update_schema=update_schema)
     efi_records = avefi.load(efi_file)
     old_count = len(efi_records)
-    if not check.pass_checks(efi_records, remove_invalid=True):
+    if not pass_checks(efi_records, schema_validator, remove_invalid=True):
         if remove_invalid:
             avefi.dump(efi_records, efi_file)
             log.info(
@@ -40,14 +55,65 @@ def check(efi_file, *, remove_invalid=False):
         log.info(f"All {old_count} records passed the checks successfully")
 
 
+def get_schema_validator(update_schema=False):
+    """Load AVefi JSON schema and initialise validator."""
+    if update_schema:
+        r = requests.get(SCHEMA_SOURCE)
+        r.raise_for_status()
+        schema = r.json()
+        CACHE_DIR.mkdir(exist_ok=True)
+        with SCHEMA_FILE.open('w') as f:
+            json.dump(schema, f, indent=2, ensure_ascii=False)
+    else:
+        try:
+            with SCHEMA_FILE.open() as f:
+                schema = json.load(f)
+        except FileNotFoundError:
+            return get_schema_validator(update_schema=True)
+
+    cls = validator_for(schema)
+    cls.check_schema(schema)
+    validator = cls(schema)
+    return validator
+
+
 def pass_checks(
-        efi_records: List[efi.MovingImageRecord],
+        efi_records: List[efi.MovingImageRecord], schema_validator,
         remove_invalid=False) -> bool:
+    """Check records against schema and additional rules.
+
+    Validate against AVefi schema and check various additional rules
+    like field length limits, required identifiers, resolvable
+    references, etc.
+
+    Note that this function may have obvious side effects on
+    ``efi_records`` if ``remove_invalid`` is set to True.
+
+    Parameters
+    ----------
+    efi_records : List[efi.MovingImageRecord]
+        List of records in the AVefi schema.
+    schema_validator
+        Validator instance as returned by get_schema_validator().
+    remove_invalid : bool
+        Remove records from the list if they violate any of the rules.
+
+    Returns
+    -------
+    bool
+        True if all checks have passed successfully, False otherwise.
+
+    """
     id_lookup = {}
     dependants_by_ref = defaultdict(list)
     all_was_fine = True
 
     for rec in efi_records.copy():
+        error = best_match(schema_validator.iter_errors(
+            remove_empty_items(rec)))
+        if error is not None:
+            raise error
+
         if has_invalid_value(rec):
             if all_was_fine:
                 all_was_fine = False
