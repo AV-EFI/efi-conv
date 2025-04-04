@@ -53,7 +53,7 @@ name = "avefi-schema"
 version = "0.1.0"
 requires_python = ">=3.10"
 git = "https://github.com/AV-EFI/av-efi-schema.git"
-revision = "6f6160352bf01e220286e167122921192f0afd75"
+revision = "b1296ce677a39e84caddc8e8adfddd745837a1bd"
 summary = "Schema for persistent film identifiers developed in the AVefi project"
 groups = ["default"]
 dependencies = [
