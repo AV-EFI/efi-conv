@@ -16,4 +16,4 @@ def dump(records, to_file, **kwargs):
 
 def dumps(records):
     """Dump AVefi records to string (in JSON format)."""
-    dumpers.json_dumper.dump(records, to_file, inject_type=False)
+    return dumpers.json_dumper.dumps(records, inject_type=False)
