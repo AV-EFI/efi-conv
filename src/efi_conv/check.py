@@ -157,6 +157,12 @@ def pass_checks(
             if remove_invalid:
                 purge_dependant_records(
                     ref, efi_records, id_lookup, dependants_by_ref)
+    for record_id in list(id_lookup.keys()):
+        if dangling_record(
+                record_id, efi_records, id_lookup, dependants_by_ref,
+                remove_dangling=remove_invalid):
+            if all_was_fine:
+                all_was_fine = False
     return all_was_fine
 
 
@@ -172,6 +178,47 @@ def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
             log.error(f"Reference to removed record: {record_id.id}")
             purge_dependant_records(
                 record_id, record_list, id_lookup, dependants_by_ref)
+
+
+def dangling_record(
+        record_id, record_list, id_lookup, dependants_by_ref,
+        remove_dangling=False):
+    """Return True if record has neither items nor a PID yet."""
+    if record_id.category == 'avefi:LocalResource' \
+       and record_id not in dependants_by_ref:
+        rec, ids = id_lookup[record_id]
+        if rec.category != 'avefi:Item' \
+           and all(
+               id_.category == 'avefi:LocalResource'
+               and id_ not in dependants_by_ref
+               for id_ in ids):
+            log.error(
+                f"No items associated with {rec.category} {record_id.id}")
+            if remove_dangling:
+                refs = []
+                for attr_name in (
+                        'is_manifestation_of', 'is_variant_of', 'is_part_of'):
+                    ref = getattr(rec, attr_name, None)
+                    if ref:
+                        if isinstance(ref, list):
+                            refs.extend(HashableId(**as_dict(r)) for r in ref)
+                        else:
+                            refs.append(HashableId(**as_dict(ref)))
+                for id_ in ids:
+                    del id_lookup[id_]
+                record_list.remove(rec)
+                for ref in refs:
+                    ref_deps = dependants_by_ref[ref]
+                    for id_ in ids:
+                        if id_ in ref_deps:
+                            ref_deps.remove(id_)
+                    if not ref_deps:
+                        del dependants_by_ref[ref]
+                    dangling_record(
+                        ref, record_list, id_lookup, dependants_by_ref,
+                        remove_dangling=remove_dangling)
+            return True
+    return False
 
 
 class HashableId:
