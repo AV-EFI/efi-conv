@@ -272,6 +272,13 @@ def exceeds_field_limit(efi_record):
                 f"Record {efi_record.has_identifier[0].id} violates limit of"
                 f" 250 characters on title length: {title.has_name}")
             return True
+    if efi_record.category != 'avefi:WorkVariant':
+        for note in efi_record.has_note:
+            if len(note) >= 8192:
+                log.error(
+                    f"Record {efi_record.has_identifier[0].id} violates limit"
+                    f" of 8192 characters on has_note entries")
+                return True
     return False
 
 
