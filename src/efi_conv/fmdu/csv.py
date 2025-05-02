@@ -102,7 +102,7 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
             manifestation_title = make_title(
                 row['manifestation_title'], 'TitleProper')
             manifestation = efi.Manifestation(
-                is_manifestation_of=work_id,
+                is_manifestation_of=work.has_identifier[0],
                 has_primary_title=manifestation_title)
             work_man_lookup[work_key]['manifestations'][man_fields] = \
                 manifestation
