@@ -128,14 +128,12 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
                 f"_{row['Intertitles']}_{row['colour_type']}_{row['format']}")
             manifestation.has_identifier.append(manifestation_id)
             efi_records.append(manifestation)
-        else:
-            manifestation_id = manifestation.has_identifier[0]
 
         # item
         item_title = make_title(
             row['item_title'], 'TitleProper')
         item = efi.Item(
-            is_item_of=manifestation_id,
+            is_item_of=manifestation.has_identifier[0],
             has_primary_title=item_title)
         item_format = format_map[row['format']]
         if item_format:
