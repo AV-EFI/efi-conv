@@ -11,7 +11,7 @@ requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
-    "avefi-schema @ git+https://github.com/AV-EFI/av-efi-schema.git",
+    "avefi-schema[dataclasses] @ git+https://github.com/AV-EFI/av-efi-schema.git",
     "xsdata[cli,lxml]>=24.7",
     "click>=8.1.7",
     "appdirs>=1.4.4",
