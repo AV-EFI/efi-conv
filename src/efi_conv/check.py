@@ -34,25 +34,28 @@ SCHEMA_FILE = CACHE_DIR / 'avefi_schema.json'
 @click.option(
     '--update-schema', '-u', is_flag=True, default=False,
     help='Fetch latest version of the AVefi schema from upstream repo.')
-@click.argument('efi_file', type=click.Path(dir_okay=False, exists=True))
-def check(efi_file, *, remove_invalid=False, update_schema=False):
-    """Sanity check EFI_FILE and optionally remove invalid records."""
+@click.argument(
+    'efi_files', nargs=-1, type=click.Path(dir_okay=False, exists=True))
+def check(efi_files, *, remove_invalid=False, update_schema=False):
+    """Sanity check EFI_FILES and optionally remove invalid records."""
     schema_validator = get_schema_validator(update_schema=update_schema)
-    efi_records = avefi.load(efi_file)
-    old_count = len(efi_records)
-    if not pass_checks(efi_records, schema_validator, remove_invalid=True):
-        if remove_invalid:
-            avefi.dump(efi_records, efi_file)
-            log.info(
-                f"Successfully removed {old_count-len(efi_records)} invalid"
-                f" records")
+    for efi_file in efi_files:
+        log.info(f"Processing {efi_file}")
+        efi_records = avefi.load(efi_file)
+        old_count = len(efi_records)
+        if not pass_checks(efi_records, schema_validator, remove_invalid=True):
+            if remove_invalid:
+                avefi.dump(efi_records, efi_file)
+                log.info(
+                    f"Successfully removed {old_count-len(efi_records)}"
+                    f" invalid records")
+            else:
+                log.error(
+                    f"Found {old_count-len(efi_records)} invalid records"
+                    f" (no action taken)")
+                sys.exit(1)
         else:
-            log.error(
-                f"Found {old_count-len(efi_records)} invalid records"
-                f" (no action taken)")
-            sys.exit(1)
-    else:
-        log.info(f"All {old_count} records passed the checks successfully")
+            log.info(f"All {old_count} records passed the checks successfully")
 
 
 def get_schema_validator(update_schema=False):
