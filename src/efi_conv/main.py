@@ -2,10 +2,8 @@ import logging
 import logging.config
 import os
 
-from . import check, from_
-from .cli import cli_main
 
-
+# Configure logging before importing local modules
 log = logging.getLogger(__name__)
 loglevel = os.environ.get(
     f"{__package__.upper()}_LOGLEVEL", 'INFO').upper()
@@ -33,3 +31,7 @@ logging_config = {
     'disable_existing_loggers': False,
 }
 logging.config.dictConfig(logging_config)
+
+
+from . import check, from_
+from .cli import cli_main
