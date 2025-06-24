@@ -135,6 +135,9 @@ def efi_import(input_file) -> List[efi.MovingImageRecord]:
         item = efi.Item(
             is_item_of=manifestation.has_identifier[0],
             has_primary_title=item_title)
+        access_status = access_status_map[row['access_status']]
+        if access_status:
+            item.has_access_status = efi.ItemAccessStatusEnum(access_status)
         item_format = format_map[row['format']]
         if item_format:
             item.has_format.append(efi.Film(type=item_format))
