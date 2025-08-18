@@ -1,9 +1,7 @@
 from collections import defaultdict
 import copy
 import logging
-import os
 import re
-from typing import List
 
 from avefi_schema import model as efi
 from xsdata.formats.dataclass.parsers import XmlParser
@@ -17,10 +15,17 @@ log = logging.getLogger(__name__)
 parser = XmlParser()
 
 
-def efi_import(input_file) -> List[efi.MovingImageRecord]:
+def efi_import(input_file) -> list[efi.MovingImageRecord]:
+    input = read_input(input_file)
+    return map_to_efi(input)
+
+
+def read_input(input_file) -> ROOT_CLASS:
+    return parser.parse(input_file, ROOT_CLASS)
+
+
+def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     efi_records = []
-    input = parser.parse(input_file, ROOT_CLASS)
-    # Use input.identifier once we have complete iwf schema
     source_key = str(input.identifier)
 
     # work
