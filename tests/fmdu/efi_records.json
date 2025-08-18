@@ -1,0 +1,1028 @@
+[
+  {
+    "category": "avefi:WorkVariant",
+    "has_event": [
+      {
+        "category": "avefi:ProductionEvent",
+        "has_activity": [
+          {
+            "category": "avefi:DirectingActivity",
+            "has_agent": [
+              {
+                "category": "avefi:Agent",
+                "has_name": "Possardt, Werner",
+                "type": "Person"
+              }
+            ],
+            "type": "Director"
+          }
+        ],
+        "has_date": "1981",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Deutschland"
+          }
+        ]
+      }
+    ],
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "STROMMBERG - DIE LETZTE NACHT__Werner Possardt__1981_work"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "STROMMBERG - DIE LETZTE NACHT",
+      "type": "PreferredTitle"
+    },
+    "has_source_key": [
+      "218204"
+    ],
+    "type": "Monographic"
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "STROMMBERG - DIE LETZTE NACHT_1981_Deutsch___Farbe_35mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "STROMMBERG - DIE LETZTE NACHT",
+      "type": "TitleProper"
+    },
+    "has_source_key": [
+      "218204"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "ger"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "STROMMBERG - DIE LETZTE NACHT__Werner Possardt__1981_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "218204"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "STROMMBERG - DIE LETZTE NACHT",
+      "type": "TitleProper"
+    },
+    "has_source_key": [
+      "218204"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "35mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "STROMMBERG - DIE LETZTE NACHT_1981_Deutsch___Farbe_35mm"
+    },
+    "has_access_status": "Archive"
+  },
+  {
+    "category": "avefi:WorkVariant",
+    "has_event": [
+      {
+        "category": "avefi:ProductionEvent",
+        "has_date": "1950?",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Deutschland"
+          }
+        ]
+      }
+    ],
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?__Unbekannt__1950?_work"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?",
+      "type": "PreferredTitle"
+    },
+    "has_source_key": [
+      "216420"
+    ],
+    "type": "Monographic"
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?_1950?____Schwarz-Weiß_8mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?",
+      "type": "TitleProper"
+    },
+    "has_source_key": [
+      "216420"
+    ],
+    "has_colour_type": "BlackAndWhite",
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?__Unbekannt__1950?_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "216420"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?",
+      "type": "TitleProper"
+    },
+    "has_source_key": [
+      "216420"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "8mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?_1950?____Schwarz-Weiß_8mm"
+    }
+  },
+  {
+    "category": "avefi:WorkVariant",
+    "has_event": [
+      {
+        "category": "avefi:ProductionEvent",
+        "has_activity": [
+          {
+            "category": "avefi:DirectingActivity",
+            "has_agent": [
+              {
+                "category": "avefi:Agent",
+                "has_name": "Delmont, Joseph",
+                "type": "Person"
+              }
+            ],
+            "type": "Director"
+          }
+        ],
+        "has_date": "1913",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Deutschland"
+          }
+        ]
+      }
+    ],
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "RECHT AUFS DASEIN, DAS__Joseph Delmont__1913_work"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DAS RECHT AUFS DASEIN",
+      "type": "PreferredTitle",
+      "has_ordering_name": "RECHT AUFS DASEIN, DAS"
+    },
+    "has_source_key": [
+      "217965"
+    ],
+    "type": "Monographic"
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "RECHT AUFS DASEIN, DAS_1913__Deutsch_Niederländisch_Farbe_35mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DAS RECHT AUFS DASEIN",
+      "type": "TitleProper",
+      "has_ordering_name": "RECHT AUFS DASEIN, DAS"
+    },
+    "has_source_key": [
+      "217965"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "Subtitles"
+        ],
+        "code": "ger"
+      },
+      {
+        "usage": [
+          "Intertitles"
+        ],
+        "code": "nld"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "RECHT AUFS DASEIN, DAS__Joseph Delmont__1913_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "217965"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DAS RECHT AUFS DASEIN",
+      "type": "TitleProper",
+      "has_ordering_name": "RECHT AUFS DASEIN, DAS"
+    },
+    "has_source_key": [
+      "217965"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "35mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "RECHT AUFS DASEIN, DAS_1913__Deutsch_Niederländisch_Farbe_35mm"
+    }
+  },
+  {
+    "category": "avefi:WorkVariant",
+    "has_event": [
+      {
+        "category": "avefi:ProductionEvent",
+        "has_activity": [
+          {
+            "category": "avefi:DirectingActivity",
+            "has_agent": [
+              {
+                "category": "avefi:Agent",
+                "has_name": "Paul, Heinz",
+                "type": "Person"
+              }
+            ],
+            "type": "Director"
+          }
+        ],
+        "has_date": "1931",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Deutschland"
+          }
+        ]
+      }
+    ],
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Heinz Paul__1931_work"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "PreferredTitle",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1066485",
+      "1066486",
+      "1066489"
+    ],
+    "type": "Monographic"
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1931_Englisch___Farbe_16mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1066485",
+      "1066486"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "eng"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Heinz Paul__1931_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "1066485"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1066485"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1931_Englisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1931_Französisch___Farbe_16mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1066489"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "fre"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Heinz Paul__1931_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "1066489"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1066489"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1931_Französisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "1066486"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1066486"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1931_Englisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:WorkVariant",
+    "has_event": [
+      {
+        "category": "avefi:ProductionEvent",
+        "has_activity": [
+          {
+            "category": "avefi:DirectingActivity",
+            "has_agent": [
+              {
+                "category": "avefi:Agent",
+                "has_name": "Labudda, Gerhard",
+                "type": "Person"
+              }
+            ],
+            "type": "Director"
+          }
+        ],
+        "has_date": "1976",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Deutschland"
+          }
+        ]
+      }
+    ],
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "PreferredTitle",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1022777",
+      "1035595",
+      "216250",
+      "217167",
+      "219572",
+      "856824",
+      "856825",
+      "856827",
+      "856829",
+      "856830",
+      "857279",
+      "857283"
+    ],
+    "type": "Monographic"
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_35mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "216250",
+      "856824",
+      "856825"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "ger"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "216250"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "216250"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "35mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_35mm"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "856824"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856824"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "35mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_35mm"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "856825"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856825"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "35mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_35mm"
+    }
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_16mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856827",
+      "857283"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "ger"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "856827"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856827"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1976_Englisch___Farbe_16mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "217167",
+      "856829"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "eng"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "856829"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856829"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Englisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1976_Französisch___Farbe_16mm"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856830",
+      "857279"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "fre"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "856830"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "856830"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Französisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "857279"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "857279"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Französisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "857283"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "857283"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "217167"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "217167"
+    ],
+    "has_format": [
+      {
+        "category": "avefi:Film",
+        "type": "16mmFilm"
+      }
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Englisch___Farbe_16mm"
+    }
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_(not assigned)"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "219572"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "usage": [
+          "SpokenLanguage"
+        ],
+        "code": "ger"
+      }
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "219572"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "219572"
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_Deutsch___Farbe_(not assigned)"
+    }
+  },
+  {
+    "category": "avefi:Manifestation",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE_1976_____"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1022777",
+      "1035595"
+    ],
+    "is_manifestation_of": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "ANDERE SEITE, DIE__Gerhard Labudda__1976_work"
+      }
+    ]
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "1022777"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1022777"
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_____"
+    }
+  },
+  {
+    "category": "avefi:Item",
+    "has_identifier": [
+      {
+        "category": "avefi:LocalResource",
+        "id": "1035595"
+      }
+    ],
+    "has_primary_title": {
+      "has_name": "DIE ANDERE SEITE",
+      "type": "TitleProper",
+      "has_ordering_name": "ANDERE SEITE, DIE"
+    },
+    "has_source_key": [
+      "1035595"
+    ],
+    "is_item_of": {
+      "category": "avefi:LocalResource",
+      "id": "ANDERE SEITE, DIE_1976_____"
+    }
+  }
+]
