@@ -187,6 +187,11 @@ dependencies = [
     { name = "xsdata", extra = ["cli", "lxml"] },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "appdirs", specifier = ">=1.4.4" },
@@ -194,6 +199,9 @@ requires-dist = [
     { name = "click", specifier = ">=8.1.7" },
     { name = "xsdata", extras = ["cli", "lxml"], specifier = ">=24.7" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=8.4.1" }]
 
 [[package]]
 name = "hbreader"

@@ -2,286 +2,6 @@
   {
     "category": "avefi:WorkVariant",
     "has_primary_title": {
-      "has_name": "Regulation of the Development in Sordaria macrospora by Biotin and Arginine",
-      "type": "PreferredTitle"
-    },
-    "has_event": [
-      {
-        "category": "avefi:ProductionEvent",
-        "has_activity": [
-          {
-            "category": "avefi:ProducingActivity",
-            "has_agent": [
-              {
-                "category": "avefi:Agent",
-                "has_name": "Hock, Bertold",
-                "type": "Person"
-              },
-              {
-                "category": "avefi:Agent",
-                "has_name": "Bahn, Michael",
-                "type": "Person"
-              }
-            ],
-            "type": "Producer"
-          },
-          {
-            "category": "avefi:ProducingActivity",
-            "has_agent": [
-              {
-                "category": "avefi:Agent",
-                "has_name": "IWF (Göttingen)",
-                "type": "CorporateBody"
-              }
-            ],
-            "type": "ProductionCompany"
-          }
-        ],
-        "has_date": "1975/1976"
-      }
-    ],
-    "has_identifier": [
-      {
-        "category": "avefi:LocalResource",
-        "id": "14743_work"
-      }
-    ],
-    "has_source_key": [
-      14743
-    ],
-    "has_alternative_title": [
-      {
-        "has_name": "Regulation der Entwicklung von Sordaria macrospora durch Biotin und Arginin",
-        "type": "AlternativeTitle"
-      }
-    ],
-    "type": "Monographic",
-    "has_genre": [
-      {
-        "has_name": "Documentation/Report"
-      }
-    ],
-    "has_subject": [
-      {
-        "category": "avefi:Subject",
-        "has_name": "Life Sciences",
-        "same_as": [
-          {
-            "category": "avefi:GNDResource",
-            "id": "4129772-6"
-          }
-        ]
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Morphogenese"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Perithezium"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Biotin"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Arginin"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Myzelwachstum"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Zellbiologie"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Sordaria"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Kernpilz"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Pilze / Kernpilz"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "morphogenesis"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "perithecium"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "biotin"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "arginine"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "mycelial growth"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "cell biology"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Sordaria"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "pyromycete"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "fungi / pyromycete"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Botanik"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Entwicklungszyklen"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Pilze"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Physiologie (Botanik)"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Entwicklung"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "Biologie"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "botany"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "developmental cycles"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "fungi"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "physiology (botany)"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "development"
-      },
-      {
-        "category": "avefi:Subject",
-        "has_name": "biology"
-      }
-    ],
-    "same_as": [
-      {
-        "category": "avefi:DOIResource",
-        "id": "10.3203/IWF/B-1262eng"
-      }
-    ]
-  },
-  {
-    "category": "avefi:Manifestation",
-    "has_primary_title": {
-      "has_name": "Regulation of the Development in Sordaria macrospora by Biotin and Arginine",
-      "type": "TitleProper"
-    },
-    "has_event": [
-      {
-        "category": "avefi:PublicationEvent",
-        "has_activity": [
-          {
-            "category": "avefi:ManifestationActivity",
-            "has_agent": [
-              {
-                "category": "avefi:Agent",
-                "has_name": "IWF (Göttingen)",
-                "type": "CorporateBody"
-              }
-            ],
-            "type": "Publisher"
-          }
-        ],
-        "has_date": "1977",
-        "type": "ReleaseEvent"
-      }
-    ],
-    "has_identifier": [
-      {
-        "category": "avefi:LocalResource",
-        "id": "14743_manifestation"
-      }
-    ],
-    "has_source_key": [
-      14743
-    ],
-    "in_language": {
-      "code": "eng",
-      "usage": [
-        "SpokenLanguage"
-      ]
-    },
-    "has_duration": {
-      "has_value": "PT7M47S"
-    },
-    "has_extent": {
-      "has_unit": "MegaByte",
-      "has_value": 410
-    },
-    "has_note": [
-      "Ein Beitrag zur Morphogenese der Pilze. Die Steuerung der Perithezienbildung durch Biotin und Arginin geschieht auf der Ebene von Myzelwachstum und Hyphenverzweigung: Peridienbildung setzt Verzweigung im älteren Myzel voraus.",
-      "A contribution to the morphogenesis of fungi. Control of the fruiting body formation by biotin and arginine occurs at the level of mycelial growth and hypal branching: branching in older mycelium is a prerequisite for fruiting body formation."
-    ],
-    "is_manifestation_of": [
-      {
-        "category": "avefi:LocalResource",
-        "id": "14743_work"
-      }
-    ]
-  },
-  {
-    "category": "avefi:Item",
-    "has_primary_title": {
-      "has_name": "Regulation of the Development in Sordaria macrospora by Biotin and Arginine",
-      "type": "TitleProper"
-    },
-    "has_identifier": [
-      {
-        "category": "avefi:LocalResource",
-        "id": "14743_item"
-      }
-    ],
-    "has_source_key": [
-      14743
-    ],
-    "is_item_of": {
-      "category": "avefi:LocalResource",
-      "id": "14743_manifestation"
-    }
-  },
-  {
-    "category": "avefi:WorkVariant",
-    "has_primary_title": {
       "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
       "type": "PreferredTitle"
     },
@@ -344,7 +64,7 @@
       }
     ],
     "has_source_key": [
-      27540
+      "27540"
     ],
     "has_alternative_title": [
       {
@@ -573,16 +293,6 @@
         "category": "avefi:Subject",
         "has_name": "painting (ethnology)"
       }
-    ],
-    "same_as": [
-      {
-        "category": "avefi:DOIResource",
-        "id": "10.3203/IWF/E-2905"
-      },
-      {
-        "category": "avefi:EIDRResource",
-        "id": "10.5240/92F6-0468-AEFE-530F-02E3-L"
-      }
     ]
   },
   {
@@ -618,7 +328,7 @@
       }
     ],
     "has_source_key": [
-      27540
+      "27540"
     ],
     "has_duration": {
       "has_value": "PT29M21S"
@@ -630,6 +340,13 @@
     "has_note": [
       "Während einer Initiation trägt ein Mann aus Japanaut Modelliermasse auf einen Schädel auf. Von einem Baum im Wald holt er Baumsaft. Die Modelliermasse mischt er aus Erde, Baumsaft und gebranntem Kalk. Dann befestigt er am Schädel Kauri-Schneckengehäuse, Conus-Schneckenböden und Menschenhaare. Anschließend wird der Schädel mit schwarzer, gelber und roter Farbe bemalt.",
       "During an initiation ceremony a man modells on a skull a mixture of clay. He taps a tree for some tree-sap. The mixture on the skull consists of earth, tree-sap, and burned chalk. Different shells like cowrie shells and conus shells and human hair fixed on the skull. Finally he paints the overmodelled skull with black, yellow and red."
+    ],
+    "in_language": [
+      {
+        "usage": [
+          "NoDialogue"
+        ]
+      }
     ],
     "is_manifestation_of": [
       {
@@ -652,7 +369,17 @@
       }
     ],
     "has_source_key": [
-      27540
+      "27540"
+    ],
+    "is_copy_of": [
+      {
+        "category": "avefi:DOIResource",
+        "id": "10.3203/IWF/E-2905"
+      },
+      {
+        "category": "avefi:EIDRResource",
+        "id": "10.5240/92F6-0468-AEFE-530F-02E3-L"
+      }
     ],
     "is_item_of": {
       "category": "avefi:LocalResource",
