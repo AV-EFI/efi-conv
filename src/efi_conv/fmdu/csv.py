@@ -2,7 +2,6 @@ import csv
 import logging
 import pathlib
 import re
-from typing import List
 
 from avefi_schema import model as efi
 
@@ -17,12 +16,24 @@ FIELD_NAMES = (
     'colour_type', 'item_title', 'access_status', 'format')
 
 
-def efi_import(input_file) -> List[efi.MovingImageRecord]:
-    efi_records = []
+def efi_import(input_file) -> list[efi.MovingImageRecord]:
+    parsed_input = read_input(input_file)
+    return map_to_efi(parsed_input)
+
+
+def read_input(input_file) -> list[csv.DictReader]:
     with pathlib.Path(input_file).open(encoding=FILE_ENCODING) as f:
         parsed_input = list(csv.DictReader(
             f, delimiter=DELIMITER, fieldnames=FIELD_NAMES))
+
+    # Drop the header line
     parsed_input = parsed_input[1:]
+    return parsed_input
+
+
+def map_to_efi(
+        parsed_input: list[csv.DictReader]) -> list[efi.MovingImageRecord]:
+    efi_records = []
     work_man_lookup = {}
     for row in parsed_input:
         source_key = row['source_key']
