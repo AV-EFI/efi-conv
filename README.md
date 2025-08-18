@@ -17,7 +17,7 @@ get in touch and let us jointly work on your mapping.
 
 For demonstration purposes and since this code is in early development
 yet, just clone the repository and make an editable installation.
-Either use pip in a virtualenv or preferably [pdm][] if you consider
+Either use pip in a virtualenv or preferably [UV][uv_install] if you consider
 contributing and might need to add dependencies at some point.
 
 Here is how to convert some test data:
@@ -47,17 +47,17 @@ Options:
 $ efi-conv from -f avportal efi_records.json tests/avportal/*.xml
 $ efi-conv check tests/avportal/efi_records.json
 INFO efi_conv.cli: All 6 records passed the checks successfully
-## Or, instead of using pip above, proceed with pdm:
-$ pdm install
+## Or, instead of using pip above, proceed with UV:
+$ uv sync
 ## [...]
-$ pdm run efi-conv --help
+$ uv run efi-conv --help
 ## Same output as above
-$ pdm run efi-conv from -f avportal efi_records.json tests/avportal/*.xml
-$ pdm run efi-conv check tests/avportal/efi_records.json
+$ uv run efi-conv from -f avportal efi_records.json tests/avportal/*.xml
+$ uv run efi-conv check tests/avportal/efi_records.json
 INFO efi_conv.cli: All 6 records passed the checks successfully
 ```
 
-[pdm]: https://pdm-project.org/en/latest/#installation
+[uv_install]: https://docs.astral.sh/uv/getting-started/installation/
 
 ## Developer note
 
