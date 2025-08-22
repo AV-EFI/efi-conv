@@ -150,6 +150,12 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                     ]))
     for k in input.keywords.keyword:
         work.has_subject.append(efi.Subject(has_name=k.value))
+    identifiers = input.alternate_identifiers
+    if identifiers:
+        for id in identifiers.alternate_identifier:
+            if id.alternate_identifier_type != "EIDR":
+                raise RuntimeError(f"Cannot handle identifier_type: {id}")
+            work.same_as.append(efi.EIDRResource(id=id.value))
     work_id = efi.LocalResource(id=f"{source_key}_work")
     work.has_identifier.append(work_id)
     work.has_source_key.append(source_key)
@@ -251,13 +257,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
 
     # External identifiers
     if input.doi:
-        item.is_copy_of.append(efi.DOIResource(id=input.doi))
-    identifiers = input.alternate_identifiers
-    if identifiers:
-        for id in identifiers.alternate_identifier:
-            if id.alternate_identifier_type != "EIDR":
-                raise RuntimeError(f"Cannot handle identifier_type: {id}")
-            item.is_copy_of.append(efi.EIDRResource(id=id.value))
+        item.same_as.append(efi.DOIResource(id=input.doi))
 
     # links
     if input.links:

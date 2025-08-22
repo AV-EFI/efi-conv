@@ -1,10 +1,12 @@
 [
   {
     "category": "avefi:WorkVariant",
-    "has_primary_title": {
-      "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
-      "type": "PreferredTitle"
-    },
+    "has_alternative_title": [
+      {
+        "has_name": "Iatmul (New Guinea, Middle Sepik) - Overmodelling and Painting a Skull",
+        "type": "AlternativeTitle"
+      }
+    ],
     "has_event": [
       {
         "category": "avefi:ProductionEvent",
@@ -63,16 +65,19 @@
         "id": "27540_work"
       }
     ],
+    "has_primary_title": {
+      "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
+      "type": "PreferredTitle"
+    },
     "has_source_key": [
       "27540"
     ],
-    "has_alternative_title": [
+    "same_as": [
       {
-        "has_name": "Iatmul (New Guinea, Middle Sepik) - Overmodelling and Painting a Skull",
-        "type": "AlternativeTitle"
+        "category": "avefi:EIDRResource",
+        "id": "10.5240/92F6-0468-AEFE-530F-02E3-L"
       }
     ],
-    "type": "Monographic",
     "has_genre": [
       {
         "has_name": "Documentation/Report"
@@ -293,14 +298,11 @@
         "category": "avefi:Subject",
         "has_name": "painting (ethnology)"
       }
-    ]
+    ],
+    "type": "Monographic"
   },
   {
     "category": "avefi:Manifestation",
-    "has_primary_title": {
-      "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
-      "type": "TitleProper"
-    },
     "has_event": [
       {
         "category": "avefi:PublicationEvent",
@@ -327,6 +329,10 @@
         "id": "27540_manifestation"
       }
     ],
+    "has_primary_title": {
+      "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
+      "type": "TitleProper"
+    },
     "has_source_key": [
       "27540"
     ],
@@ -335,12 +341,13 @@
     },
     "has_extent": {
       "has_unit": "MegaByte",
-      "has_value": 1612
+      "has_value": "1612"
     },
     "has_note": [
       "Während einer Initiation trägt ein Mann aus Japanaut Modelliermasse auf einen Schädel auf. Von einem Baum im Wald holt er Baumsaft. Die Modelliermasse mischt er aus Erde, Baumsaft und gebranntem Kalk. Dann befestigt er am Schädel Kauri-Schneckengehäuse, Conus-Schneckenböden und Menschenhaare. Anschließend wird der Schädel mit schwarzer, gelber und roter Farbe bemalt.",
       "During an initiation ceremony a man modells on a skull a mixture of clay. He taps a tree for some tree-sap. The mixture on the skull consists of earth, tree-sap, and burned chalk. Different shells like cowrie shells and conus shells and human hair fixed on the skull. Finally he paints the overmodelled skull with black, yellow and red."
     ],
+    "has_sound_type": "Sound",
     "in_language": [
       {
         "usage": [
@@ -353,32 +360,27 @@
         "category": "avefi:LocalResource",
         "id": "27540_work"
       }
-    ],
-    "has_sound_type": "Sound"
+    ]
   },
   {
     "category": "avefi:Item",
-    "has_primary_title": {
-      "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
-      "type": "TitleProper"
-    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
         "id": "27540_item"
       }
     ],
+    "has_primary_title": {
+      "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
+      "type": "TitleProper"
+    },
     "has_source_key": [
       "27540"
     ],
-    "is_copy_of": [
+    "same_as": [
       {
         "category": "avefi:DOIResource",
         "id": "10.3203/IWF/E-2905"
-      },
-      {
-        "category": "avefi:EIDRResource",
-        "id": "10.5240/92F6-0468-AEFE-530F-02E3-L"
       }
     ],
     "is_item_of": {
