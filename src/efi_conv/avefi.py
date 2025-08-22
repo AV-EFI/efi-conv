@@ -1,24 +1,22 @@
-from typing import List
+import pathlib
+from typing import Annotated
 
-from avefi_schema import model as efi
-from linkml_runtime import dumpers, loaders
+from avefi_schema import model_pydantic_v2 as efi
 
-
-def load(source: str) -> List[efi.MovingImageRecord]:
+def load(source: str) -> list[efi.MovingImageRecord]:
     """Load AVefi records from file or string."""
-    result = loaders.json_loader.load_any(source, efi.MovingImageRecord)
-    if not isinstance(result, list):
-        result = [result]
-    return result
+    with pathlib.Path(source).open() as f:
+        container = efi.MovingImageRecords.model_validate_json(f.read())
+    return container.root
 
 
-def dump(records: List[efi.MovingImageRecord], to_file: str, **kwargs):
+def dump(records: list[efi.MovingImageRecord], to_file: str):
     """Dump AVefi records to JSON file."""
-    if 'inject_type' not in kwargs:
-        kwargs['inject_type'] = False
-    dumpers.json_dumper.dump(records, to_file, **kwargs)
+    with open(to_file, 'w') as f:
+        f.write(dumps(records, indent=2))
 
 
-def dumps(records: List[efi.MovingImageRecord]) -> str:
+def dumps(records: list[efi.MovingImageRecord], indent=None) -> str:
     """Dump AVefi records to string (in JSON format)."""
-    return dumpers.json_dumper.dumps(records, inject_type=False)
+    container = efi.MovingImageRecords(records)
+    return container.model_dump_json(exclude_none=True, indent=indent)

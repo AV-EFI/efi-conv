@@ -3,7 +3,7 @@ import logging
 import pathlib
 import re
 
-from avefi_schema import model as efi
+from avefi_schema import model_pydantic_v2 as efi
 
 
 log = logging.getLogger(__name__)
@@ -113,21 +113,21 @@ def map_to_efi(
             manifestation_title = make_title(
                 row['manifestation_title'], 'TitleProper')
             manifestation = efi.Manifestation(
-                is_manifestation_of=work.has_identifier[0],
+                is_manifestation_of=[work.has_identifier[0]],
                 has_primary_title=manifestation_title)
             work_man_lookup[work_key]['manifestations'][man_fields] = \
                 manifestation
             spoken_lang = row['SpokenLanguage']
             if spoken_lang == 'Ohne Sprache':
                 manifestation.in_language.append(efi.Language(
-                    usage=efi.LanguageUsageEnum('NoDialogue')))
+                    usage=[efi.LanguageUsageEnum('NoDialogue')]))
             elif spoken_lang == 'Verschiedene':
                 pass
             else:
                 manifestation.in_language.extend([
                     efi.Language(
                         code=language_map[row[usage]],
-                        usage=efi.LanguageUsageEnum(usage))
+                        usage=[efi.LanguageUsageEnum(usage)])
                     for usage in ('SpokenLanguage', 'Subtitles', 'Intertitles')
                     if row[usage]])
             colour_type = colour_type_map[row['colour_type']]

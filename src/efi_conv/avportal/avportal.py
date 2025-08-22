@@ -3,7 +3,7 @@ import copy
 import logging
 import re
 
-from avefi_schema import model as efi
+from avefi_schema import model_pydantic_v2 as efi
 from xsdata.formats.dataclass.parsers import XmlParser
 
 from .ntm_4_avefi import ntm_4_av_efi as ntm
@@ -209,13 +209,13 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         if input.language == "qot":
             manifestation.has_sound_type = efi.SoundTypeEnum('Sound')
             manifestation.in_language.append(efi.Language(
-                usage=efi.LanguageUsageEnum('NoDialogue')))
+                usage=[efi.LanguageUsageEnum('NoDialogue')]))
         elif input.language == "qno":
             manifestation.has_sound_type = efi.SoundTypeEnum('Silent')
         else:
             manifestation.in_language.append(efi.Language(
                 code=input.language,
-                usage=efi.LanguageUsageEnum('SpokenLanguage')))
+                usage=[efi.LanguageUsageEnum('SpokenLanguage')]))
     # Todo: format
     if input.size:
         match = re.search(r"^(\d+) *(\w+)$", input.size)

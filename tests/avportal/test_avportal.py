@@ -1,7 +1,8 @@
-from linkml_runtime.utils.formatutils import remove_empty_items
+import json
+
 import pytest
 
-from efi_conv import check
+from efi_conv import avefi, check
 from efi_conv.avportal import avportal
 
 @pytest.fixture(scope='module')
@@ -11,7 +12,7 @@ def parsed_input(input_path):
 
 def test_map_to_efi(parsed_input, expected_output):
     efi_records = avportal.map_to_efi(parsed_input)
-    result_serialized = remove_empty_items(efi_records)
+    result_serialized = json.loads(avefi.dumps(efi_records))
 
     assert result_serialized == expected_output
 

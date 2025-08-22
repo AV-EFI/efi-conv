@@ -7,13 +7,10 @@ import sys
 from typing import List
 
 import appdirs
-from avefi_schema import model as efi
+from avefi_schema import model_pydantic_v2 as efi
 import click
-from jsonasobj2 import as_dict
 from jsonschema.validators import validator_for
 from jsonschema.exceptions import best_match
-from linkml_runtime.loaders import json_loader
-from linkml_runtime.utils.formatutils import remove_empty_items
 import requests
 
 from . import avefi
@@ -112,8 +109,7 @@ def pass_checks(
     all_was_fine = True
 
     for rec in efi_records.copy():
-        error = best_match(schema_validator.iter_errors(
-            remove_empty_items(rec)))
+        error = best_match(schema_validator.iter_errors(rec.model_dump()))
         if error is not None:
             raise error
 
@@ -127,7 +123,7 @@ def pass_checks(
             raise ValueError(f"has_identifier is missing in record: {rec}")
         record_ids = []
         for identifier in rec.has_identifier:
-            record_id = HashableId(**as_dict(identifier))
+            record_id = HashableId(identifier)
             if record_id in id_lookup:
                 raise ValueError(f"Identifier is not unique: {record_id}")
             record_ids.append(record_id)
@@ -149,11 +145,14 @@ def pass_checks(
             elif not isinstance(attr, list):
                 attr = [attr]
             for identifier in attr:
-                ref = HashableId(**as_dict(identifier))
+                ref = HashableId(identifier)
                 dependants_by_ref[ref].append(record_id)
 
     for ref in list(dependants_by_ref.keys()):
-        if ref not in id_lookup and ref.category == 'avefi:LocalResource':
+        if (
+                ref not in id_lookup
+                and ref.identifier.category == 'avefi:LocalResource'
+        ):
             log.error(f"Unresolvable reference: {ref.id}")
             if all_was_fine:
                 all_was_fine = False
@@ -187,7 +186,7 @@ def dangling_record(
         record_id, record_list, id_lookup, dependants_by_ref,
         remove_dangling=False):
     """Return True if record has neither items nor a PID yet."""
-    if record_id.category == 'avefi:LocalResource' \
+    if record_id.identifier.category == 'avefi:LocalResource' \
        and record_id not in dependants_by_ref:
         rec, ids = id_lookup[record_id]
         if rec.category != 'avefi:Item' \
@@ -204,9 +203,9 @@ def dangling_record(
                     ref = getattr(rec, attr_name, None)
                     if ref:
                         if isinstance(ref, list):
-                            refs.extend(HashableId(**as_dict(r)) for r in ref)
+                            refs.extend(HashableId(r) for r in ref)
                         else:
-                            refs.append(HashableId(**as_dict(ref)))
+                            refs.append(HashableId(ref))
                 for id_ in ids:
                     del id_lookup[id_]
                 record_list.remove(rec)
@@ -225,13 +224,12 @@ def dangling_record(
 
 
 class HashableId:
-    def __init__(self, category, id):
-        self.category = category
-        self.id = id
-        self.name = f"{category}.{id}"
+    def __init__(self, identifier: efi.AuthorityResource):
+        self.identifier = identifier
+        self.name = f"{self.identifier.category}.{self.identifier.id}"
 
     def __eq__(self, other):
-        return other.id == self.id and other.category == self.category
+        return other.identifier == self.identifier
 
     def __hash__(self):
         return hash(self.name)
