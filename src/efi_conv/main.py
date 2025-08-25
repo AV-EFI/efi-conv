@@ -33,5 +33,5 @@ logging_config = {
 logging.config.dictConfig(logging_config)
 
 
-from . import check, from_
-from .cli import cli_main
+from .core import check, from_
+from .core.cli import cli_main

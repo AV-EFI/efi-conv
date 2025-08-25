@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 @click.argument('input_files', nargs=-1, type=click.Path(exists=True))
 def efi_from(output_file, input_files, **kwargs):
     """Convert files from some schema into a JSON file with AVefi records."""
-    mod = importlib.import_module(f".{kwargs['format']}", __package__)
+    mod = importlib.import_module(f"..{kwargs['format']}", __package__)
     generated_records = []
     for input_file in input_files:
         try:

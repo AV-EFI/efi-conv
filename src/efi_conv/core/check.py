@@ -15,7 +15,7 @@ import requests
 
 from . import avefi
 from .cli import cli_main
-from .core.settings import settings
+from .settings import settings
 
 
 log = logging.getLogger(__name__)
