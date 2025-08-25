@@ -15,6 +15,7 @@ import requests
 
 from . import avefi
 from .cli import cli_main
+from .core.settings import settings
 
 
 log = logging.getLogger(__name__)
@@ -268,17 +269,19 @@ def exceeds_field_limit(efi_record):
     titles = [efi_record.has_primary_title]
     titles.extend(efi_record.has_alternative_title)
     for title in titles:
-        if len(title.has_name) > 250:
+        if len(title.has_name) > settings.line_limit:
             log.error(
                 f"Record {efi_record.has_identifier[0].id} violates limit of"
-                f" 250 characters on title length: {title.has_name}")
+                f" {settings.line_limit} characters on title length:"
+                f" {title.has_name}")
             return True
     if efi_record.category != 'avefi:WorkVariant':
         for note in efi_record.has_note:
-            if len(note) >= 8192:
+            if len(note) >= settings.text_limit:
                 log.error(
                     f"Record {efi_record.has_identifier[0].id} violates limit"
-                    f" of 8192 characters on has_note entries")
+                    f" of {settings.text_limit} characters on has_note"
+                    f" entries")
                 return True
     return False
 
