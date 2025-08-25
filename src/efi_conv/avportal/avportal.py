@@ -6,6 +6,7 @@ import re
 from avefi_schema import model_pydantic_v2 as efi
 from xsdata.formats.dataclass.parsers import XmlParser
 
+from ..core.settings import settings
 from .ntm_4_avefi import ntm_4_av_efi as ntm
 from .ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
 
@@ -292,6 +293,14 @@ def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
         log.warning(
             f"Pushing article to back of ordering name for title:"
             f" {result.has_ordering_name}")
+    if len(display_title) > settings.line_limit:
+        result.has_name = f"{display_title[:settings.line_limit - 3]}..."
+        if result.has_ordering_name:
+            result.has_ordering_name = result.has_ordering_name[
+                :settings.line_limit]
+        log.warning(
+            f"Shortening title that exceeded line limit of"
+            f" {settings.line_limit} characters: {result.has_name}")
     return result
 
 
