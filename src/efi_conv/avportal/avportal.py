@@ -212,15 +212,25 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             publication_year = str(publication_year)
             verify_iso_date(publication_year)
             publication.has_date = publication_year
+    manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
+    manifestation.has_identifier.append(manifestation_id)
+    manifestation.has_source_key.append(source_key)
+    efi_records.append(manifestation)
+
+    # item
+    item = efi.Item(
+        is_item_of=manifestation_id,
+        has_primary_title=copy.deepcopy(manifestation.has_primary_title))
+
     if input.language:
         if input.language == "qot":
-            manifestation.has_sound_type = efi.SoundTypeEnum('Sound')
-            manifestation.in_language.append(efi.Language(
+            item.has_sound_type = efi.SoundTypeEnum('Sound')
+            item.in_language.append(efi.Language(
                 usage=[efi.LanguageUsageEnum('NoDialogue')]))
         elif input.language == "qno":
-            manifestation.has_sound_type = efi.SoundTypeEnum('Silent')
+            item.has_sound_type = efi.SoundTypeEnum('Silent')
         else:
-            manifestation.in_language.append(efi.Language(
+            item.in_language.append(efi.Language(
                 code=input.language,
                 usage=[efi.LanguageUsageEnum('SpokenLanguage')]))
     # Todo: format
@@ -229,7 +239,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         if match is None:
             raise RuntimeError(f"No idea how to parse size={input.size}")
         value, unit = match.groups()
-        manifestation.has_extent = efi.Extent(
+        item.has_extent = efi.Extent(
             has_value=value, has_unit=size_mapping[unit])
     if input.duration:
         duration_value = re.sub(
@@ -244,17 +254,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             if i or (not duration_str and suffix == 'S'):
                 duration_str += f"{str(i)}{suffix}"
         duration_str = f"PT{duration_str}"
-        manifestation.has_duration = efi.Duration(
+        item.has_duration = efi.Duration(
             has_value=duration_str)
-    manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
-    manifestation.has_identifier.append(manifestation_id)
-    manifestation.has_source_key.append(source_key)
-    efi_records.append(manifestation)
-
-    # item
-    item = efi.Item(
-        is_item_of=manifestation_id,
-        has_primary_title=copy.deepcopy(manifestation.has_primary_title))
 
     # External identifiers
     if input.doi:
