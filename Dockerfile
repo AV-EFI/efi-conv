@@ -2,7 +2,7 @@
 #
 # !!!!    Achtung Script funktioniert NICHT mit Version 3.13     !!!!
 #
-FROM python:3.11-slim
+FROM docker.io/library/python:3-slim
 
 # Autoreninformationen
 LABEL org.opencontainers.image.authors="Elias Oltmanns <elias.oltmanns@gwdg.de>, Andreas Kasper <andreas.kasper@hdf.de>"
