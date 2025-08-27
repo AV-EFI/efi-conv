@@ -32,7 +32,7 @@ wheels = [
 [[package]]
 name = "avefi-schema"
 version = "0.1.0"
-source = { git = "https://github.com/AV-EFI/av-efi-schema.git#7bc6ad42fedb0d2b27edfa3009f1efa487739c81" }
+source = { git = "https://github.com/AV-EFI/av-efi-schema.git#3995b898f908ab56876c1520b65f5185e1e509d8" }
 dependencies = [
     { name = "pydantic" },
 ]
