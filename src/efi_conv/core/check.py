@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 import json
 import logging
 import pathlib
@@ -67,6 +68,11 @@ def get_schema_validator(update_schema=False):
             json.dump(schema, f, indent=2, ensure_ascii=False)
     else:
         try:
+            if (datetime.now() - datetime.fromtimestamp(
+                    SCHEMA_FILE.stat().st_mtime)).days > 30:
+                log.warning(
+                    f"{SCHEMA_FILE} has not been updated in 30 days, please"
+                    f" consider using the --update-schema option")
             with SCHEMA_FILE.open() as f:
                 schema = json.load(f)
         except FileNotFoundError:
