@@ -117,22 +117,6 @@ def map_to_efi(
                 has_primary_title=manifestation_title)
             work_man_lookup[work_key]['manifestations'][man_fields] = \
                 manifestation
-            spoken_lang = row['SpokenLanguage']
-            if spoken_lang == 'Ohne Sprache':
-                manifestation.in_language.append(efi.Language(
-                    usage=[efi.LanguageUsageEnum('NoDialogue')]))
-            elif spoken_lang == 'Verschiedene':
-                pass
-            else:
-                manifestation.in_language.extend([
-                    efi.Language(
-                        code=language_map[row[usage]],
-                        usage=[efi.LanguageUsageEnum(usage)])
-                    for usage in ('SpokenLanguage', 'Subtitles', 'Intertitles')
-                    if row[usage]])
-            colour_type = colour_type_map[row['colour_type']]
-            if colour_type:
-                manifestation.has_colour_type = efi.ColourTypeEnum(colour_type)
             manifestation_id = efi.LocalResource(
                 id=f"{row['manifestation_title']}_{row['production_year']}"
                 f"_{row['SpokenLanguage']}_{row['Subtitles']}"
@@ -152,6 +136,22 @@ def map_to_efi(
         item_format = format_map[row['format']]
         if item_format:
             item.has_format.append(efi.Film(type=item_format))
+        spoken_lang = row['SpokenLanguage']
+        if spoken_lang == 'Ohne Sprache':
+            item.in_language.append(efi.Language(
+                usage=[efi.LanguageUsageEnum('NoDialogue')]))
+        elif spoken_lang == 'Verschiedene':
+            pass
+        else:
+            item.in_language.extend([
+                efi.Language(
+                    code=language_map[row[usage]],
+                    usage=[efi.LanguageUsageEnum(usage)])
+                for usage in ('SpokenLanguage', 'Subtitles', 'Intertitles')
+                if row[usage]])
+        colour_type = colour_type_map[row['colour_type']]
+        if colour_type:
+            item.has_colour_type = efi.ColourTypeEnum(colour_type)
         item_id = efi.LocalResource(id=source_key)
         item.has_identifier.append(item_id)
         efi_records.append(item)
