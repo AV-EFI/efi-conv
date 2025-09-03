@@ -21,7 +21,7 @@ from .settings import settings
 log = logging.getLogger(__name__)
 SCHEMA_SOURCE = 'https://raw.githubusercontent.com/AV-EFI/av-efi-schema/main/project/jsonschema/avefi_schema/model.schema.json'
 CACHE_DIR = pathlib.Path(appdirs.user_cache_dir(
-    appname=__package__))
+    appname=__name__.split('.')[0]))
 SCHEMA_FILE = CACHE_DIR / 'avefi_schema.json'
 
 
