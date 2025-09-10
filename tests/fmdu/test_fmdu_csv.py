@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from efi_conv import avefi, check
+from efi_conv.core import avefi, check
 from efi_conv.fmdu import csv as fmdu_csv
 
 @pytest.fixture(scope='module')

@@ -56,15 +56,6 @@
     "has_source_key": [
       "218204"
     ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "ger"
-      }
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -87,17 +78,26 @@
     "has_source_key": [
       "218204"
     ],
+    "has_access_status": "Archive",
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "35mmFilm"
       }
     ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
+      }
+    ],
     "is_item_of": {
       "category": "avefi:LocalResource",
       "id": "STROMMBERG - DIE LETZTE NACHT_1981_Deutsch___Farbe_35mm"
-    },
-    "has_access_status": "Archive"
+    }
   },
   {
     "category": "avefi:WorkVariant",
@@ -143,7 +143,6 @@
     "has_source_key": [
       "216420"
     ],
-    "has_colour_type": "BlackAndWhite",
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -166,6 +165,7 @@
     "has_source_key": [
       "216420"
     ],
+    "has_colour_type": "BlackAndWhite",
     "has_format": [
       {
         "category": "avefi:Film",
@@ -212,8 +212,8 @@
     ],
     "has_primary_title": {
       "has_name": "DAS RECHT AUFS DASEIN",
-      "type": "PreferredTitle",
-      "has_ordering_name": "RECHT AUFS DASEIN, DAS"
+      "has_ordering_name": "RECHT AUFS DASEIN, DAS",
+      "type": "PreferredTitle"
     },
     "has_source_key": [
       "217965"
@@ -230,26 +230,11 @@
     ],
     "has_primary_title": {
       "has_name": "DAS RECHT AUFS DASEIN",
-      "type": "TitleProper",
-      "has_ordering_name": "RECHT AUFS DASEIN, DAS"
+      "has_ordering_name": "RECHT AUFS DASEIN, DAS",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "217965"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "Subtitles"
-        ],
-        "code": "ger"
-      },
-      {
-        "usage": [
-          "Intertitles"
-        ],
-        "code": "nld"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -268,16 +253,31 @@
     ],
     "has_primary_title": {
       "has_name": "DAS RECHT AUFS DASEIN",
-      "type": "TitleProper",
-      "has_ordering_name": "RECHT AUFS DASEIN, DAS"
+      "has_ordering_name": "RECHT AUFS DASEIN, DAS",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "217965"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "35mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "Subtitles"
+        ]
+      },
+      {
+        "code": "nld",
+        "usage": [
+          "Intertitles"
+        ]
       }
     ],
     "is_item_of": {
@@ -320,8 +320,8 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "PreferredTitle",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "PreferredTitle"
     },
     "has_source_key": [
       "1066485",
@@ -340,21 +340,12 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1066485",
       "1066486"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "eng"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -373,16 +364,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1066485"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "eng",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -400,20 +400,11 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1066489"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "fre"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -432,16 +423,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1066489"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "fre",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -459,16 +459,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1066486"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "eng",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -511,8 +520,8 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "PreferredTitle",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "PreferredTitle"
     },
     "has_source_key": [
       "1022777",
@@ -540,22 +549,13 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "216250",
       "856824",
       "856825"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "ger"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -574,16 +574,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "216250"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "35mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -601,16 +610,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856824"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "35mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -628,16 +646,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856825"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "35mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -655,21 +682,12 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856827",
       "857283"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "ger"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -688,16 +706,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856827"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -715,21 +742,12 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "217167",
       "856829"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "eng"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -748,16 +766,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856829"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "eng",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -775,21 +802,12 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856830",
       "857279"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "fre"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -808,16 +826,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "856830"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "fre",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -835,16 +862,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "857279"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "fre",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -862,16 +898,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "857283"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -889,16 +934,25 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "217167"
     ],
+    "has_colour_type": "Colour",
     "has_format": [
       {
         "category": "avefi:Film",
         "type": "16mmFilm"
+      }
+    ],
+    "in_language": [
+      {
+        "code": "eng",
+        "usage": [
+          "SpokenLanguage"
+        ]
       }
     ],
     "is_item_of": {
@@ -916,20 +970,11 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "219572"
-    ],
-    "has_colour_type": "Colour",
-    "in_language": [
-      {
-        "usage": [
-          "SpokenLanguage"
-        ],
-        "code": "ger"
-      }
     ],
     "is_manifestation_of": [
       {
@@ -948,11 +993,20 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "219572"
+    ],
+    "has_colour_type": "Colour",
+    "in_language": [
+      {
+        "code": "ger",
+        "usage": [
+          "SpokenLanguage"
+        ]
+      }
     ],
     "is_item_of": {
       "category": "avefi:LocalResource",
@@ -969,8 +1023,8 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1022777",
@@ -993,8 +1047,8 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1022777"
@@ -1014,8 +1068,8 @@
     ],
     "has_primary_title": {
       "has_name": "DIE ANDERE SEITE",
-      "type": "TitleProper",
-      "has_ordering_name": "ANDERE SEITE, DIE"
+      "has_ordering_name": "ANDERE SEITE, DIE",
+      "type": "TitleProper"
     },
     "has_source_key": [
       "1035595"

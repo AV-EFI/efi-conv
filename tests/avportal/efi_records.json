@@ -336,24 +336,9 @@
     "has_source_key": [
       "27540"
     ],
-    "has_duration": {
-      "has_value": "PT29M21S"
-    },
-    "has_extent": {
-      "has_unit": "MegaByte",
-      "has_value": "1612"
-    },
     "has_note": [
       "Während einer Initiation trägt ein Mann aus Japanaut Modelliermasse auf einen Schädel auf. Von einem Baum im Wald holt er Baumsaft. Die Modelliermasse mischt er aus Erde, Baumsaft und gebranntem Kalk. Dann befestigt er am Schädel Kauri-Schneckengehäuse, Conus-Schneckenböden und Menschenhaare. Anschließend wird der Schädel mit schwarzer, gelber und roter Farbe bemalt.",
       "During an initiation ceremony a man modells on a skull a mixture of clay. He taps a tree for some tree-sap. The mixture on the skull consists of earth, tree-sap, and burned chalk. Different shells like cowrie shells and conus shells and human hair fixed on the skull. Finally he paints the overmodelled skull with black, yellow and red."
-    ],
-    "has_sound_type": "Sound",
-    "in_language": [
-      {
-        "usage": [
-          "NoDialogue"
-        ]
-      }
     ],
     "is_manifestation_of": [
       {
@@ -381,6 +366,21 @@
       {
         "category": "avefi:DOIResource",
         "id": "10.3203/IWF/E-2905"
+      }
+    ],
+    "has_duration": {
+      "has_value": "PT29M21S"
+    },
+    "has_extent": {
+      "has_unit": "MegaByte",
+      "has_value": "1612"
+    },
+    "has_sound_type": "Sound",
+    "in_language": [
+      {
+        "usage": [
+          "NoDialogue"
+        ]
       }
     ],
     "is_item_of": {

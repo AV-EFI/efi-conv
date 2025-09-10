@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from efi_conv import avefi, check
+from efi_conv.core import avefi, check
 from efi_conv.avportal import avportal
 
 @pytest.fixture(scope='module')
