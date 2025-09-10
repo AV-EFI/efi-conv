@@ -198,7 +198,7 @@ def dangling_record(
         rec, ids = id_lookup[record_id]
         if rec.category != 'avefi:Item' \
            and all(
-               id_.category == 'avefi:LocalResource'
+               id_.identifier.category == 'avefi:LocalResource'
                and id_ not in dependants_by_ref
                for id_ in ids):
             log.error(
@@ -231,7 +231,7 @@ def dangling_record(
 
 
 class HashableId:
-    def __init__(self, identifier: efi.AuthorityResource):
+    def __init__(self, identifier: efi.MovingImageResource):
         self.identifier = identifier
         self.name = f"{self.identifier.category}.{self.identifier.id}"
 
