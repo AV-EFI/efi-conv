@@ -4,10 +4,15 @@ from typing import Annotated
 from avefi_schema import model_pydantic_v2 as efi
 from pydantic import ValidationError
 
-def load(source: str) -> list[efi.MovingImageRecord]:
-    """Load AVefi records from file or string."""
+def load(source: pathlib.Path | str) -> list[efi.MovingImageRecord]:
+    """Load AVefi records from file."""
     with pathlib.Path(source).open() as f:
         input = f.read()
+    return loads(input)
+
+
+def loads(input: str) -> list[efi.MovingImageRecord]:
+    """Load AVefi records from JSON string."""
     try:
         container = efi.MovingImageRecords.model_validate_json(input)
         return container.root
