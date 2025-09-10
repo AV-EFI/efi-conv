@@ -2,12 +2,21 @@ import pathlib
 from typing import Annotated
 
 from avefi_schema import model_pydantic_v2 as efi
+from pydantic import ValidationError
 
 def load(source: str) -> list[efi.MovingImageRecord]:
     """Load AVefi records from file or string."""
     with pathlib.Path(source).open() as f:
-        container = efi.MovingImageRecords.model_validate_json(f.read())
-    return container.root
+        input = f.read()
+    try:
+        container = efi.MovingImageRecords.model_validate_json(input)
+        return container.root
+    except ValidationError as e:
+        err0 = e.errors()[0]
+        if err0.get('loc') == () and err0.get('type') == 'list_type':
+            record = efi.MovingImageRecordTypeAdapter.validate_json(input)
+            return [record]
+        raise
 
 
 def dump(records: list[efi.MovingImageRecord], to_file: str):
