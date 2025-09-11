@@ -160,7 +160,7 @@ def pass_checks(
                 ref not in id_lookup
                 and ref.identifier.category == 'avefi:LocalResource'
         ):
-            log.error(f"Unresolvable reference: {ref.id}")
+            log.error(f"Unresolvable reference: {ref.identifier.id}")
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
@@ -184,7 +184,8 @@ def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
         record_list.remove(rec)
         for record_id in ids:
             del id_lookup[record_id]
-            log.error(f"Reference to removed record: {record_id.id}")
+            log.error(
+                f"Reference to removed record: {record_id.identifier.id}")
             purge_dependant_records(
                 record_id, record_list, id_lookup, dependants_by_ref)
 
@@ -202,7 +203,8 @@ def dangling_record(
                and id_ not in dependants_by_ref
                for id_ in ids):
             log.error(
-                f"No items associated with {rec.category} {record_id.id}")
+                f"No items associated with {rec.category}"
+                f" {record_id.identifier.id}")
             if remove_dangling:
                 refs = []
                 for attr_name in (
