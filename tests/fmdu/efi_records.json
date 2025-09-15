@@ -1,6 +1,15 @@
 [
   {
     "category": "avefi:WorkVariant",
+    "described_by": [
+      {
+        "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+        "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+        "has_source_key": [
+          "218204"
+        ]
+      }
+    ],
     "has_event": [
       {
         "category": "avefi:ProductionEvent",
@@ -36,13 +45,17 @@
       "has_name": "STROMMBERG - DIE LETZTE NACHT",
       "type": "PreferredTitle"
     },
-    "has_source_key": [
-      "218204"
-    ],
     "type": "Monographic"
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "218204"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -53,9 +66,6 @@
       "has_name": "STROMMBERG - DIE LETZTE NACHT",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "218204"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -65,6 +75,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "218204"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -75,9 +92,6 @@
       "has_name": "STROMMBERG - DIE LETZTE NACHT",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "218204"
-    ],
     "has_access_status": "Archive",
     "has_colour_type": "Colour",
     "has_format": [
@@ -101,6 +115,15 @@
   },
   {
     "category": "avefi:WorkVariant",
+    "described_by": [
+      {
+        "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+        "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+        "has_source_key": [
+          "216420"
+        ]
+      }
+    ],
     "has_event": [
       {
         "category": "avefi:ProductionEvent",
@@ -123,13 +146,17 @@
       "has_name": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?",
       "type": "PreferredTitle"
     },
-    "has_source_key": [
-      "216420"
-    ],
     "type": "Monographic"
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "216420"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -140,9 +167,6 @@
       "has_name": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "216420"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -152,6 +176,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "216420"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -162,9 +193,6 @@
       "has_name": "STADTARCHIV DÜSSELDORF - BOBBEL SPORTLICH IN DÜSSELDORF?",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "216420"
-    ],
     "has_colour_type": "BlackAndWhite",
     "has_format": [
       {
@@ -179,6 +207,15 @@
   },
   {
     "category": "avefi:WorkVariant",
+    "described_by": [
+      {
+        "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+        "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+        "has_source_key": [
+          "217965"
+        ]
+      }
+    ],
     "has_event": [
       {
         "category": "avefi:ProductionEvent",
@@ -215,13 +252,17 @@
       "has_ordering_name": "RECHT AUFS DASEIN, DAS",
       "type": "PreferredTitle"
     },
-    "has_source_key": [
-      "217965"
-    ],
     "type": "Monographic"
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "217965"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -233,9 +274,6 @@
       "has_ordering_name": "RECHT AUFS DASEIN, DAS",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "217965"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -245,6 +283,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "217965"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -256,9 +301,6 @@
       "has_ordering_name": "RECHT AUFS DASEIN, DAS",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "217965"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -287,6 +329,17 @@
   },
   {
     "category": "avefi:WorkVariant",
+    "described_by": [
+      {
+        "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+        "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+        "has_source_key": [
+          "1066485",
+          "1066486",
+          "1066489"
+        ]
+      }
+    ],
     "has_event": [
       {
         "category": "avefi:ProductionEvent",
@@ -323,15 +376,18 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "PreferredTitle"
     },
-    "has_source_key": [
-      "1066485",
-      "1066486",
-      "1066489"
-    ],
     "type": "Monographic"
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1066485",
+        "1066486"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -343,10 +399,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1066485",
-      "1066486"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -356,6 +408,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1066485"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -367,9 +426,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1066485"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -392,6 +448,13 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1066489"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -403,9 +466,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1066489"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -415,6 +475,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1066489"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -426,9 +493,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1066489"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -451,6 +515,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1066486"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -462,9 +533,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1066486"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -487,6 +555,26 @@
   },
   {
     "category": "avefi:WorkVariant",
+    "described_by": [
+      {
+        "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+        "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+        "has_source_key": [
+          "1022777",
+          "1035595",
+          "216250",
+          "217167",
+          "219572",
+          "856824",
+          "856825",
+          "856827",
+          "856829",
+          "856830",
+          "857279",
+          "857283"
+        ]
+      }
+    ],
     "has_event": [
       {
         "category": "avefi:ProductionEvent",
@@ -523,24 +611,19 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "PreferredTitle"
     },
-    "has_source_key": [
-      "1022777",
-      "1035595",
-      "216250",
-      "217167",
-      "219572",
-      "856824",
-      "856825",
-      "856827",
-      "856829",
-      "856830",
-      "857279",
-      "857283"
-    ],
     "type": "Monographic"
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "216250",
+        "856824",
+        "856825"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -552,11 +635,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "216250",
-      "856824",
-      "856825"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -566,6 +644,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "216250"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -577,9 +662,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "216250"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -602,6 +684,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856824"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -613,9 +702,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856824"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -638,6 +724,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856825"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -649,9 +742,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856825"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -674,6 +764,14 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856827",
+        "857283"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -685,10 +783,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856827",
-      "857283"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -698,6 +792,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856827"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -709,9 +810,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856827"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -734,6 +832,14 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "217167",
+        "856829"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -745,10 +851,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "217167",
-      "856829"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -758,6 +860,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856829"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -769,9 +878,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856829"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -794,6 +900,14 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856830",
+        "857279"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -805,10 +919,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856830",
-      "857279"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -818,6 +928,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "856830"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -829,9 +946,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "856830"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -854,6 +968,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "857279"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -865,9 +986,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "857279"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -890,6 +1008,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "857283"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -901,9 +1026,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "857283"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -926,6 +1048,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "217167"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -937,9 +1066,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "217167"
-    ],
     "has_colour_type": "Colour",
     "has_format": [
       {
@@ -962,6 +1088,13 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "219572"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -973,9 +1106,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "219572"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -985,6 +1115,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "219572"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -996,9 +1133,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "219572"
-    ],
     "has_colour_type": "Colour",
     "in_language": [
       {
@@ -1015,6 +1149,14 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1022777",
+        "1035595"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -1026,10 +1168,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1022777",
-      "1035595"
-    ],
     "is_manifestation_of": [
       {
         "category": "avefi:LocalResource",
@@ -1039,6 +1177,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1022777"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -1050,9 +1195,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1022777"
-    ],
     "is_item_of": {
       "category": "avefi:LocalResource",
       "id": "ANDERE SEITE, DIE_1976_____"
@@ -1060,6 +1202,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+      "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+      "has_source_key": [
+        "1035595"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -1071,9 +1220,6 @@
       "has_ordering_name": "ANDERE SEITE, DIE",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "1035595"
-    ],
     "is_item_of": {
       "category": "avefi:LocalResource",
       "id": "ANDERE SEITE, DIE_1976_____"

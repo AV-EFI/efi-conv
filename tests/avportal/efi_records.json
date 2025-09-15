@@ -1,6 +1,15 @@
 [
   {
     "category": "avefi:WorkVariant",
+    "described_by": [
+      {
+        "has_issuer_id": "https://w3id.org/isil/DE-89",
+        "has_issuer_name": "Technische Informationsbibliothek (TIB)",
+        "has_source_key": [
+          "27540"
+        ]
+      }
+    ],
     "has_alternative_title": [
       {
         "has_name": "Iatmul (New Guinea, Middle Sepik) - Overmodelling and Painting a Skull",
@@ -69,9 +78,6 @@
       "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
       "type": "PreferredTitle"
     },
-    "has_source_key": [
-      "27540"
-    ],
     "same_as": [
       {
         "category": "avefi:EIDRResource",
@@ -303,6 +309,13 @@
   },
   {
     "category": "avefi:Manifestation",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-89",
+      "has_issuer_name": "Technische Informationsbibliothek (TIB)",
+      "has_source_key": [
+        "27540"
+      ]
+    },
     "has_event": [
       {
         "category": "avefi:PublicationEvent",
@@ -333,9 +346,6 @@
       "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "27540"
-    ],
     "has_note": [
       "Während einer Initiation trägt ein Mann aus Japanaut Modelliermasse auf einen Schädel auf. Von einem Baum im Wald holt er Baumsaft. Die Modelliermasse mischt er aus Erde, Baumsaft und gebranntem Kalk. Dann befestigt er am Schädel Kauri-Schneckengehäuse, Conus-Schneckenböden und Menschenhaare. Anschließend wird der Schädel mit schwarzer, gelber und roter Farbe bemalt.",
       "During an initiation ceremony a man modells on a skull a mixture of clay. He taps a tree for some tree-sap. The mixture on the skull consists of earth, tree-sap, and burned chalk. Different shells like cowrie shells and conus shells and human hair fixed on the skull. Finally he paints the overmodelled skull with black, yellow and red."
@@ -349,6 +359,13 @@
   },
   {
     "category": "avefi:Item",
+    "described_by": {
+      "has_issuer_id": "https://w3id.org/isil/DE-89",
+      "has_issuer_name": "Technische Informationsbibliothek (TIB)",
+      "has_source_key": [
+        "27540"
+      ]
+    },
     "has_identifier": [
       {
         "category": "avefi:LocalResource",
@@ -359,9 +376,6 @@
       "has_name": "Iatmul (Neuguinea, Mittlerer Sepik) - Übermodellieren und Bemalen eines Schädels",
       "type": "TitleProper"
     },
-    "has_source_key": [
-      "27540"
-    ],
     "same_as": [
       {
         "category": "avefi:DOIResource",

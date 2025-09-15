@@ -7,6 +7,7 @@ from avefi_schema import model_pydantic_v2 as efi
 from xsdata.formats.dataclass.parsers import XmlParser
 
 from ..core.settings import settings
+from ..core.utils import described_by_issuer
 from .ntm_4_avefi import ntm_4_av_efi as ntm
 from .ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
 
@@ -14,6 +15,10 @@ from .ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
 ROOT_CLASS = ntm_main.Resource
 log = logging.getLogger(__name__)
 parser = XmlParser()
+ISSUER_INFO = {
+    "has_issuer_id": "https://w3id.org/isil/DE-89",
+    "has_issuer_name": "Technische Informationsbibliothek (TIB)"
+}
 
 
 def efi_import(input_file) -> list[efi.MovingImageRecord]:
@@ -159,7 +164,9 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             work.same_as.append(efi.EIDRResource(id=id.value))
     work_id = efi.LocalResource(id=f"{source_key}_work")
     work.has_identifier.append(work_id)
-    work.has_source_key.append(source_key)
+    described_by = described_by_issuer(work, ISSUER_INFO)
+    if source_key not in described_by.has_source_key:
+        described_by.has_source_key.append(source_key)
     efi_records.append(work)
 
     # manifestation
@@ -214,7 +221,9 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             publication.has_date = publication_year
     manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
     manifestation.has_identifier.append(manifestation_id)
-    manifestation.has_source_key.append(source_key)
+    described_by = described_by_issuer(manifestation, ISSUER_INFO)
+    if source_key not in described_by.has_source_key:
+        described_by.has_source_key.append(source_key)
     efi_records.append(manifestation)
 
     # item
@@ -269,7 +278,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
 
     item_id = efi.LocalResource(id=f"{source_key}_item")
     item.has_identifier.append(item_id)
-    item.has_source_key.append(source_key)
+    described_by = described_by_issuer(item, ISSUER_INFO)
+    described_by.has_source_key.append(source_key)
     efi_records.append(item)
     return efi_records
 

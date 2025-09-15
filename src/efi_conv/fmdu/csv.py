@@ -5,6 +5,8 @@ import re
 
 from avefi_schema import model_pydantic_v2 as efi
 
+from ..core.utils import described_by_issuer
+
 
 log = logging.getLogger(__name__)
 FILE_ENCODING = 'iso8859-1'
@@ -14,6 +16,10 @@ FIELD_NAMES = (
     'production_year', 'country', 'provider', 'manifestation_title',
     'SpokenLanguage', 'Subtitles', 'Intertitles',
     'colour_type', 'item_title', 'access_status', 'format')
+ISSUER_INFO = {
+    "has_issuer_id": "https://w3id.org/isil/DE-MUS-432511",
+    "has_issuer_name": "Filmmuseum der Landeshauptstadt Düsseldorf",
+}
 
 
 def efi_import(input_file) -> list[efi.MovingImageRecord]:
@@ -155,11 +161,12 @@ def map_to_efi(
         item_id = efi.LocalResource(id=source_key)
         item.has_identifier.append(item_id)
         efi_records.append(item)
-        item.has_source_key.append(source_key)
-        manifestation.has_source_key.append(source_key)
-        manifestation.has_source_key.sort()
-        work.has_source_key.append(source_key)
-        work.has_source_key.sort()
+        for record in (item, manifestation, work):
+            described_by = described_by_issuer(record, ISSUER_INFO)
+            if described_by.has_source_key is None:
+                described_by.has_source_key = []
+            if source_key not in described_by.has_source_key:
+                described_by.has_source_key.append(source_key)
     return efi_records
 
 
