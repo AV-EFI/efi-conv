@@ -15,7 +15,7 @@ log = logging.getLogger(__name__)
 
 @cli_main.command('from')
 @click.option(
-    '-f', '--format', type=click.Choice(['avportal', 'fmdu']),
+    '-f', '--format', type=click.Choice(['avportal', 'fmdu']), required=True,
     help='Source data format.')
 @click.argument('output_file', type=click.Path(dir_okay=False, writable=True))
 @click.argument('input_files', nargs=-1, type=click.Path(exists=True))
