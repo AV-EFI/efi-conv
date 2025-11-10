@@ -338,6 +338,8 @@ def process_titles(
     input_primary_title = input_subtitle = None
     alternative_titles = []
     for title in titles:
+        if not(title.value.strip()):
+            continue
         if title.title_type is None:
             if input_primary_title:
                 raise RuntimeError(f"Cannot determine primary title: {titles}")
@@ -365,7 +367,7 @@ def process_titles(
 
 
 def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
-    display_title = input_title.value.strip()
+    display_title = re.sub(r'\s+', ' ', input_title.value.strip())
     result = efi.Title(type=title_type, has_name=display_title)
     split_title = display_title.split(maxsplit=1)
     if (len(split_title) > 1
