@@ -68,9 +68,9 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     event = efi.ProductionEvent(has_date=production_year)
     work.has_event.append(event)
     producers = []
-    for c in input.creators.creator:
+    for c in input.creators.creator if input.creators else []:
         if not c.creator_name:
-            raise ValueError(f"Missing creator_name for {c}")
+            continue
         agent = efi.Agent(
             type=efi.AgentTypeEnum('Person'), has_name=c.creator_name)
         if c.name_identifier:
@@ -82,9 +82,9 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                 type=efi.ProducingActivityTypeEnum('Producer'),
                 has_agent=producers))
     production_companies = []
-    for p in input.producers.producer:
+    for p in input.producers.producer if input.producers else []:
         if not p.producer_name:
-            raise ValueError(f"Missing producer_name for {p}")
+            continue
         agent = efi.Agent(
             type=efi.AgentTypeEnum('CorporateBody'), has_name=p.producer_name)
         if p.name_identifier:
@@ -98,6 +98,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     contrib_dict = defaultdict(list)
     if input.contributors:
         for contributor in input.contributors.contributor:
+            if not contributor.contributor_name:
+                continue
             match = re.search(
                 r'^([^(]*) \(([^)]*)\)$', contributor.contributor_name)
             if match:
