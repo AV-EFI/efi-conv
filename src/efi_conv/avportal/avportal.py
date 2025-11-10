@@ -324,8 +324,10 @@ def is_iso_date(date_str):
 def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
     display_title = input_title.value.strip()
     result = efi.Title(type=title_type, has_name=display_title)
-    first, rest = display_title.split(maxsplit=1)
-    if first.lower() in articles[input_title.language]:
+    split_title = display_title.split(maxsplit=1)
+    if (len(split_title) > 1
+        and split_title[0].lower() in articles[input_title.language]):
+        first, rest = split_title
         result.has_ordering_name = f"{rest}, {first}"
         log.warning(
             f"Pushing article to back of ordering name for title:"
