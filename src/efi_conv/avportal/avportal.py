@@ -37,19 +37,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
 
     # work
     titles = input.titles.title
-    primary_title = None
-    alternative_titles = []
-    for title in titles:
-        if title.title_type is None:
-            if primary_title:
-                raise RuntimeError(f"Cannot determine primary title: {titles}")
-            primary_title = make_title(
-                title, efi.TitleTypeEnum('PreferredTitle'))
-        elif title.title_type == ntm.TitleType.ALTERNATIVE_TITLE:
-            alternative_titles.append(
-                make_title(title, efi.TitleTypeEnum('AlternativeTitle')))
-        else:
-            raise RuntimeError(f"No mapping specified for title type: {title}")
+    primary_title, alternative_titles = process_titles(titles)
     work = efi.WorkVariant(
         type=efi.WorkVariantTypeEnum('Monographic'),
         has_primary_title=primary_title,
@@ -326,6 +314,54 @@ def is_iso_date(date_str):
         '(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})'
         '(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$',
         date_str))
+
+
+def process_titles(
+        titles: list[ntm.TitleType]) -> tuple[efi.Title | list[efi.Title]]:
+    """Return primary and a list of alternative titles.
+
+    Identify preferred title, append the subtitle if present, and
+    return it as primary title. Also, return a (possibly empty) list
+    of alternative titles.
+
+    Parameters
+    ----------
+    titles : list(ntm.TitleType)
+        List of titles according to NTM schema.
+
+    Returns
+    -------
+    tuple(efi.Title, list(efi.Title))
+        Primary and list of alternative titles.
+
+    """
+    input_primary_title = input_subtitle = None
+    alternative_titles = []
+    for title in titles:
+        if title.title_type is None:
+            if input_primary_title:
+                raise RuntimeError(f"Cannot determine primary title: {titles}")
+            input_primary_title = title
+        elif title.title_type == ntm.TitleType.SUBTITLE:
+            if input_subtitle:
+                raise RuntimeError(
+                    f"Cannot associate subtitle to primary title: {titles}")
+            input_subtitle = title
+        elif title.title_type == ntm.TitleType.ALTERNATIVE_TITLE:
+            alternative_titles.append(
+                make_title(title, efi.TitleTypeEnum('AlternativeTitle')))
+        else:
+            raise RuntimeError(f"No mapping specified for title type: {title}")
+    if input_subtitle and input_subtitle.value.strip() not in [
+            t.has_name for t in alternative_titles]:
+        if input_subtitle.language != input_primary_title.language:
+            raise RuntimeError(
+                f"Languages do not match for primary and subtitle: {titles}")
+        input_primary_title.value = ' - '.join([
+            input_primary_title.value, input_subtitle.value])
+    primary_title = make_title(
+        input_primary_title, efi.TitleTypeEnum('PreferredTitle'))
+    return primary_title, alternative_titles
 
 
 def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
