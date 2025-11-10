@@ -53,7 +53,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         type=efi.WorkVariantTypeEnum('Monographic'),
         has_primary_title=primary_title,
         has_alternative_title=alternative_titles)
-    production_year = input.iwf_production_year or input.production_year
+    production_year = get_iso_date(
+        str(input.production_year), str(input.iwf_production_year))
     if production_year:
         if input.production_year and input.iwf_production_year \
            and input.production_year not in input.iwf_production_year:
@@ -61,12 +62,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                 f"Contradicting values:"
                 f" productionYear={input.production_year},"
                 f" iwfProductionYear={input.iwf_production_year}")
-        production_year = str(production_year)
-        if '-' in production_year:
-            production_year = production_year.replace('-', '/')
-        verify_iso_date(production_year)
     else:
-        raise RuntimeError(f"No production year")
+        log.warning(f"No production year")
     event = efi.ProductionEvent(has_date=production_year)
     work.has_event.append(event)
     producers = []
@@ -188,7 +185,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                     for text in description.content
                     if isinstance(text, str)
                 ]))
-    publication_year = input.iwf_publication_year or input.publication_year
+    publication_year = get_iso_date(
+        str(input.publication_year), str(input.iwf_publication_year))
     if publication_year or input.publishers.publisher \
        or contrib_dict.get('Unknown'):
         publication = efi.PublicationEvent(
@@ -216,8 +214,6 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                             type=efi.AgentTypeEnum('Person'), has_name=name)
                         for name in contrib_dict['Unknown']]))
         if publication_year:
-            publication_year = str(publication_year)
-            verify_iso_date(publication_year)
             publication.has_date = publication_year
     manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
     manifestation.has_identifier.append(manifestation_id)
@@ -284,15 +280,45 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     return efi_records
 
 
-def verify_iso_date(date_str):
-    if not re.search(
-            r'^-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])'
-            '(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})'
-            '(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$',
-            date_str):
-        raise ValueError(
-            f"Expected date or interval according to ISO 8601,"
-            f" got: {date_str}")
+def get_iso_date(year: str, iwf_year: str) -> str | None:
+    """Extract a year or period in keeping with ISO 8601.
+
+    iwf_production_year and iwf_publication_year in the NTM schema
+    seem to provide more extensive information than their counterparts
+    without the iwf_ prefix. Try to make sense of that information if
+    present and resort to the simpler fields when that does not work
+    out.
+
+    Parameters
+    ----------
+    year : str
+        Input from production_year or publication_year.
+    iwf_year : str
+        Input from iwf_production_year or iwf_publication.
+
+    """
+    for iso_date in (iwf_year, year):
+        if not iso_date:
+            continue
+        if '-' in iso_date:
+            iso_date = iso_date.replace('-', '/')
+        if is_iso_date(iso_date):
+            break
+    else:
+        if year or iwf_year:
+            log.warning(
+                f"Expected date or interval according to ISO 8601,"
+                f" got: {year or iwf_year}")
+        return None
+    return iso_date
+
+
+def is_iso_date(date_str):
+    return bool(re.search(
+        r'^-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])'
+        '(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})'
+        '(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$',
+        date_str))
 
 
 def make_title(input_title, title_type: efi.TitleTypeEnum) -> efi.Title:
