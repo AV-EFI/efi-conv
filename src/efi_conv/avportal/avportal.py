@@ -19,6 +19,7 @@ ISSUER_INFO = {
     "has_issuer_id": "https://w3id.org/isil/DE-89",
     "has_issuer_name": "Technische Informationsbibliothek (TIB)"
 }
+CORPORATE_BODY_FLAG_WORDS = ['gesellschaft', 'gmbh', 'institut', 'trickstudio']
 
 
 def efi_import(input_file) -> list[efi.MovingImageRecord]:
@@ -100,34 +101,38 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             match = re.search(
                 r'^([^(]*) \(([^)]*)\)$', contributor.contributor_name)
             if match:
-                name, role = match.groups()
+                name, roles = match.groups()
             else:
                 name = contributor.contributor_name
-                role = 'Unknown'
-            name_components = name.split(',')
-            if len(name_components) == 1:
-                name_components = name.rsplit(maxsplit=1)
-                orig_name = name
-                name = ', '.join(reversed(name_components))
-                log.warning(
-                    f"Please check if correct: Replaced name '{orig_name}'"
-                    f" by '{name}'")
-            elif len(name_components) != 2:
-                raise ValueError(
-                    f"Name probably not in correct format (family_name,"
-                    f" given_name): {name}")
-            double_role = re.search(r'^(.*) und (.*)$', role)
-            if double_role:
-                roles = double_role.groups()
-            else:
-                roles = (role,)
-            for role in roles:
+                roles = 'Unknown'
+            if not any(
+                    expr in name.lower()
+                    for expr in CORPORATE_BODY_FLAG_WORDS):
+                name_components = name.split(',')
+                if len(name_components) == 1:
+                    name_components = name.rsplit(maxsplit=1)
+                    orig_name = name
+                    name = ', '.join(reversed(name_components))
+                    log.warning(
+                        f"Please check if correct: Replaced name '{orig_name}'"
+                        f" by '{name}'")
+                elif len(name_components) != 2:
+                    raise ValueError(
+                        f"Name probably not in correct format (family_name,"
+                        f" given_name): {name}")
+            for match in re.finditer(
+                    r'([^,/]+)(, +|/|$)',
+                    re.sub(r' +und ', ', ', roles),
+            ):
+                role = match.groups()[0]
                 contrib_dict[role].append(name)
         for role, names in contrib_dict.items():
             if role == 'Unknown':
                 # Handled on manifestation level below
                 continue
             activity_type = role_mapping[role]
+            if activity_type is None:
+                continue
             # drop TypeEnum suffix to get the required class name
             activity_class_name = activity_type.__class__.__name__[:-8]
             activity = getattr(efi, activity_class_name)(
