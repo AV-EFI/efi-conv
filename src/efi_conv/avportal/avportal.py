@@ -151,7 +151,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     identifiers = input.alternate_identifiers
     if identifiers:
         for id in identifiers.alternate_identifier:
-            if id.alternate_identifier_type != "EIDR":
+            if not(id.value.startswith('10.5240/')):
                 raise RuntimeError(f"Cannot handle identifier_type: {id}")
             work.same_as.append(efi.EIDRResource(id=id.value))
     work_id = efi.LocalResource(id=f"{source_key}_work")
