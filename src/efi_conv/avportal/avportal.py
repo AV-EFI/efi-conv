@@ -235,10 +235,11 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                 usage=[efi.LanguageUsageEnum('SpokenLanguage')]))
     # Todo: format
     if input.size:
-        match = re.search(r"^(\d+) *(\w+)$", input.size)
+        match = re.search(r"^([\d,]+) *(\w+)$", input.size)
         if match is None:
             raise RuntimeError(f"No idea how to parse size={input.size}")
         value, unit = match.groups()
+        value = value.replace(',', '.')
         item.has_extent = efi.Extent(
             has_value=value, has_unit=size_mapping[unit])
     if input.duration:
