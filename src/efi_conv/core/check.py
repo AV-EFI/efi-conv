@@ -270,6 +270,23 @@ def has_invalid_value(efi_record):
             return True
         if any_empty_has_name(efi_record.has_subject):
             return True
+        if efi_record.has_primary_title.type not in (
+                'PreferredTitle', 'SuppliedDevisedTitle'):
+            log.error(
+                f"Primary title type for work records is supposed to be"
+                f" one of ('PreferredTitle', 'SuppliedDevisedTitle'), found:"
+                f" {efi_record.has_primary_title.type} in record"
+                f" {efi_record.has_identifier[0].id}")
+            return True
+    else:
+        if efi_record.has_primary_title.type not in (
+                'TitleProper', 'SuppliedDevisedTitle'):
+            log.error(
+                f"Primary title type for non-work records is supposed to be"
+                f" one of ('TitleProper', 'SuppliedDevisedTitle'), found:"
+                f" {efi_record.has_primary_title.type} in record"
+                f" {efi_record.has_identifier[0].id}")
+            return True
     return False
 
 
