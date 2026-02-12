@@ -88,34 +88,36 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         for contributor in input.contributors.contributor:
             if not contributor.contributor_name:
                 continue
-            match = re.search(
-                r'^([^(]*) \(([^)]*)\)$', contributor.contributor_name)
-            if match:
-                name, roles = match.groups()
-            else:
-                name = contributor.contributor_name
-                roles = 'Unknown'
-            if not any(
-                    expr in name.lower()
-                    for expr in CORPORATE_BODY_FLAG_WORDS):
-                name_components = name.split(',')
-                if len(name_components) == 1:
-                    name_components = name.rsplit(maxsplit=1)
-                    orig_name = name
-                    name = ', '.join(reversed(name_components))
-                    log.warning(
-                        f"Please check if correct: Replaced name '{orig_name}'"
-                        f" by '{name}'")
-                elif len(name_components) != 2:
-                    raise ValueError(
-                        f"Name probably not in correct format (family_name,"
-                        f" given_name): {name}")
-            for match in re.finditer(
-                    r'([^,/]+)(, +|/|$)',
-                    re.sub(r' +und ', ', ', roles),
-            ):
-                role = match.groups()[0]
-                contrib_dict[role].append(name)
+            for unit in contributor.contributor_name.split(';'):
+                match = re.search(
+                        r'^([^(]*) \(([^()]*).', unit)
+                if match:
+                    name, roles = match.groups()
+                else:
+                    name = unit
+                    roles = 'Unknown'
+                name = name.strip()
+                if not any(
+                        expr in name.lower()
+                        for expr in CORPORATE_BODY_FLAG_WORDS):
+                    name_components = name.split(',')
+                    if len(name_components) == 1:
+                        name_components = name.rsplit(maxsplit=1)
+                        orig_name = name
+                        name = ', '.join(reversed(name_components))
+                        log.warning(
+                            f"Please check if correct: Replaced name"
+                            f" '{orig_name}' by '{name}'")
+                    elif len(name_components) != 2:
+                        raise ValueError(
+                            f"Name probably not in correct format"
+                            f" (family_name, given_name): {name}")
+                for match in re.finditer(
+                        r'([^,/]+)(, +|/|$)',
+                        re.sub(r' +und ', ', ', roles),
+                ):
+                    role = match.groups()[0].strip()
+                    contrib_dict[role].append(name)
         for role, names in contrib_dict.items():
             if role == 'Unknown':
                 # Handled on manifestation level below
