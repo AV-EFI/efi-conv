@@ -34,3 +34,8 @@ module-root = "src"
 dev = [
     "pytest>=8.4.1",
 ]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
