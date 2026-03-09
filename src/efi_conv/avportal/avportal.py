@@ -11,7 +11,6 @@ from ..core.utils import described_by_issuer
 from .generated.ntm_4_avefi import ntm_4_av_efi as ntm
 from .generated.ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
 
-
 ROOT_CLASS = ntm_main.Resource
 log = logging.getLogger(__name__)
 parser = XmlParser()
@@ -52,7 +51,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                 f" productionYear={input.production_year},"
                 f" iwfProductionYear={input.iwf_production_year}")
     else:
-        log.warning(f"No production year")
+        log.warning("No production year")
     event = efi.ProductionEvent(has_date=production_year)
     work.has_event.append(event)
     producers = []

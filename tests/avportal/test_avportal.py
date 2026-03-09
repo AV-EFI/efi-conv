@@ -1,9 +1,8 @@
 import json
 
-import pytest
-
-from efi_conv.core import avefi, check, from_
 from efi_conv.avportal import avportal
+from efi_conv.core import avefi, check, from_
+
 
 def test_map_to_efi(input_path, expected_output):
     efi_records = from_.import_file(avportal, input_path('clip27540.xml'))

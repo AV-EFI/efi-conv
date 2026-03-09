@@ -5,19 +5,17 @@ import logging
 import pathlib
 import re
 import sys
-from typing import List
 
 import appdirs
 from avefi_schema import model_pydantic_v2 as efi
 import click
-from jsonschema.validators import validator_for
 from jsonschema.exceptions import best_match
+from jsonschema.validators import validator_for
 import requests
 
 from . import avefi
 from .cli import cli_main
 from .settings import settings
-
 
 log = logging.getLogger(__name__)
 SCHEMA_SOURCE = 'https://raw.githubusercontent.com/AV-EFI/av-efi-schema/main/project/jsonschema/avefi_schema/model.schema.json'
@@ -85,7 +83,7 @@ def get_schema_validator(update_schema=False):
 
 
 def pass_checks(
-        efi_records: List[efi.MovingImageRecord], schema_validator,
+        efi_records: list[efi.MovingImageRecord], schema_validator,
         remove_invalid=False) -> bool:
     """Check records against schema and additional rules.
 

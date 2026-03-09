@@ -1,7 +1,9 @@
+from collections.abc import Callable
 import json
 from pathlib import Path
+
 import pytest
-from typing import Callable
+
 
 @pytest.fixture(scope="module")
 def input_path(request) -> Callable[[str], Path]:

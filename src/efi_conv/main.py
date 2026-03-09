@@ -2,7 +2,6 @@ import logging
 import logging.config
 import os
 
-
 # Configure logging before importing local modules
 log = logging.getLogger(__name__)
 loglevel = os.environ.get(
@@ -33,5 +32,3 @@ logging_config = {
 logging.config.dictConfig(logging_config)
 
 
-from .core import check, from_
-from .core.cli import cli_main

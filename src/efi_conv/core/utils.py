@@ -1,5 +1,6 @@
 from avefi_schema import model_pydantic_v2 as efi
 
+
 def described_by_issuer(
         record: efi.MovingImageRecord, issuer: dict
 ) -> efi.DescriptionResource:

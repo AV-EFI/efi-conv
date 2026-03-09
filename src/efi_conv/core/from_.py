@@ -9,7 +9,6 @@ from . import avefi
 from .cli import cli_main
 from .utils import described_by_issuer
 
-
 log = logging.getLogger(__name__)
 
 
@@ -37,7 +36,7 @@ def import_file(
     result = importer.efi_import(input_file)
     for record in result:
         if not(record.has_identifier):
-            raise ValueError(f"has_identifier missing for some record(s)")
+            raise ValueError("has_identifier missing for some record(s)")
         described_by = described_by_issuer(record, importer.ISSUER_INFO)
         if not(described_by.has_source_key):
             log.warning(

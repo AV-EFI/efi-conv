@@ -1,8 +1,8 @@
 import pathlib
-from typing import Annotated
 
 from avefi_schema import model_pydantic_v2 as efi
 from pydantic import ValidationError
+
 
 def load(source: pathlib.Path | str) -> list[efi.MovingImageRecord]:
     """Load AVefi records from file."""

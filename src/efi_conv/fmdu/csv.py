@@ -7,7 +7,6 @@ from avefi_schema import model_pydantic_v2 as efi
 
 from ..core.utils import described_by_issuer
 
-
 log = logging.getLogger(__name__)
 FILE_ENCODING = 'iso8859-1'
 DELIMITER = ';'
@@ -47,9 +46,9 @@ def map_to_efi(
             r'\W\+', '',
             f"{row['work_title']}__{row['director']}"
             f"__{row['production_year']}")
-        work_fields = dict((
+        work_fields = dict(
             (key, row[key]) for key in (
-                'work_title', 'director', 'production_year', 'country')))
+                'work_title', 'director', 'production_year', 'country'))
         if work_key not in work_man_lookup:
             work_title = make_title(row['work_title'], 'PreferredTitle')
             work = efi.WorkVariant(

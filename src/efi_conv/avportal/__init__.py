@@ -1,1 +1,1 @@
-from .avportal import efi_import, ISSUER_INFO
+from .avportal import ISSUER_INFO, efi_import

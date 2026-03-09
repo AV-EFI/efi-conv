@@ -1,6 +1,5 @@
 import click
 
-
 # To be imported in each subcommand module
 
 @click.group()

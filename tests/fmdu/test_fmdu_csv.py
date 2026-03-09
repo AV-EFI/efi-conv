@@ -1,9 +1,8 @@
 import json
 
-import pytest
-
 from efi_conv.core import avefi, check, from_
 from efi_conv.fmdu import csv as fmdu_csv
+
 
 def test_map_to_efi(input_path, expected_output):
     efi_records = from_.import_file(fmdu_csv, input_path('sample_data.csv'))
