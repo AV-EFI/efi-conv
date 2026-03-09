@@ -32,7 +32,7 @@ Usage: efi-conv [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --help  Show this message and exit.
-  
+
 Commands:
   check  Sanity check EFI_FILE and optionally remove invalid records.
   from   Convert files from some schema into a JSON file with AVefi records.
@@ -60,6 +60,24 @@ INFO efi_conv.cli: All 6 records passed the checks successfully
 [uv_install]: https://docs.astral.sh/uv/getting-started/installation/
 
 ## Developer note
+
+If you consider hacking on this package and even making a pullrequest
+at some point, it is advisable to install the pre-commit hooks
+configured on this repository. This way, some quality checks and
+coding style guide lines will be enforced right from the beginning
+which will make merging your code much easier, eventually. The
+pre-commit package is not part of the package's virtual environment
+and needs to be installed globally instead. This is because the hooks
+are executed automatically on every `git commit`; the hooks themselves
+are configured for this repository only, of course. So, here is one
+way to set things up:
+
+```console
+$ pipx install pre-commit
+$ pre-commit install
+```
+
+That's all. Feel free to start hacking!
 
 Add new converters as modules within the [efi_conv
 package](./src/efi_conv). Then, add this module as another choice to
