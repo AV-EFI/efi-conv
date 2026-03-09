@@ -8,8 +8,8 @@ from xsdata.formats.dataclass.parsers import XmlParser
 
 from ..core.settings import settings
 from ..core.utils import described_by_issuer
-from .ntm_4_avefi import ntm_4_av_efi as ntm
-from .ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
+from .generated.ntm_4_avefi import ntm_4_av_efi as ntm
+from .generated.ntm_4_avefi import ntm_4_av_efi_schema as ntm_main
 
 
 ROOT_CLASS = ntm_main.Resource

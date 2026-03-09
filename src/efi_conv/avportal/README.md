@@ -8,8 +8,9 @@ courtesy of the [xsData project][xsdata] by running the following
 command in this directory:
 
 ```console
-$ pdm run xsdata generate --include-header --unnest-classes \
-    --relative-imports --docstring-style NumPy --package generated \
+$ uv run xsdata generate --include-header --unnest-classes \
+    --relative-imports --docstring-style NumPy \
+    --package generated.ntm_extern_2_5 \
     http://www.tib.eu/fileadmin/extern/knm/NTM-Metadata-Schema_v_2.5.xsd
 ```
 
