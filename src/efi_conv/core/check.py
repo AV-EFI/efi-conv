@@ -18,21 +18,30 @@ from .cli import cli_main
 from .settings import settings
 
 log = logging.getLogger(__name__)
-SCHEMA_SOURCE = 'https://raw.githubusercontent.com/AV-EFI/av-efi-schema/main/project/jsonschema/avefi_schema/model.schema.json'
-CACHE_DIR = pathlib.Path(appdirs.user_cache_dir(
-    appname=__name__.split('.')[0]))
-SCHEMA_FILE = CACHE_DIR / 'avefi_schema.json'
+SCHEMA_SOURCE = "https://raw.githubusercontent.com/AV-EFI/av-efi-schema/main/project/jsonschema/avefi_schema/model.schema.json"
+CACHE_DIR = pathlib.Path(
+    appdirs.user_cache_dir(appname=__name__.split(".")[0])
+)
+SCHEMA_FILE = CACHE_DIR / "avefi_schema.json"
 
 
 @cli_main.command()
 @click.option(
-    '--remove-invalid/--no-remove-invalid', '-r', default=False,
-    help='Remove invalid records modifying EFI_FILE in place.')
+    "--remove-invalid/--no-remove-invalid",
+    "-r",
+    default=False,
+    help="Remove invalid records modifying EFI_FILE in place.",
+)
 @click.option(
-    '--update-schema', '-u', is_flag=True, default=False,
-    help='Fetch latest version of the AVefi schema from upstream repo.')
+    "--update-schema",
+    "-u",
+    is_flag=True,
+    default=False,
+    help="Fetch latest version of the AVefi schema from upstream repo.",
+)
 @click.argument(
-    'efi_files', nargs=-1, type=click.Path(dir_okay=False, exists=True))
+    "efi_files", nargs=-1, type=click.Path(dir_okay=False, exists=True)
+)
 def check(efi_files, *, remove_invalid=False, update_schema=False):
     """Sanity check EFI_FILES and optionally remove invalid records."""
     schema_validator = get_schema_validator(update_schema=update_schema)
@@ -44,12 +53,14 @@ def check(efi_files, *, remove_invalid=False, update_schema=False):
             if remove_invalid:
                 avefi.dump(efi_records, efi_file)
                 log.info(
-                    f"Successfully removed {old_count-len(efi_records)}"
-                    f" invalid records")
+                    f"Successfully removed {old_count - len(efi_records)}"
+                    f" invalid records"
+                )
             else:
                 log.error(
-                    f"Found {old_count-len(efi_records)} invalid records"
-                    f" (no action taken)")
+                    f"Found {old_count - len(efi_records)} invalid records"
+                    f" (no action taken)"
+                )
                 sys.exit(1)
         else:
             log.info(f"All {old_count} records passed the checks successfully")
@@ -62,15 +73,18 @@ def get_schema_validator(update_schema=False):
         r.raise_for_status()
         schema = r.json()
         CACHE_DIR.mkdir(exist_ok=True)
-        with SCHEMA_FILE.open('w') as f:
+        with SCHEMA_FILE.open("w") as f:
             json.dump(schema, f, indent=2, ensure_ascii=False)
     else:
         try:
-            if (datetime.now() - datetime.fromtimestamp(
-                    SCHEMA_FILE.stat().st_mtime)).days > 30:
+            if (
+                datetime.now()
+                - datetime.fromtimestamp(SCHEMA_FILE.stat().st_mtime)
+            ).days > 30:
                 log.warning(
                     f"{SCHEMA_FILE} has not been updated in 30 days, please"
-                    f" consider using the --update-schema option")
+                    f" consider using the --update-schema option"
+                )
             with SCHEMA_FILE.open() as f:
                 schema = json.load(f)
         except FileNotFoundError:
@@ -83,8 +97,10 @@ def get_schema_validator(update_schema=False):
 
 
 def pass_checks(
-        efi_records: list[efi.MovingImageRecord], schema_validator,
-        remove_invalid=False) -> bool:
+    efi_records: list[efi.MovingImageRecord],
+    schema_validator,
+    remove_invalid=False,
+) -> bool:
     """Check records against schema and additional rules.
 
     Validate against AVefi schema and check various additional rules
@@ -134,15 +150,14 @@ def pass_checks(
             record_ids.append(record_id)
             id_lookup[record_id] = (rec, record_ids)
         if isinstance(rec, efi.WorkVariant):
-            link_attributes = ('is_part_of', 'is_variant_of')
+            link_attributes = ("is_part_of", "is_variant_of")
         elif isinstance(rec, efi.Manifestation):
             # Ignore has_item here
-            link_attributes = ('is_manifestation_of', 'same_as')
+            link_attributes = ("is_manifestation_of", "same_as")
         elif isinstance(rec, efi.Item):
-            link_attributes = ('is_item_of', 'is_copy_of', 'is_derivative_of')
+            link_attributes = ("is_item_of", "is_copy_of", "is_derivative_of")
         else:
-            raise ValueError(
-                f"Cannot handle {type(rec)} (record={rec})")
+            raise ValueError(f"Cannot handle {type(rec)} (record={rec})")
         for attr_name in link_attributes:
             attr = getattr(rec, attr_name)
             if attr is None:
@@ -155,21 +170,27 @@ def pass_checks(
 
     for ref in list(dependants_by_ref.keys()):
         if (
-                ref not in id_lookup
-                and ref.identifier.category == 'avefi:LocalResource'
+            ref not in id_lookup
+            and ref.identifier.category == "avefi:LocalResource"
         ):
             log.error(f"Unresolvable reference: {ref.identifier.id}")
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
                 purge_dependant_records(
-                    ref, efi_records, id_lookup, dependants_by_ref)
+                    ref, efi_records, id_lookup, dependants_by_ref
+                )
     for record_id in list(id_lookup.keys()):
         if (
-                dangling_record(
-                    record_id, efi_records, id_lookup, dependants_by_ref,
-                    remove_dangling=remove_invalid)
-                and all_was_fine):
+            dangling_record(
+                record_id,
+                efi_records,
+                id_lookup,
+                dependants_by_ref,
+                remove_dangling=remove_invalid,
+            )
+            and all_was_fine
+        ):
             all_was_fine = False
     return all_was_fine
 
@@ -184,30 +205,38 @@ def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
         for record_id in ids:
             del id_lookup[record_id]
             log.error(
-                f"Reference to removed record: {record_id.identifier.id}")
+                f"Reference to removed record: {record_id.identifier.id}"
+            )
             purge_dependant_records(
-                record_id, record_list, id_lookup, dependants_by_ref)
+                record_id, record_list, id_lookup, dependants_by_ref
+            )
 
 
 def dangling_record(
-        record_id, record_list, id_lookup, dependants_by_ref,
-        remove_dangling=False):
+    record_id, record_list, id_lookup, dependants_by_ref, remove_dangling=False
+):
     """Return True if record has neither items nor a PID yet."""
-    if record_id.identifier.category == 'avefi:LocalResource' \
-       and record_id not in dependants_by_ref:
+    if (
+        record_id.identifier.category == "avefi:LocalResource"
+        and record_id not in dependants_by_ref
+    ):
         rec, ids = id_lookup[record_id]
-        if rec.category != 'avefi:Item' \
-           and all(
-               id_.identifier.category == 'avefi:LocalResource'
-               and id_ not in dependants_by_ref
-               for id_ in ids):
+        if rec.category != "avefi:Item" and all(
+            id_.identifier.category == "avefi:LocalResource"
+            and id_ not in dependants_by_ref
+            for id_ in ids
+        ):
             log.error(
                 f"No items associated with {rec.category}"
-                f" {record_id.identifier.id}")
+                f" {record_id.identifier.id}"
+            )
             if remove_dangling:
                 refs = []
                 for attr_name in (
-                        'is_manifestation_of', 'is_variant_of', 'is_part_of'):
+                    "is_manifestation_of",
+                    "is_variant_of",
+                    "is_part_of",
+                ):
                     ref = getattr(rec, attr_name, None)
                     if ref:
                         if isinstance(ref, list):
@@ -225,8 +254,12 @@ def dangling_record(
                     if not ref_deps:
                         del dependants_by_ref[ref]
                     dangling_record(
-                        ref, record_list, id_lookup, dependants_by_ref,
-                        remove_dangling=remove_dangling)
+                        ref,
+                        record_list,
+                        id_lookup,
+                        dependants_by_ref,
+                        remove_dangling=remove_dangling,
+                    )
             return True
     return False
 
@@ -252,8 +285,7 @@ class HashableId:
 def has_invalid_value(efi_record):
     def any_empty_has_name(elem_generator):
         if any([not elem.has_name for elem in elem_generator]):
-            log.error(
-                f"Empty has_name in {efi_record.has_identifier[0].id}")
+            log.error(f"Empty has_name in {efi_record.has_identifier[0].id}")
             return True
         return False
 
@@ -273,21 +305,27 @@ def has_invalid_value(efi_record):
         if any_empty_has_name(efi_record.has_subject):
             return True
         if efi_record.has_primary_title.type not in (
-                'PreferredTitle', 'SuppliedDevisedTitle'):
+            "PreferredTitle",
+            "SuppliedDevisedTitle",
+        ):
             log.error(
                 f"Primary title type for work records is supposed to be"
                 f" one of ('PreferredTitle', 'SuppliedDevisedTitle'), found:"
                 f" {efi_record.has_primary_title.type} in record"
-                f" {efi_record.has_identifier[0].id}")
+                f" {efi_record.has_identifier[0].id}"
+            )
             return True
     else:
         if efi_record.has_primary_title.type not in (
-                'TitleProper', 'SuppliedDevisedTitle'):
+            "TitleProper",
+            "SuppliedDevisedTitle",
+        ):
             log.error(
                 f"Primary title type for non-work records is supposed to be"
                 f" one of ('TitleProper', 'SuppliedDevisedTitle'), found:"
                 f" {efi_record.has_primary_title.type} in record"
-                f" {efi_record.has_identifier[0].id}")
+                f" {efi_record.has_identifier[0].id}"
+            )
             return True
     return False
 
@@ -300,27 +338,30 @@ def exceeds_field_limit(efi_record):
             log.error(
                 f"Record {efi_record.has_identifier[0].id} violates limit of"
                 f" {settings.line_limit} characters on title length:"
-                f" {title.has_name}")
+                f" {title.has_name}"
+            )
             return True
-    if efi_record.category != 'avefi:WorkVariant':
+    if efi_record.category != "avefi:WorkVariant":
         for note in efi_record.has_note:
             if len(note) >= settings.text_limit:
                 log.error(
                     f"Record {efi_record.has_identifier[0].id} violates limit"
                     f" of {settings.text_limit} characters on has_note"
-                    f" entries")
+                    f" entries"
+                )
                 return True
     return False
 
 
 def has_invalid_date(efi_record):
     for event in efi_record.has_event:
-        if event.has_date \
-           and not re.search(
-               r'^-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$',
-               event.has_date):
+        if event.has_date and not re.search(
+            r"^-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?(/-?([1-9][0-9]{3,}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01]))?)?[?~]?)?$",
+            event.has_date,
+        ):
             log.error(
                 f"Record {efi_record.has_identifier[0].id} has event(s) with"
-                f" invalid value in has_date: {event.has_date}")
+                f" invalid value in has_date: {event.has_date}"
+            )
             return True
     return False

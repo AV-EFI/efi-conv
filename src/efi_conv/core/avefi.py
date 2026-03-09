@@ -18,7 +18,7 @@ def loads(input: str) -> list[efi.MovingImageRecord]:
         return container.root
     except ValidationError as e:
         err0 = e.errors()[0]
-        if err0.get('loc') == () and err0.get('type') == 'list_type':
+        if err0.get("loc") == () and err0.get("type") == "list_type":
             record = efi.MovingImageRecordTypeAdapter.validate_json(input)
             return [record]
         raise
@@ -26,7 +26,7 @@ def loads(input: str) -> list[efi.MovingImageRecord]:
 
 def dump(records: list[efi.MovingImageRecord], to_file: str):
     """Dump AVefi records to JSON file."""
-    with open(to_file, 'w') as f:
+    with open(to_file, "w") as f:
         f.write(dumps(records, indent=2))
 
 

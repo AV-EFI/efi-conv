@@ -13,7 +13,7 @@ def input_path(request) -> Callable[[str], Path]:
     return get_path
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope="module")
 def expected_output(input_path):
-    with input_path('efi_records.json').open() as f:
+    with input_path("efi_records.json").open() as f:
         return json.load(f)

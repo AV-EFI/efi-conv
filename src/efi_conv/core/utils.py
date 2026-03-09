@@ -2,7 +2,7 @@ from avefi_schema import model_pydantic_v2 as efi
 
 
 def described_by_issuer(
-        record: efi.MovingImageRecord, issuer: dict
+    record: efi.MovingImageRecord, issuer: dict
 ) -> efi.DescriptionResource:
     """Return described_by entry matching ``issuer``.
 
@@ -15,7 +15,7 @@ def described_by_issuer(
     """
     if isinstance(record, efi.WorkVariant):
         for described_by in record.described_by or []:
-            if described_by.has_issuer_id == issuer['has_issuer_id']:
+            if described_by.has_issuer_id == issuer["has_issuer_id"]:
                 break
         else:
             record.described_by = [efi.DescriptionResource(**issuer)]
@@ -23,10 +23,11 @@ def described_by_issuer(
     else:
         if record.described_by:
             described_by = record.described_by
-            if described_by.has_issuer_id != issuer['has_issuer_id']:
+            if described_by.has_issuer_id != issuer["has_issuer_id"]:
                 raise ValueError(
                     f"Unexpected issuer information in record provided by"
-                    f" issuer_id {issuer.has_issuer_id}: {described_by}")
+                    f" issuer_id {issuer.has_issuer_id}: {described_by}"
+                )
         else:
             record.described_by = efi.DescriptionResource(**issuer)
             described_by = record.described_by
