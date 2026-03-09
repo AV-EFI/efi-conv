@@ -165,11 +165,12 @@ def pass_checks(
                 purge_dependant_records(
                     ref, efi_records, id_lookup, dependants_by_ref)
     for record_id in list(id_lookup.keys()):
-        if dangling_record(
-                record_id, efi_records, id_lookup, dependants_by_ref,
-                remove_dangling=remove_invalid):
-            if all_was_fine:
-                all_was_fine = False
+        if (
+                dangling_record(
+                    record_id, efi_records, id_lookup, dependants_by_ref,
+                    remove_dangling=remove_invalid)
+                and all_was_fine):
+            all_was_fine = False
     return all_was_fine
 
 
@@ -235,13 +236,16 @@ class HashableId:
         self.identifier = identifier
         self.name = f"{self.identifier.category}.{self.identifier.id}"
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
+        """Check equality to another object."""
         return other.identifier == self.identifier
 
     def __hash__(self):
+        """Return hash of the name attribute."""
         return hash(self.name)
 
     def __str__(self):
+        """Return name attribute."""
         return self.name
 
 

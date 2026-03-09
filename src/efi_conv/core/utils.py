@@ -25,9 +25,8 @@ def described_by_issuer(
             described_by = record.described_by
             if described_by.has_issuer_id != issuer['has_issuer_id']:
                 raise ValueError(
-                    f"Cannot add source_key {source_key} by issuer_id"
-                    f" {issuer.has_issuer_id} to record from issuer"
-                    f" {described_by.has_issuer_id}")
+                    f"Unexpected issuer information in record provided by"
+                    f" issuer_id {issuer.has_issuer_id}: {described_by}")
         else:
             record.described_by = efi.DescriptionResource(**issuer)
             described_by = record.described_by

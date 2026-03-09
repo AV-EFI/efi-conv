@@ -244,14 +244,12 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         item.has_extent = efi.Extent(
             has_value=value, has_unit=size_mapping[unit])
     if input.duration:
-        duration_value = re.sub(
-            r"^(\d\d):(\d\d):(\d\d):\d\d$", 'PT\1H\2M\3S', input.duration)
         match = re.search(r"^(\d\d):(\d\d):(\d\d):\d\d$", input.duration)
         if match is None:
             raise RuntimeError(
                 f"No idea how to parse duration={input.duration}")
         duration_str = ''
-        for val, suffix in zip(match.groups(), ('H', 'M', 'S')):
+        for val, suffix in zip(match.groups(), ('H', 'M', 'S'), strict=True):
             i = int(val)
             if i or (not duration_str and suffix == 'S'):
                 duration_str += f"{str(i)}{suffix}"

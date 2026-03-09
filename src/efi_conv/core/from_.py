@@ -32,7 +32,8 @@ def efi_from(output_file, input_files, **kwargs):
 
 
 def import_file(
-        importer: types.ModuleType, input_file: str) -> list[efi.MovingImageRecord]:
+        importer: types.ModuleType, input_file: str,
+) -> list[efi.MovingImageRecord]:
     result = importer.efi_import(input_file)
     for record in result:
         if not(record.has_identifier):
