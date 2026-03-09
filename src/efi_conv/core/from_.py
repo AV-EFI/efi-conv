@@ -6,7 +6,7 @@ from avefi_schema import model_pydantic_v2 as efi
 import click
 
 from . import avefi
-from .cli import cli_main
+from .cli import IMPORTERS, cli_main
 from .utils import described_by_issuer
 
 log = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ log = logging.getLogger(__name__)
 @click.option(
     "-f",
     "--format",
-    type=click.Choice(["avportal", "fmdu"]),
+    type=click.Choice(IMPORTERS),
     required=True,
     help="Source data format.",
 )

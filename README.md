@@ -48,7 +48,7 @@ $ efi-conv from -f avportal efi_records.json tests/avportal/*.xml
 $ efi-conv check tests/avportal/efi_records.json
 INFO efi_conv.cli: All 6 records passed the checks successfully
 ## Or, instead of using pip above, proceed with UV:
-$ uv sync
+$ uv sync --no-python-downloads
 ## [...]
 $ uv run efi-conv --help
 ## Same output as above
@@ -81,9 +81,9 @@ That's all. Feel free to start hacking!
 
 Add new converters as modules within the [efi_conv
 package](./src/efi_conv). Then, add this module as another choice to
-the format option in [cli.py](./src/efi_conv/cli.py) to make it
+the `IMPORTERS` list in [cli.py](./src/efi_conv/core/cli.py) to make it
 accessible from the command line. Take care that the module provides
-`.module_name:efi_from` function similar to what the avportal module
+`.module_name:efi_import` function similar to what the avportal module
 does.
 
 Unless you already have a suitable python parser for your data, check

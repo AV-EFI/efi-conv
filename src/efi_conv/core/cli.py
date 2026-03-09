@@ -1,6 +1,8 @@
+# To be imported in each subcommand module
+
 import click
 
-# To be imported in each subcommand module
+IMPORTERS = ["avportal", "fmdu"]
 
 
 @click.group()
