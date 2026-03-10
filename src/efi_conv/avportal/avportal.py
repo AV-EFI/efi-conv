@@ -510,11 +510,11 @@ role_mapping = {
     "Projektkoordination": efi.ProducingActivityTypeEnum(
         "ProductionCoordinator"
     ),
-    "Projektleitung": efi.EditingActivityTypeEnum("Editor"),
+    "Projektleitung": efi.WritingActivityTypeEnum("Editor"),
     "Psychiater": None,
-    "Red.": efi.EditingActivityTypeEnum("Editor"),
-    "Redaktion": efi.EditingActivityTypeEnum("Editor"),
-    "Redaktionsassistenz": efi.EditingActivityTypeEnum("AssistantEditor"),
+    "Red.": efi.WritingActivityTypeEnum("Editor"),
+    "Redaktion": efi.WritingActivityTypeEnum("Editor"),
+    "Redaktionsassistenz": efi.WritingActivityTypeEnum("AssistantEditor"),
     "Regie": efi.DirectingActivityTypeEnum("Director"),
     "Regieassistenz": efi.DirectingActivityTypeEnum("AssistantDirector"),
     "Sachbearbeiter": None,

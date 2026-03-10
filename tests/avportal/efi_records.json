@@ -43,7 +43,7 @@
             "type": "ProductionCompany"
           },
           {
-            "category": "avefi:EditingActivity",
+            "category": "avefi:WritingActivity",
             "has_agent": [
               {
                 "category": "avefi:Agent",
