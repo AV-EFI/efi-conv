@@ -1,0 +1,103 @@
+name: Test package
+
+on: [push]
+
+env:
+  PYTHON_VERSION: "3.14"
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Restore global uv cache
+        uses: actions/cache/restore@v5
+        id: cache-restore
+        with:
+          path: |
+            ~/.cache/uv
+            ~/.local/share/uv
+            .venv
+          key: uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: false
+
+      - name: Install dependencies
+        run: uv sync --group dev --locked
+
+      - name: Run ruff check
+        run: uv run -- ruff check --output-format=github
+
+      - name: Run ruff format
+        run: uv run -- ruff format --diff
+
+      - name: Save uv caches
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            ~/.cache/uv
+            ~/.local/share/uv
+            .venv
+          key: uv-${{ hashFiles('uv.lock') }}
+
+  tests:
+    needs:
+      - quality-checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Restore global uv cache
+        uses: actions/cache/restore@v5
+        id: cache-restore
+        with:
+          path: |
+            ~/.cache/uv
+            ~/.local/share/uv
+            .venv
+          key: uv-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            uv-
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          enable-cache: false
+
+      - name: Install dependencies
+        run: uv sync --group dev --locked
+
+      - name: Test package
+        run: |
+          uv run coverage run -m pytest
+          uv run coverage report -m
+        shell: bash
+
+      - name: Save uv caches
+        if: steps.cache-restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            ~/.cache/uv
+            ~/.local/share/uv
+            .venv
+          key: uv-${{ hashFiles('uv.lock') }}
