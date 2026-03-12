@@ -46,7 +46,8 @@ Options:
   --help                   Show this message and exit.
 $ efi-conv from -f avportal efi_records.json tests/avportal/*.xml
 $ efi-conv check tests/avportal/efi_records.json
-INFO efi_conv.cli: All 6 records passed the checks successfully
+INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
+INFO efi_conv.core.check: All 3 records passed the checks successfully
 ## Or, instead of using pip above, proceed with UV:
 $ uv sync --no-python-downloads
 ## [...]
@@ -54,7 +55,18 @@ $ uv run efi-conv --help
 ## Same output as above
 $ uv run efi-conv from -f avportal efi_records.json tests/avportal/*.xml
 $ uv run efi-conv check tests/avportal/efi_records.json
-INFO efi_conv.cli: All 6 records passed the checks successfully
+INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
+INFO efi_conv.core.check: All 3 records passed the checks successfully
+```
+
+Alternatively, use the provided docker-compose file in order to run
+this toll inside a container:
+
+```console
+$ docker-compose pull
+$ docker-compose run efi-conv check tests/avportal/efi_records.json
+INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
+INFO efi_conv.core.check: All 3 records passed the checks successfully
 ```
 
 [uv_install]: https://docs.astral.sh/uv/getting-started/installation/

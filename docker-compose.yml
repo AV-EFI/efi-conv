@@ -1,0 +1,8 @@
+services:
+  efi-conv:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/av-efi/efi-conv:latest
+    volumes:
+      - .:/data:Z
