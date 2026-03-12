@@ -1,25 +1,60 @@
-# Verwende das offizielle Python-Image mit einer spezifischen Version
-#
-# !!!!    Achtung Script funktioniert NICHT mit Version 3.13     !!!!
-#
-FROM docker.io/library/python:3-slim
+FROM docker.io/library/python:3-slim AS python-base
 
-# Autoreninformationen
+# Image information
+LABEL org.opencontainers.image.source=https://github.com/AV-EFI/efi-conv
+LABEL org.opencontainers.image.description="Check module and converter scripts related to the AVefi schema"
+LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.authors="Elias Oltmanns <elias.oltmanns@gwdg.de>, Andreas Kasper <andreas.kasper@hdf.de>"
 
-# Installiere Systemabhängigkeiten (z.B. für git) und setze das Arbeitsverzeichnis
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
+RUN apt-get update && apt-get -y upgrade
+
+# Python
+ENV PYTHONUNBUFFERED=1 \
+    # paths
+    # This is where our app + requirements + virtual environment will live
+    PYSETUP_PATH="/app"
+
+# Adjust PATH
+ENV PATH=$PYSETUP_PATH/.venv/bin:$PATH
+
+WORKDIR $PYSETUP_PATH
+
+# `builder-base` stage is used to build deps + create our virtual environment
+FROM python-base AS builder-base
+
+# Deps for building python deps
+RUN apt-get install --no-install-recommends -y build-essential git \
     && rm -rf /var/lib/apt/lists/*
 
-# Klone das Repository in app Verzeichnis
-RUN git clone https://github.com/AV-EFI/efi-conv.git app
+# install UV
+RUN pip install --no-cache-dir uv
 
-# Definiere den Standard-Arbeitsordner
-WORKDIR /app
+# Copy project requirement files here to ensure they will be cached.
+COPY pyproject.toml uv.lock ./
 
-# Installiere die Python-Abhängigkeiten im Entwicklermodus
-RUN pip install --no-cache-dir -e .
+# Install runtime deps
+RUN uv sync --locked --no-dev --no-python-downloads --no-install-project
 
-# Setze das Standard-Einstiegspunktprogramm
+# Copy the source code
+COPY LICENSE README.md ./
+COPY src/ ./src/
+
+# Install main app
+RUN uv sync --locked --no-dev
+
+
+# Production image used for runtime
+FROM python-base AS production
+
+# Create mount point and make it the working directory
+RUN mkdir /data
+WORKDIR /data
+
+# Copy the dependencies
+COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
+
+# Cache current JSON schema for check module
+RUN efi-conv check -u
+
+# Set entry point
 ENTRYPOINT [ "efi-conv" ]
