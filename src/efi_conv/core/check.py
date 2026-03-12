@@ -72,7 +72,7 @@ def get_schema_validator(update_schema=False):
         r = requests.get(SCHEMA_SOURCE)
         r.raise_for_status()
         schema = r.json()
-        CACHE_DIR.mkdir(exist_ok=True)
+        CACHE_DIR.mkdir(exist_ok=True, parents=True)
         with SCHEMA_FILE.open("w") as f:
             json.dump(schema, f, indent=2, ensure_ascii=False)
     else:
