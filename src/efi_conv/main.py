@@ -29,3 +29,6 @@ logging_config = {
     "disable_existing_loggers": False,
 }
 logging.config.dictConfig(logging_config)
+
+from .core import check, from_  # noqa: E402, F401
+from .core.cli import cli_main  # noqa: E402, F401
