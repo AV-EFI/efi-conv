@@ -1,4 +1,5 @@
-FROM docker.io/library/python:3-slim AS python-base
+# Pull in base image
+FROM docker.io/library/python:3-slim-trixie AS python-base
 
 # Image information
 LABEL org.opencontainers.image.source=https://github.com/AV-EFI/efi-conv
@@ -6,7 +7,10 @@ LABEL org.opencontainers.image.description="Check module and converter scripts r
 LABEL org.opencontainers.image.licenses=MIT
 LABEL org.opencontainers.image.authors="Elias Oltmanns <elias.oltmanns@gwdg.de>, Andreas Kasper <andreas.kasper@hdf.de>"
 
-RUN apt-get update && apt-get -y upgrade
+# Update OS packages and install requirements
+RUN apt-get update && apt-get upgrade --no-install-recommends -y \
+    && apt-get install --no-install-recommends -y git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Python
 ENV PYTHONUNBUFFERED=1 \
@@ -22,18 +26,14 @@ WORKDIR $PYSETUP_PATH
 # `builder-base` stage is used to build deps + create our virtual environment
 FROM python-base AS builder-base
 
-# Deps for building python deps
-RUN apt-get install --no-install-recommends -y build-essential git \
-    && rm -rf /var/lib/apt/lists/*
-
-# install UV
+# Install UV
 RUN pip install --no-cache-dir uv
 
 # Copy project requirement files here to ensure they will be cached.
 COPY pyproject.toml uv.lock ./
 
 # Install runtime deps
-RUN uv sync --locked --no-dev --no-python-downloads --no-install-project
+RUN uv sync --locked --no-dev --no-install-project --no-python-downloads
 
 # Copy the source code
 COPY LICENSE README.md ./
@@ -50,7 +50,7 @@ FROM python-base AS production
 RUN mkdir /data
 WORKDIR /data
 
-# Copy the dependencies
+# Copy app directory including dependencies
 COPY --from=builder-base $PYSETUP_PATH $PYSETUP_PATH
 
 # Cache current JSON schema for check module
