@@ -134,14 +134,20 @@ def pass_checks(
         if error is not None:
             raise error
 
-        if has_invalid_value(rec):
-            if all_was_fine:
-                all_was_fine = False
-            if remove_invalid:
-                efi_records.remove(rec)
-                continue
         if not rec.has_identifier:
             raise ValueError(f"has_identifier is missing in record: {rec}")
+        try:
+            if has_invalid_value(rec):
+                if all_was_fine:
+                    all_was_fine = False
+                if remove_invalid:
+                    efi_records.remove(rec)
+                    continue
+        except Exception as e:
+            raise RuntimeError(
+                f"Error while checking record {rec.has_identifier[0].id}",
+            ) from e
+
         record_ids = []
         for identifier in rec.has_identifier:
             record_id = HashableId(identifier)
