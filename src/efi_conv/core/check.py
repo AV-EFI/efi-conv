@@ -220,7 +220,10 @@ def dangling_record(
         record_id.identifier.category == "avefi:LocalResource"
         and record_id not in dependants_by_ref
     ):
-        rec, ids = id_lookup[record_id]
+        try:
+            rec, ids = id_lookup[record_id]
+        except KeyError:
+            return False
         if rec.category != "avefi:Item" and all(
             id_.identifier.category == "avefi:LocalResource"
             and id_ not in dependants_by_ref
