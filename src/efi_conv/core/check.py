@@ -193,9 +193,7 @@ def pass_checks(
         if (
             ref not in id_lookup
             and ref.identifier.category == "avefi:LocalResource"
-            and ref not in removed_refs
         ):
-            log.error(f"Unresolvable reference: {ref.identifier.id}")
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
@@ -206,6 +204,8 @@ def pass_checks(
                     dependants_by_ref,
                     removed_refs,
                 )
+            if ref not in removed_refs:
+                log.error(f"Unresolvable reference: {ref.identifier.id}")
 
     # Check for records that should be associated with items but are not
     for record_id in list(id_lookup.keys()):
