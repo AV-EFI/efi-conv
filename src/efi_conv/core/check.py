@@ -128,7 +128,9 @@ def pass_checks(
     id_lookup = {}
     dependants_by_ref = defaultdict(list)
     all_was_fine = True
+    removed_refs = []
 
+    # Check records and track dependencies
     for rec in efi_records.copy():
         error = best_match(schema_validator.iter_errors(rec.model_dump()))
         if error is not None:
@@ -141,6 +143,9 @@ def pass_checks(
                 if all_was_fine:
                     all_was_fine = False
                 if remove_invalid:
+                    removed_refs.extend(
+                        [HashableId(id_) for id_ in rec.has_identifier]
+                    )
                     efi_records.remove(rec)
                     continue
         except Exception as e:
@@ -183,18 +188,26 @@ def pass_checks(
                 ref = HashableId(identifier)
                 dependants_by_ref[ref].append(record_id)
 
+    # Check for references (to parent records) that cannot be resolved
     for ref in list(dependants_by_ref.keys()):
         if (
             ref not in id_lookup
             and ref.identifier.category == "avefi:LocalResource"
+            and ref not in removed_refs
         ):
             log.error(f"Unresolvable reference: {ref.identifier.id}")
             if all_was_fine:
                 all_was_fine = False
             if remove_invalid:
                 purge_dependant_records(
-                    ref, efi_records, id_lookup, dependants_by_ref
+                    ref,
+                    efi_records,
+                    id_lookup,
+                    dependants_by_ref,
+                    removed_refs,
                 )
+
+    # Check for records that should be associated with items but are not
     for record_id in list(id_lookup.keys()):
         if (
             dangling_record(
@@ -210,7 +223,9 @@ def pass_checks(
     return all_was_fine
 
 
-def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
+def purge_dependant_records(
+    ref, record_list, id_lookup, dependants_by_ref, removed_refs
+):
     for record_id in dependants_by_ref[ref]:
         try:
             rec, ids = id_lookup[record_id]
@@ -219,11 +234,16 @@ def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
         record_list.remove(rec)
         for record_id in ids:
             del id_lookup[record_id]
-            log.error(
+            removed_refs.append(record_id)
+            log.debug(
                 f"Reference to removed record: {record_id.identifier.id}"
             )
             purge_dependant_records(
-                record_id, record_list, id_lookup, dependants_by_ref
+                record_id,
+                record_list,
+                id_lookup,
+                dependants_by_ref,
+                removed_refs,
             )
     del dependants_by_ref[ref]
     dangling_record(
