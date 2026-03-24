@@ -304,9 +304,13 @@ def has_invalid_value(efi_record):
             return True
         if any_empty_has_name(efi_record.has_subject):
             return True
-        if efi_record.has_primary_title.type not in (
-            "PreferredTitle",
-            "SuppliedDevisedTitle",
+        if (
+            efi_record.has_primary_title
+            and efi_record.has_primary_title.type
+            not in (
+                "PreferredTitle",
+                "SuppliedDevisedTitle",
+            )
         ):
             log.error(
                 f"Primary title type for work records is supposed to be"
@@ -316,9 +320,13 @@ def has_invalid_value(efi_record):
             )
             return True
     else:
-        if efi_record.has_primary_title.type not in (
-            "TitleProper",
-            "SuppliedDevisedTitle",
+        if (
+            efi_record.has_primary_title
+            and efi_record.has_primary_title.type
+            not in (
+                "TitleProper",
+                "SuppliedDevisedTitle",
+            )
         ):
             log.error(
                 f"Primary title type for non-work records is supposed to be"
@@ -331,7 +339,9 @@ def has_invalid_value(efi_record):
 
 
 def exceeds_field_limit(efi_record):
-    titles = [efi_record.has_primary_title]
+    titles = []
+    if efi_record.has_primary_title:
+        titles.append(efi_record.has_primary_title)
     titles.extend(efi_record.has_alternative_title)
     for title in titles:
         if len(title.has_name) > settings.line_limit:
