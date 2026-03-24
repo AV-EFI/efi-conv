@@ -225,6 +225,14 @@ def purge_dependant_records(ref, record_list, id_lookup, dependants_by_ref):
             purge_dependant_records(
                 record_id, record_list, id_lookup, dependants_by_ref
             )
+    del dependants_by_ref[ref]
+    dangling_record(
+        ref,
+        record_list,
+        id_lookup,
+        dependants_by_ref,
+        remove_dangling=True,
+    )
 
 
 def dangling_record(
