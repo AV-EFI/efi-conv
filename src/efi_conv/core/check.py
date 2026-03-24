@@ -256,13 +256,13 @@ def dangling_record(
                             ref_deps.remove(id_)
                     if not ref_deps:
                         del dependants_by_ref[ref]
-                    dangling_record(
-                        ref,
-                        record_list,
-                        id_lookup,
-                        dependants_by_ref,
-                        remove_dangling=remove_dangling,
-                    )
+                        dangling_record(
+                            ref,
+                            record_list,
+                            id_lookup,
+                            dependants_by_ref,
+                            remove_dangling=remove_dangling,
+                        )
             return True
     return False
 
