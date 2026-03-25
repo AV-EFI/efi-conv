@@ -316,7 +316,7 @@ language_map = {
     "Japanisch": "jpn",
     "Jugoslawisch": None,
     "Litauisch": "lit",
-    "Niederländisch": "nld",
+    "Niederländisch": "dut",
     "Spanisch": "spa",
     "Portugiesisch": "por",
 }
