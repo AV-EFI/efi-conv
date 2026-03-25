@@ -267,7 +267,35 @@ def dangling_record(
             rec, ids = id_lookup[record_id]
         except KeyError:
             return False
-        if rec.category != "avefi:Item" and all(
+        is_dangling = False
+        if rec.category == "avefi:WorkVariant" and rec.type == "Analytic":
+            if any(
+                id_ in dependants_by_ref
+                and id_lookup[id_][0].category == "avefi:Manifestation"
+                for id_ in ids
+            ):
+                raise ValueError(
+                    f"Analytic work unexpectedly referenced by"
+                    f" manifestation(s): {record_id}"
+                )
+            for identifier in rec.is_part_of:
+                ref = HashableId(identifier)
+                parent, p_ids = id_lookup[ref]
+                # TODO: Uncomment if approved by Metadaten-experts
+                # if parent.type != "Monographic":
+                #     log.error(
+                #         f"Analytic work {record_id} is part of work with"
+                #         f" type other than monographic: {ref}"
+                #     )
+                #     is_dangling = True
+                for id_ in p_ids:
+                    ref_deps = dependants_by_ref[id_]
+                    if ref_deps and all(
+                        id_lookup[ref_dep][0].category == "avefi:WorkVariant"
+                        for ref_dep in ref_deps
+                    ):
+                        is_dangling = True
+        elif rec.category != "avefi:Item" and all(
             id_.identifier.category == "avefi:LocalResource"
             and id_ not in dependants_by_ref
             for id_ in ids
@@ -276,37 +304,38 @@ def dangling_record(
                 f"No items associated with {rec.category}"
                 f" {record_id.identifier.id}"
             )
-            if remove_dangling:
-                refs = []
-                for attr_name in (
-                    "is_manifestation_of",
-                    "is_variant_of",
-                    "is_part_of",
-                ):
-                    ref = getattr(rec, attr_name, None)
-                    if ref:
-                        if isinstance(ref, list):
-                            refs.extend(HashableId(r) for r in ref)
-                        else:
-                            refs.append(HashableId(ref))
+            is_dangling = True
+        if is_dangling and remove_dangling:
+            refs = []
+            for attr_name in (
+                "is_manifestation_of",
+                "is_variant_of",
+                "is_part_of",
+            ):
+                ref = getattr(rec, attr_name, None)
+                if ref:
+                    if isinstance(ref, list):
+                        refs.extend(HashableId(r) for r in ref)
+                    else:
+                        refs.append(HashableId(ref))
+            for id_ in ids:
+                del id_lookup[id_]
+            record_list.remove(rec)
+            for ref in refs:
+                ref_deps = dependants_by_ref[ref]
                 for id_ in ids:
-                    del id_lookup[id_]
-                record_list.remove(rec)
-                for ref in refs:
-                    ref_deps = dependants_by_ref[ref]
-                    for id_ in ids:
-                        if id_ in ref_deps:
-                            ref_deps.remove(id_)
-                    if not ref_deps:
-                        del dependants_by_ref[ref]
-                        dangling_record(
-                            ref,
-                            record_list,
-                            id_lookup,
-                            dependants_by_ref,
-                            remove_dangling=remove_dangling,
-                        )
-            return True
+                    if id_ in ref_deps:
+                        ref_deps.remove(id_)
+                if not ref_deps:
+                    del dependants_by_ref[ref]
+                    dangling_record(
+                        ref,
+                        record_list,
+                        id_lookup,
+                        dependants_by_ref,
+                        remove_dangling=remove_dangling,
+                    )
+        return is_dangling
     return False
 
 
