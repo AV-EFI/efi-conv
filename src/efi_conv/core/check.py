@@ -157,10 +157,14 @@ def pass_checks(
         for identifier in rec.has_identifier:
             record_id = HashableId(identifier)
             if record_id in id_lookup:
-                log.error(f"Identifier is not unique: {record_id}")
                 if all_was_fine:
                     all_was_fine = False
-                efi_records.remove(rec)
+                err_msg = f"Identifier is not unique: {record_id}"
+                if remove_invalid:
+                    log.error(err_msg)
+                    efi_records.remove(rec)
+                else:
+                    raise ValueError(err_msg)
                 for record_id in record_ids:
                     del id_lookup[record_id]
                 record_ids = []
