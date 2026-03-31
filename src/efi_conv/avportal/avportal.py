@@ -60,7 +60,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         log.warning("No production year")
     event = efi.ProductionEvent(has_date=production_year)
     work.has_event.append(event)
-    producers = []
+    creators = []
     for c in input.creators.creator if input.creators else []:
         if not c.creator_name:
             continue
@@ -69,15 +69,15 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         )
         if c.name_identifier:
             raise RuntimeError(f"Cannot handle name_identifier for {c}")
-        producers.append(agent)
-    if producers:
+        creators.append(agent)
+    if creators:
         event.has_activity.append(
-            efi.ProducingActivity(
-                type=efi.ProducingActivityTypeEnum("Producer"),
-                has_agent=producers,
+            efi.DirectingActivity(
+                type=efi.DirectingActivityTypeEnum("Creator"),
+                has_agent=creators,
             )
         )
-    production_companies = []
+    producers = []
     for p in input.producers.producer if input.producers else []:
         if not p.producer_name:
             continue
@@ -86,12 +86,12 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         )
         if p.name_identifier:
             raise RuntimeError(f"Cannot handle name_identifier for {p}")
-        production_companies.append(agent)
-    if production_companies:
+        producers.append(agent)
+    if producers:
         event.has_activity.append(
             efi.ProducingActivity(
-                type=efi.ProducingActivityTypeEnum("ProductionCompany"),
-                has_agent=production_companies,
+                type=efi.ProducingActivityTypeEnum("Producer"),
+                has_agent=producers,
             )
         )
     contrib_dict = defaultdict(list)
