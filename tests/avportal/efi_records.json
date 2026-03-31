@@ -47,6 +47,9 @@
             "has_agent": [
               {
                 "category": "avefi:Agent",
+                "has_alternate_name": [
+                  "Dore Kleindienst-Andrée"
+                ],
                 "has_name": "Kleindienst-Andrée, Dore",
                 "type": "Person"
               }
@@ -58,6 +61,9 @@
             "has_agent": [
               {
                 "category": "avefi:Agent",
+                "has_alternate_name": [
+                  "E. Fischer"
+                ],
                 "has_name": "Fischer, E.",
                 "type": "Person"
               }

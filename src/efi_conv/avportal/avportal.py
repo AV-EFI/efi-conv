@@ -18,7 +18,6 @@ ISSUER_INFO = {
     "has_issuer_id": "https://w3id.org/isil/DE-89",
     "has_issuer_name": "Technische Informationsbibliothek (TIB)",
 }
-CORPORATE_BODY_FLAG_WORDS = ["gesellschaft", "gmbh", "institut", "trickstudio"]
 
 
 def efi_import(input_file) -> list[efi.MovingImageRecord]:
@@ -64,9 +63,21 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     for c in input.creators.creator if input.creators else []:
         if not c.creator_name:
             continue
-        agent = efi.Agent(
-            type=efi.AgentTypeEnum("Person"), has_name=c.creator_name
-        )
+
+        # Disregard occurrences of "IWF (Hrsg.)" if duplicated as publisher
+        if (
+            "iwf (hrsg.)" in c.creator_name.lower()
+            and input.publishers
+            and any(
+                "iwf" in p.publisher_name.lower()
+                for p in input.publishers.publisher
+            )
+        ):
+            continue
+
+        agent = agent_from_name(c.creator_name)
+        if agent is None:
+            continue
         if c.name_identifier:
             raise RuntimeError(f"Cannot handle name_identifier for {c}")
         creators.append(agent)
@@ -81,9 +92,9 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     for p in input.producers.producer if input.producers else []:
         if not p.producer_name:
             continue
-        agent = efi.Agent(
-            type=efi.AgentTypeEnum("CorporateBody"), has_name=p.producer_name
-        )
+        agent = agent_from_name(p.producer_name)
+        if agent is None:
+            continue
         if p.name_identifier:
             raise RuntimeError(f"Cannot handle name_identifier for {p}")
         producers.append(agent)
@@ -106,45 +117,27 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                 else:
                     name = unit
                     roles = "Unknown"
-                name = name.strip()
-                if not any(
-                    expr in name.lower() for expr in CORPORATE_BODY_FLAG_WORDS
-                ):
-                    name_components = name.split(",")
-                    if len(name_components) == 1:
-                        name_components = name.rsplit(maxsplit=1)
-                        orig_name = name
-                        name = ", ".join(reversed(name_components))
-                        log.warning(
-                            f"Please check if correct: Replaced name"
-                            f" '{orig_name}' by '{name}'"
-                        )
-                    elif len(name_components) != 2:
-                        raise ValueError(
-                            f"Name probably not in correct format"
-                            f" (family_name, given_name): {name}"
-                        )
+                agent = agent_from_name(name)
+                if agent is None:
+                    continue
                 for match in re.finditer(
                     r"([^,/]+)(, +|/|$)",
                     re.sub(r" +und ", ", ", roles),
                 ):
                     role = match.groups()[0].strip()
-                    contrib_dict[role].append(name)
-        for role, names in contrib_dict.items():
+                    contrib_dict[role].append(agent)
+        for role, agents in contrib_dict.items():
             if role == "Unknown":
                 # Handled on manifestation level below
                 continue
             activity_type = role_mapping[role]
-            if activity_type is None:
+            if not agents or activity_type is None:
                 continue
             # drop TypeEnum suffix to get the required class name
             activity_class_name = activity_type.__class__.__name__[:-8]
             activity = getattr(efi, activity_class_name)(
                 type=activity_type,
-                has_agent=[
-                    efi.Agent(type=efi.AgentTypeEnum("Person"), has_name=name)
-                    for name in names
-                ],
+                has_agent=agents,
             )
             event.has_activity.append(activity)
     if input.genre and input.genre.value:
@@ -213,6 +206,8 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
                 type=efi.AgentTypeEnum("CorporateBody"),
                 has_name=p.publisher_name,
             )
+            if agent is None:
+                continue
             if p.name_identifier:
                 raise RuntimeError(f"What to do about identifier: {p}")
             publishers.append(agent)
@@ -227,12 +222,7 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             publication.has_activity.append(
                 efi.ManifestationActivity(
                     type=efi.ManifestationActivityTypeEnum("UnknownActivity"),
-                    has_agent=[
-                        efi.Agent(
-                            type=efi.AgentTypeEnum("Person"), has_name=name
-                        )
-                        for name in contrib_dict["Unknown"]
-                    ],
+                    has_agent=contrib_dict["Unknown"],
                 )
             )
         if publication_year:
@@ -350,6 +340,96 @@ def is_iso_date(date_str):
             date_str,
         )
     )
+
+
+CORPORATE_BODY_FLAG_WORDS = [
+    " ag ",
+    " ag, ",
+    "amt",
+    "archiv",
+    "bhwk",
+    "film",
+    "fwu",
+    "gesellschaft",
+    "gmbh",
+    "inc.",
+    "institut",
+    "iwf",
+    "klinik",
+    "öwf",
+    "produktion",
+    "rfdu",
+    "rundfunk",
+    "rwu",
+    "schule",
+    "seminar",
+    "studio",
+    "universit",  # matches university and universität
+    "verband",
+    "zkm",
+]
+
+
+def agent_from_name(
+    name: str,
+    type: efi.AgentTypeEnum | None = None,
+) -> efi.Agent | None:
+    """Return agent compliant with AVefi submission guide lines.
+
+    Return agent as specified by ``name`` and ``type`` as provided. If
+    ``type`` is not specified, check name for certain keywords
+    indicating that it refers to a corporate body rather than a
+    person. If it appears to be a person, after all, try to make sure
+    it is in the form "family name, given name".
+
+    Note that ``name`` will be rearranged for persons if it does not
+    contain a comma by moving the last word to the front, followed by
+    a comma and the rest of the name.
+
+    Parameters
+    ----------
+    name : str
+        Name of the agent.
+    type : efi.AgentTypeEnum (optional)
+        Type of agent.
+
+    Returns
+    -------
+    efi.Agent | None
+        Agent, with type derived from name if none was specified.
+
+    """
+    name = name.strip()
+    if name.lower() in ("n. n.", "nn"):
+        return None
+    if type is None and any(
+        expr in name.lower() for expr in CORPORATE_BODY_FLAG_WORDS
+    ):
+        agent = efi.Agent(
+            has_name=name, type=efi.AgentTypeEnum("CorporateBody")
+        )
+    elif type is not None and type != efi.AgentTypeEnum("Person"):
+        agent = efi.Agent(has_name=name, type=type)
+    else:
+        orig_name = None
+        name_components = name.split(",")
+        if len(name_components) == 1:
+            if len(name.split()) > 4:
+                log.warning(f"Left unusual name unchanged: {name}")
+            else:
+                name_components = name.rsplit(maxsplit=1)
+                orig_name = name
+                name = ", ".join(reversed(name_components))
+                log.info(f"Replaced name '{orig_name}' by '{name}'")
+        elif len(name_components) != 2:
+            raise ValueError(
+                f"Name probably not in correct format"
+                f" (family_name, given_name): {name}"
+            )
+        agent = efi.Agent(has_name=name, type=efi.AgentTypeEnum("Person"))
+        if orig_name:
+            agent.has_alternate_name.append(orig_name)
+    return agent
 
 
 def process_titles(
