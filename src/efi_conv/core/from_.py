@@ -20,9 +20,14 @@ log = logging.getLogger(__name__)
     required=True,
     help="Source data format.",
 )
-@click.argument("output_file", type=click.Path(dir_okay=False, writable=True))
+@click.option(
+    "-o",
+    "--output",
+    type=click.Path(dir_okay=False, writable=True),
+    help="Output file (stdout if not specified).",
+)
 @click.argument("input_files", nargs=-1, type=click.Path(exists=True))
-def efi_from(output_file, input_files, **kwargs):
+def efi_from(input_files, output=None, **kwargs):
     """Convert files from some schema into a JSON file with AVefi records."""
     mod = importlib.import_module(f"..{kwargs['format']}", __package__)
     generated_records = []
@@ -32,7 +37,10 @@ def efi_from(output_file, input_files, **kwargs):
         except Exception as e:
             raise RuntimeError(f"Failed to convert {input_file}") from e
     if generated_records:
-        avefi.dump(generated_records, output_file)
+        if output and output != "-":
+            avefi.dump(generated_records, output)
+        else:
+            print(avefi.dumps(generated_records, indent=2))
 
 
 def import_file(
