@@ -96,6 +96,24 @@ def get_schema_validator(update_schema=False):
     return validator
 
 
+class HashableId:
+    def __init__(self, identifier: efi.MovingImageResource):
+        self.identifier = identifier
+        self.name = f"{self.identifier.category}.{self.identifier.id}"
+
+    def __eq__(self, other) -> bool:
+        """Check equality to another object."""
+        return other.identifier == self.identifier
+
+    def __hash__(self):
+        """Return hash of the name attribute."""
+        return hash(self.name)
+
+    def __str__(self):
+        """Return name attribute."""
+        return self.name
+
+
 def pass_checks(
     efi_records: list[efi.MovingImageRecord],
     schema_validator,
@@ -228,13 +246,27 @@ def pass_checks(
 
 
 def purge_dependant_records(
-    ref, record_list, id_lookup, dependants_by_ref, removed_refs
+    ref: HashableId,
+    record_list: list[efi.MovingImageRecord],
+    id_lookup: dict[
+        HashableId, tuple[efi.MovingImageRecord, list[HashableId]]
+    ],
+    dependants_by_ref: dict[HashableId, list[HashableId]],
+    removed_refs: list[HashableId],
 ):
-    for record_id in dependants_by_ref[ref]:
-        try:
-            rec, ids = id_lookup[record_id]
-        except KeyError:
-            continue
+    """Remove all records identified by or dependant on ``ref``.
+
+    Check whether ``ref`` has an associated record in ``id_lookup``,
+    remove it from ``record_list`` and all its identifiers from
+    ``id_lookup``. Recursively apply this function to all dependants
+    of ``ref`` and all known identifiers of the same record.
+
+    """
+    try:
+        rec, ids = id_lookup[ref]
+    except KeyError:
+        ids = [ref]
+    else:
         record_list.remove(rec)
         for record_id in ids:
             del id_lookup[record_id]
@@ -242,21 +274,17 @@ def purge_dependant_records(
             log.debug(
                 f"Reference to removed record: {record_id.identifier.id}"
             )
+
+    for record_id in ids:
+        for dep_ref in dependants_by_ref[record_id]:
             purge_dependant_records(
-                record_id,
+                dep_ref,
                 record_list,
                 id_lookup,
                 dependants_by_ref,
                 removed_refs,
             )
-    del dependants_by_ref[ref]
-    dangling_record(
-        ref,
-        record_list,
-        id_lookup,
-        dependants_by_ref,
-        remove_dangling=True,
-    )
+        del dependants_by_ref[record_id]
 
 
 def dangling_record(
@@ -341,24 +369,6 @@ def dangling_record(
                     )
         return is_dangling
     return False
-
-
-class HashableId:
-    def __init__(self, identifier: efi.MovingImageResource):
-        self.identifier = identifier
-        self.name = f"{self.identifier.category}.{self.identifier.id}"
-
-    def __eq__(self, other) -> bool:
-        """Check equality to another object."""
-        return other.identifier == self.identifier
-
-    def __hash__(self):
-        """Return hash of the name attribute."""
-        return hash(self.name)
-
-    def __str__(self):
-        """Return name attribute."""
-        return self.name
 
 
 def has_invalid_value(efi_record):
