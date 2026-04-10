@@ -230,13 +230,14 @@ def pass_checks(
                 log.error(f"Unresolvable reference: {ref.identifier.id}")
 
     # Check for records that should be associated with items but are not
-    for record_id in list(id_lookup.keys()):
+    for rec in efi_records.copy():
         if (
             dangling_record(
-                record_id,
+                rec,
                 efi_records,
                 id_lookup,
                 dependants_by_ref,
+                removed_refs,
                 remove_dangling=remove_invalid,
             )
             and all_was_fine
@@ -288,19 +289,42 @@ def purge_dependant_records(
 
 
 def dangling_record(
-    record_id, record_list, id_lookup, dependants_by_ref, remove_dangling=False
+    rec: efi.MovingImageRecord,
+    record_list: list[efi.MovingImageRecord],
+    id_lookup: dict[HashableId, efi.MovingImageRecord],
+    dependants_by_ref: dict[HashableId, list[HashableId]],
+    removed_refs: list[HashableId],
+    remove_dangling=False,
 ):
-    """Return True if record has neither items nor a PID yet."""
-    if (
-        record_id.identifier.category == "avefi:LocalResource"
-        and record_id not in dependants_by_ref
+    """Return True if record has neither items nor a PID yet.
+
+    Return False for items and records with a PID. Additionally,
+    return False for records that are referenced by some child record.
+    Otherwise, return True, except for works of type analytic provided
+    that they are linked to a parent with at least one child that is
+    not a work.
+
+    Optionally, purge dangling records depending on the
+    ``remove_dangling`` keyword argument.
+
+    Raises
+    ------
+    ValueError
+        When a manifestation is linked to a work of type analytic.
+
+    """
+    if rec.category == "avefi:Item":
+        return False
+
+    ids = [HashableId(id_) for id_ in rec.has_identifier]
+    if all(
+        id_.identifier.category == "avefi:LocalResource"
+        and id_ not in dependants_by_ref
+        for id_ in ids
     ):
-        try:
-            rec, ids = id_lookup[record_id]
-        except KeyError:
-            return False
         is_dangling = False
         if rec.category == "avefi:WorkVariant" and rec.type == "Analytic":
+            # No manifestation should link to an analytic work.
             if any(
                 id_ in dependants_by_ref
                 and id_lookup[id_][0].category == "avefi:Manifestation"
@@ -308,33 +332,49 @@ def dangling_record(
             ):
                 raise ValueError(
                     f"Analytic work unexpectedly referenced by"
-                    f" manifestation(s): {record_id}"
+                    f" manifestation(s): {ids[0].identifier.id}"
                 )
-            for identifier in rec.is_part_of:
-                ref = HashableId(identifier)
-                parent, p_ids = id_lookup[ref]
-                # TODO: Uncomment if approved by Metadaten-experts
-                # if parent.type != "Monographic":
-                #     log.error(
-                #         f"Analytic work {record_id} is part of work with"
-                #         f" type other than monographic: {ref}"
-                #     )
-                #     is_dangling = True
-                for id_ in p_ids:
-                    ref_deps = dependants_by_ref[id_]
-                    if ref_deps and all(
+
+            # Analytic works should always be part of another work.
+            if not rec.is_part_of:
+                log.error(
+                    f"Analytic work without is_part_of: "
+                    f"{rec.has_identifier[0].id}",
+                )
+                is_dangling = True
+            else:
+                # We need to make sure that parents of analytic works
+                # actually have other dependants than the analytic
+                # works themselves, i.e. a manifestation or
+                # supplemental material.
+                for identifier in rec.is_part_of:
+                    if identifier.category != "avefi:LocalResource":
+                        continue
+                    ref = HashableId(identifier)
+                    parent, p_ids = id_lookup[ref]
+                    # TODO: Uncomment if approved by Metadaten-experts
+                    # if parent.type != "Monographic":
+                    #     log.error(
+                    #         f"Analytic work {record_id} is part of work with"
+                    #         f" type other than monographic: {ref}"
+                    #     )
+                    #     is_dangling = True
+                    ref_deps = set()
+                    for id_ in p_ids:
+                        ref_deps.update(dependants_by_ref[id_])
+                    if not ref_deps or all(
                         id_lookup[ref_dep][0].category == "avefi:WorkVariant"
                         for ref_dep in ref_deps
                     ):
+                        log.error(
+                            f"Analytic work is part of work without items: "
+                            f"{rec.has_identifier[0].id}",
+                        )
                         is_dangling = True
-        elif rec.category != "avefi:Item" and all(
-            id_.identifier.category == "avefi:LocalResource"
-            and id_ not in dependants_by_ref
-            for id_ in ids
-        ):
+        else:
             log.error(
                 f"No items associated with {rec.category}"
-                f" {record_id.identifier.id}"
+                f" {rec.has_identifier[0].id}"
             )
             is_dangling = True
         if is_dangling and remove_dangling:
@@ -350,9 +390,13 @@ def dangling_record(
                         refs.extend(HashableId(r) for r in ref)
                     else:
                         refs.append(HashableId(ref))
-            for id_ in ids:
-                del id_lookup[id_]
-            record_list.remove(rec)
+            purge_dependant_records(
+                ids[0],
+                record_list,
+                id_lookup,
+                dependants_by_ref,
+                removed_refs,
+            )
             for ref in refs:
                 ref_deps = dependants_by_ref[ref]
                 for id_ in ids:
@@ -360,13 +404,21 @@ def dangling_record(
                         ref_deps.remove(id_)
                 if not ref_deps:
                     del dependants_by_ref[ref]
-                    dangling_record(
-                        ref,
-                        record_list,
-                        id_lookup,
-                        dependants_by_ref,
-                        remove_dangling=remove_dangling,
-                    )
+                    try:
+                        parent, p_ids = id_lookup[ref]
+                    except KeyError:
+                        pass
+                    else:
+                        # Check whether parent is dangling now and
+                        # remove, accordingly.
+                        dangling_record(
+                            parent,
+                            record_list,
+                            id_lookup,
+                            dependants_by_ref,
+                            removed_refs=removed_refs,
+                            remove_dangling=True,
+                        )
         return is_dangling
     return False
 
