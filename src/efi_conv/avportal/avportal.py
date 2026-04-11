@@ -59,87 +59,90 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         log.warning("No production year")
     event = efi.ProductionEvent(has_date=production_year)
     work.has_event.append(event)
-    creators = []
+
+    # agents and their roles
+    contrib_dict = defaultdict(list)
     for c in input.creators.creator if input.creators else []:
         if not c.creator_name:
             continue
 
-        # Disregard occurrences of "IWF (Hrsg.)" if duplicated as publisher
-        if (
-            "iwf (hrsg.)" in c.creator_name.lower()
-            and input.publishers
-            and any(
-                "iwf" in p.publisher_name.lower()
-                for p in input.publishers.publisher
-            )
-        ):
-            continue
+        match_dict = re.match(
+            r"^(?P<name>.*?)( *\((?P<role>.*)\))?$",
+            c.creator_name,
+        ).groupdict()
 
-        agent = agent_from_name(c.creator_name)
+        agent = agent_from_name(match_dict["name"])
         if agent is None:
             continue
+
         if c.name_identifier:
             raise RuntimeError(f"Cannot handle name_identifier for {c}")
-        creators.append(agent)
-    if creators:
-        event.has_activity.append(
-            efi.DirectingActivity(
-                type=efi.DirectingActivityTypeEnum("Creator"),
-                has_agent=creators,
-            )
-        )
-    producers = []
+
+        # Disregard occurrences of "IWF (Hrsg.)" if duplicated as publisher
+        role = match_dict.get("role")
+        if role and role.lower() == "hrsg.":
+            name_lower = agent.has_name.lower()
+            if input.publishers and any(
+                name_lower in p.publisher_name.lower()
+                for p in input.publishers.publisher
+            ):
+                continue
+            role = "publisher"
+        else:
+            role = "creator"
+        activity_type = role_mapping[role]
+        append_if_no_equal(agent, contrib_dict[activity_type])
+
     for p in input.producers.producer if input.producers else []:
         if not p.producer_name:
             continue
-        agent = agent_from_name(p.producer_name)
+
+        match_dict = re.match(
+            r"^(?P<name>.*?)( *\((?P<location>.*)\))?$",
+            p.producer_name,
+        ).groupdict()
+
+        if match_dict["location"]:
+            event.located_in.append(
+                efi.GeographicName(has_name=match_dict["location"])
+            )
+
+        agent = agent_from_name(
+            match_dict["name"], type=efi.AgentTypeEnum("CorporateBody")
+        )
         if agent is None:
             continue
+
         if p.name_identifier:
             raise RuntimeError(f"Cannot handle name_identifier for {p}")
-        producers.append(agent)
-    if producers:
-        event.has_activity.append(
-            efi.ProducingActivity(
-                type=efi.ProducingActivityTypeEnum("Producer"),
-                has_agent=producers,
-            )
-        )
-    contrib_dict = defaultdict(list)
-    if input.contributors:
-        for contributor in input.contributors.contributor:
-            if not contributor.contributor_name:
+
+        append_if_no_equal(agent, contrib_dict[role_mapping["producer"]])
+
+    for contributor in (
+        input.contributors.contributor if input.contributors else []
+    ):
+        if not contributor.contributor_name:
+            continue
+
+        for unit in contributor.contributor_name.split(";"):
+            match = re.search(r"^([^(]*) \(([^()]*).", unit)
+            if match:
+                name, roles = match.groups()
+            else:
+                name = unit
+                roles = "unknown"
+            agent = agent_from_name(name)
+            if agent is None:
                 continue
-            for unit in contributor.contributor_name.split(";"):
-                match = re.search(r"^([^(]*) \(([^()]*).", unit)
-                if match:
-                    name, roles = match.groups()
-                else:
-                    name = unit
-                    roles = "Unknown"
-                agent = agent_from_name(name)
-                if agent is None:
-                    continue
-                for match in re.finditer(
-                    r"([^,/]+)(, +|/|$)",
-                    re.sub(r" +und ", ", ", roles),
-                ):
-                    role = match.groups()[0].strip()
-                    contrib_dict[role].append(agent)
-        for role, agents in contrib_dict.items():
-            if role == "Unknown":
-                # Handled on manifestation level below
-                continue
-            activity_type = role_mapping[role]
-            if not agents or activity_type is None:
-                continue
-            # drop TypeEnum suffix to get the required class name
-            activity_class_name = activity_type.__class__.__name__[:-8]
-            activity = getattr(efi, activity_class_name)(
-                type=activity_type,
-                has_agent=agents,
-            )
-            event.has_activity.append(activity)
+            for match in re.finditer(
+                r"([^,/]+)(, +|/|$)",
+                re.sub(r" +und ", ", ", roles),
+            ):
+                role = match.groups()[0].strip()
+                append_if_no_equal(agent, contrib_dict[role_mapping[role]])
+
+    extract_activities_for_event(event, contrib_dict)
+
     if input.genre and input.genre.value:
         work.has_genre.append(efi.Genre(has_name=input.genre.value))
     for subject_area in input.subject_areas.subject_area:
@@ -194,37 +197,35 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
     if (
         publication_year
         or input.publishers.publisher
-        or contrib_dict.get("Unknown")
+        or any(contrib_dict.get(role) for role in manifestation_roles)
     ):
         publication = efi.PublicationEvent(
             type=efi.PublicationEventTypeEnum("ReleaseEvent")
         )
         manifestation.has_event.append(publication)
-        publishers = []
-        for p in input.publishers.publisher:
-            agent = efi.Agent(
-                type=efi.AgentTypeEnum("CorporateBody"),
-                has_name=p.publisher_name,
-            )
+
+        for p in input.publishers.publisher if input.publishers else []:
+            match_dict = re.match(
+                r"^(?P<name>.*?)( *\((?P<location>.*)\))?$",
+                p.publisher_name,
+            ).groupdict()
+
+            if match_dict["location"]:
+                append_if_no_equal(
+                    efi.GeographicName(has_name=match_dict["location"]),
+                    publication.located_in,
+                )
+
+            agent = agent_from_name(match_dict["name"])
             if agent is None:
                 continue
+
             if p.name_identifier:
-                raise RuntimeError(f"What to do about identifier: {p}")
-            publishers.append(agent)
-        if publishers:
-            publication.has_activity.append(
-                efi.ManifestationActivity(
-                    type=efi.ManifestationActivityTypeEnum("Publisher"),
-                    has_agent=publishers,
-                )
-            )
-        if contrib_dict["Unknown"]:
-            publication.has_activity.append(
-                efi.ManifestationActivity(
-                    type=efi.ManifestationActivityTypeEnum("UnknownActivity"),
-                    has_agent=contrib_dict["Unknown"],
-                )
-            )
+                raise RuntimeError(f"Cannot handle name_identifier for {p}")
+
+            append_if_no_equal(agent, contrib_dict[role_mapping["publisher"]])
+
+        extract_activities_for_event(publication, contrib_dict)
         if publication_year:
             publication.has_date = publication_year
     manifestation_id = efi.LocalResource(id=f"{source_key}_manifestation")
@@ -370,6 +371,15 @@ CORPORATE_BODY_FLAG_WORDS = [
 ]
 
 
+def append_if_no_equal(item, some_list: list) -> bool:
+    """Append item and return True if no other list element is equal."""
+    if any(el == item for el in some_list):
+        return False
+    else:
+        some_list.append(item)
+        return True
+
+
 def agent_from_name(
     name: str,
     type: efi.AgentTypeEnum | None = None,
@@ -430,6 +440,36 @@ def agent_from_name(
         if orig_name:
             agent.has_alternate_name.append(orig_name)
     return agent
+
+
+def extract_activities_for_event(
+    event: efi.Event, activities_by_type: dict[str, efi.Activity]
+):
+    """Extract activities according to has_activity range of event."""
+    event_activities = event.linkml_meta.get("slot_usage", {}).get(
+        "has_activity", {}
+    )
+    if event_activities.get("any_of"):
+        ranges = [
+            el.get("range")
+            for el in event_activities["any_of"]
+            if el.get("range")
+        ]
+    else:
+        slot_range = event_activities.get("range")
+        ranges = [slot_range] if slot_range else []
+
+    activity_dict = activities_by_type.copy()
+    for activity_type, agents in activity_dict.items():
+        # Drop TypeEnum suffix to get the required class name.
+        activity_class_name = activity_type.__class__.__name__[:-8]
+        if activity_class_name in ranges:
+            activity = getattr(efi, activity_class_name)(
+                type=activity_type,
+                has_agent=agents,
+            )
+            event.has_activity.append(activity)
+            del activities_by_type[activity_type]
 
 
 def process_titles(
@@ -609,14 +649,21 @@ role_mapping = {
     "Trick": efi.AnimationActivityTypeEnum("Animator"),
     "Typografie": efi.WritingActivityTypeEnum("SourceMaterial"),
     "Übersetzung": efi.WritingActivityTypeEnum("SourceMaterial"),
-    "Unknown": efi.ManifestationActivityTypeEnum("UnknownActivity"),
     "Untertitel": efi.EditingActivityTypeEnum("FilmEditor"),
     "Videobearbeitung": efi.CinematographyActivityTypeEnum("VideoAssist"),
     "Videotechnik": efi.CinematographyActivityTypeEnum("VideoAssist"),
     "wissenschaftl. Betreuung": efi.ProducingActivityTypeEnum("Advisor"),
     "wissenschaftliche Beratung": efi.ProducingActivityTypeEnum("Advisor"),
     "wissenschaftliche Mitarbeit": efi.ProducingActivityTypeEnum("Advisor"),
+    # These keys are used internally in this module
+    "creator": efi.DirectingActivityTypeEnum("Creator"),
+    "producer": efi.ProducingActivityTypeEnum("Producer"),
+    "publisher": efi.ManifestationActivityTypeEnum("Publisher"),
+    "unknown": efi.ManifestationActivityTypeEnum("UnknownActivity"),
 }
+
+
+manifestation_roles = ["Lichtbestimmung", "Unknown"]
 
 
 size_mapping = {

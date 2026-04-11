@@ -36,7 +36,7 @@
             "has_agent": [
               {
                 "category": "avefi:Agent",
-                "has_name": "Hermann Schlenker Filmproduktion (Königsfeld)",
+                "has_name": "Hermann Schlenker Filmproduktion",
                 "type": "CorporateBody"
               }
             ],
@@ -71,7 +71,13 @@
             "type": "FilmEditor"
           }
         ],
-        "has_date": "1974"
+        "has_date": "1974",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Königsfeld"
+          }
+        ]
       }
     ],
     "has_identifier": [
@@ -331,7 +337,7 @@
             "has_agent": [
               {
                 "category": "avefi:Agent",
-                "has_name": "IWF (Göttingen)",
+                "has_name": "IWF",
                 "type": "CorporateBody"
               }
             ],
@@ -339,6 +345,12 @@
           }
         ],
         "has_date": "1989",
+        "located_in": [
+          {
+            "category": "avefi:GeographicName",
+            "has_name": "Göttingen"
+          }
+        ],
         "type": "ReleaseEvent"
       }
     ],
