@@ -186,11 +186,11 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
         manifestation.has_primary_title.type = efi.TitleTypeEnum("TitleProper")
     for description in input.descriptions.description:
         # Recon with <br/> elements accepted by the NTM schema
-        manifestation.has_note.append(
-            "\n".join(
-                [text for text in description.content if isinstance(text, str)]
-            )
+        note = "\n".join(
+            [text for text in description.content if isinstance(text, str)]
         )
+        if note:
+            manifestation.has_note.append(note)
     publication_year = get_iso_date(
         str(input.publication_year), str(input.iwf_publication_year)
     )
