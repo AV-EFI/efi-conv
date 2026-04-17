@@ -27,6 +27,11 @@ SCHEMA_FILE = CACHE_DIR / "avefi_schema.json"
 
 @cli_main.command()
 @click.option(
+    "--preserve-status-removed",
+    default=False,
+    help="Preserve items with access status Removed even without a PID yet.",
+)
+@click.option(
     "--remove-invalid/--no-remove-invalid",
     "-r",
     default=False,
@@ -42,7 +47,13 @@ SCHEMA_FILE = CACHE_DIR / "avefi_schema.json"
 @click.argument(
     "efi_files", nargs=-1, type=click.Path(dir_okay=False, exists=True)
 )
-def check(efi_files, *, remove_invalid=False, update_schema=False):
+def check(
+    efi_files,
+    *,
+    preserve_status_removed=False,
+    remove_invalid=False,
+    update_schema=False,
+):
     """Sanity check EFI_FILES and optionally remove invalid records."""
     schema_validator = get_schema_validator(update_schema=update_schema)
     for efi_file in efi_files:
@@ -423,7 +434,7 @@ def dangling_record(
     return False
 
 
-def has_invalid_value(efi_record):
+def has_invalid_value(efi_record, preserve_status_removed=False):
     def any_empty_has_name(elem_generator):
         if any([not elem.has_name for elem in elem_generator]):
             log.error(f"Empty has_name in {efi_record.has_identifier[0].id}")
@@ -474,6 +485,19 @@ def has_invalid_value(efi_record):
                 f" one of ('TitleProper', 'SuppliedDevisedTitle'), found:"
                 f" {efi_record.has_primary_title.type} in record"
                 f" {efi_record.has_identifier[0].id}"
+            )
+            return True
+        if (
+            isinstance(efi_record, efi.Item)
+            and efi_record.has_access_status == "Removed"
+            and not any(
+                ident.category == "avefi:AVefiResource"
+                for ident in efi_record.has_identifier
+            )
+        ):
+            log.error(
+                f"Do not expect has_access_status=Removed for an item"
+                f" without a PID: {efi_record.has_identifier[0].id}"
             )
             return True
     return False
