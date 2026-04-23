@@ -539,4 +539,24 @@ def has_invalid_date(efi_record):
                 f" invalid value in has_date: {event.has_date}"
             )
             return True
+
+        # Check if this is a period expression (contains '/')
+        if event.has_date and "/" in event.has_date:
+            # Split period and clean each part (keep only digits and hyphens)
+            period_parts = event.has_date.split("/")
+            if len(period_parts) == 2:
+                # Remove all characters except digits and hyphens
+                clean_start = re.sub(r"[^0-9-]", "", period_parts[0])
+                clean_end = re.sub(r"[^0-9-]", "", period_parts[1])
+
+                # Perform lexicographical comparison
+                # Equality is valid, only invalid when start > end
+                if clean_start > clean_end:
+                    log.error(
+                        f"Record {efi_record.has_identifier[0].id} has"
+                        f" event with invalid period: {event.has_date}"
+                        f" (start {clean_start} must be less than or equal to"
+                        f" end {clean_end})"
+                    )
+                    return True
     return False
