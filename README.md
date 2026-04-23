@@ -15,59 +15,72 @@ get in touch and let us jointly work on your mapping.
 
 ## Usage example
 
-For demonstration purposes and since this code is in early development
-yet, just clone the repository and make an editable installation.
-Either use pip in a virtualenv or preferably [UV][uv_install] if you consider
-contributing and might need to add dependencies at some point.
+The check module included in this package allows you to validate
+generated JSON files that are supposed to comply with the
+[AVefi schema][]. Simply clone the repository and either use
+[docker-compose](https://docs.docker.com/compose/) or install the
+package in a virtual environment in editable mode. The latter can be
+done in the traditional way using pip but it is highly recommended to
+use the dependency manager [UV][uv_install] instead, especially if you
+consider contributing and might need to add dependencies at some
+point.
 
-Here is how to convert some test data:
+For seasoned Docker users, here is how to run the checks against your
+data just a few simple steps:
 
 ```console
 $ git clone https://github.com/AV-EFI/efi-conv.git
 ## [...]
 $ cd efi-conv
-$ pip install -e .
-$ efi-conv --help
+$ docker-compose pull
+## If that does not work run:
+## $ docker-compose build
+## Then:
+$ docker-compose run efi-conv check tests/avportal/efi_records.json
+INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
+INFO efi_conv.core.check: All 3 records passed the checks successfully
+```
+
+Everyone else should rather setup a dedicated virtual environment,
+preferably using the [dependency manager UV][uv_install].
+
+Here is a more complete usage example showing how to convert some test
+data:
+
+```console
+$ git clone https://github.com/AV-EFI/efi-conv.git
+## [...]
+$ cd efi-conv
+$ uv sync --no-python-downloads
+## [...]
+$ uv run efi-conv --help
 Usage: efi-conv [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --help  Show this message and exit.
 
 Commands:
-  check  Sanity check EFI_FILE and optionally remove invalid records.
+  check  Sanity check EFI_FILES and optionally remove invalid records.
   from   Convert files from some schema into a JSON file with AVefi records.
-$ efi-conv from --help
-Usage: efi-conv from [OPTIONS] OUTPUT_FILE [INPUT_FILES]...
+$ uv run efi-conv from --help
+Usage: efi-conv from [OPTIONS] [INPUT_FILES]...
 
   Convert files from some schema into a JSON file with AVefi records.
 
 Options:
-  -f, --format [avportal]  Source data format.
-  --help                   Show this message and exit.
-$ efi-conv from -f avportal efi_records.json tests/avportal/*.xml
-$ efi-conv check tests/avportal/efi_records.json
-INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
-INFO efi_conv.core.check: All 3 records passed the checks successfully
-## Or, instead of using pip above, proceed with UV:
-$ uv sync --no-python-downloads
-## [...]
-$ uv run efi-conv --help
-## Same output as above
-$ uv run efi-conv from -f avportal efi_records.json tests/avportal/*.xml
+  -f, --format [avportal|fmdu]  Source data format.  [required]
+  -o, --output FILE             Output file (stdout if not specified).
+  --help                        Show this message and exit.
+$ uv run efi-conv from -f avportal -o efi_records.json tests/avportal/*.xml
+INFO efi_conv.avportal.avportal: Replaced name 'Dore Kleindienst-Andrée' by 'Kleindienst-Andrée, Dore'
+INFO efi_conv.avportal.avportal: Replaced name 'E. Fischer' by 'Fischer, E.'
 $ uv run efi-conv check tests/avportal/efi_records.json
 INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
 INFO efi_conv.core.check: All 3 records passed the checks successfully
 ```
 
 Alternatively, use the provided docker-compose file in order to run
-this toll inside a container:
-
-```console
-$ docker-compose pull
-$ docker-compose run efi-conv check tests/avportal/efi_records.json
-INFO efi_conv.core.check: Processing tests/avportal/efi_records.json
-INFO efi_conv.core.check: All 3 records passed the checks successfully
-```
+this tool inside a container:
 
 [uv_install]: https://docs.astral.sh/uv/getting-started/installation/
 
