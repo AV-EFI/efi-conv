@@ -2,10 +2,11 @@
 
 ## AI Attribution Requirement
 
-**IMPORTANT**: When making git commits, load the AI attribution skill:
+**IMPORTANT**: When making git commits, load the AI attribution skill
+from the `.agents` directory:
 
 ```
-skill: ai_commit_attribution
+skill: ai-commit-attribution
 ```
 
 This ensures all AI agents add proper `Assisted-by: <agent>:<model>` attribution lines to commits.
