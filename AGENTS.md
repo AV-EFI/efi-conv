@@ -1,5 +1,17 @@
 # OpenCode Agent Instructions
 
+## AI Attribution Requirement
+
+**IMPORTANT**: When making git commits, load the AI attribution skill:
+
+```
+skill: ai_commit_attribution
+```
+
+This ensures all AI agents add proper `Assisted-by: <agent>:<model>` attribution lines to commits.
+
+Reference: https://docs.kernel.org/process/coding-assistants.html
+
 ## Setup
 - Install dependencies: `uv sync --no-python-downloads`
 - Run the CLI: `uv run efi-conv --help`
