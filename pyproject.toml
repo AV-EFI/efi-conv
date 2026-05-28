@@ -12,7 +12,7 @@ readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
     "xsdata[cli,lxml]>=26.2",
-    "click>=8.3.3",
+    "click>=8.4.1",
     "appdirs>=1.4.4",
     "avefi_schema @ git+https://github.com/AV-EFI/av-efi-schema.git",
     "jsonschema>=4.25.1",
@@ -32,9 +32,9 @@ module-root = "src"
 
 [dependency-groups]
 dev = [
-    "coverage>=7.13.4",
+    "coverage>=7.14.1",
     "pytest>=8.4.1",
-    "ruff>=0.15.11",
+    "ruff>=0.15.14",
 ]
 
 [tool.pytest.ini_options]
