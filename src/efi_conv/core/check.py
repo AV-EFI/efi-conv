@@ -1,4 +1,5 @@
 from collections import defaultdict
+from contextlib import suppress
 from datetime import UTC, datetime
 import hashlib
 import json
@@ -307,7 +308,7 @@ def pass_checks(
     id_lookup = {}
     dependants_by_ref = defaultdict(list)
     all_was_fine = True
-    removed_refs = []
+    removed_refs = set()
 
     # The issuer says whose collection this is, which is a property of
     # the conversion rather than of an individual record. The records
@@ -339,7 +340,7 @@ def pass_checks(
                 if all_was_fine:
                     all_was_fine = False
                 if remove_invalid:
-                    removed_refs.extend(
+                    removed_refs.update(
                         [HashableId(id_) for id_ in rec.has_identifier]
                     )
                     discard_record(efi_records, rec)
@@ -352,20 +353,29 @@ def pass_checks(
         record_ids = []
         for identifier in rec.has_identifier:
             record_id = HashableId(identifier)
-            if record_id in id_lookup:
+            if record_id in id_lookup or record_id in removed_refs:
                 if all_was_fine:
                     all_was_fine = False
                 err_msg = f"Identifier is not unique: {record_id}"
                 if remove_invalid:
                     log.error(err_msg)
-                    removed_refs.extend(
+                    removed_refs.update(
                         [HashableId(id_) for id_ in rec.has_identifier]
                     )
                     discard_record(efi_records, rec)
+                    # Remove the other record with that same ID as well
+                    purge_dependant_records(
+                        record_id,
+                        efi_records,
+                        id_lookup,
+                        dependants_by_ref,
+                        removed_refs,
+                    )
                 else:
                     raise ValueError(err_msg)
                 for record_id in record_ids:
-                    del id_lookup[record_id]
+                    with suppress(KeyError):
+                        del id_lookup[record_id]
                 record_ids = []
                 break
             record_ids.append(record_id)
@@ -462,7 +472,7 @@ def purge_dependant_records(
         discard_record(record_list, rec)
         for record_id in ids:
             del id_lookup[record_id]
-            removed_refs.append(record_id)
+            removed_refs.add(record_id)
             log.debug(
                 f"Reference to removed record: {record_id.identifier.id}"
             )
