@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # This step uses
       # [docker/metadata-action](https://github.com/docker/metadata-action#about)
