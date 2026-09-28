@@ -67,7 +67,7 @@ class TestPeriods:
         record.has_event[0].has_date = period
 
         assert (
-            check.pass_checks([record], validator, remove_invalid=False)
+            bool(check.pass_checks([record], validator, remove_invalid=False))
             is expected
         )
 
@@ -137,9 +137,9 @@ class TestRemoveInvalid:
 
         # The assertion that matters is that this returns at all: the
         # purge used to recurse until the stack was exhausted.
-        assert isinstance(
-            check.pass_checks(cycle, validator, remove_invalid=True), bool
-        )
+        result = check.pass_checks(cycle, validator, remove_invalid=True)
+        assert isinstance(result, check.CheckResult)
+        assert isinstance(result.passed, bool)
 
 
 class TestFieldLimits:
@@ -190,6 +190,103 @@ class TestDateValidation:
     def test_period_reversal_via_has_invalid_value(self, validator):
         record = self._work_with_event(has_date="1976/1975")
         assert check.has_invalid_value(record)
+
+
+class TestInvalidCounts:
+    """pass_checks reports invalid and dependant record counts.
+
+    ``invalid`` counts the records that fail their own checks,
+    ``dependants`` the records removed as a consequence.
+
+    """
+
+    def _broken_hierarchy(self):
+        broken_work = copy.deepcopy(WORK)
+        broken_work["has_event"] = [
+            {
+                "category": "avefi:ProductionEvent",
+                "has_activity": [],
+                "located_in": [],
+                "has_date": "197/74",
+            }
+        ]
+        return records(broken_work, MANIFESTATION, ITEM)
+
+    def test_counts_without_removing(self, validator):
+        hierarchy = self._broken_hierarchy()
+        result = check.pass_checks(hierarchy, validator)
+        assert not result.passed
+        assert result.invalid == 1
+        assert result.dependants == 2
+        # Without --remove-invalid the caller's list is untouched.
+        assert len(hierarchy) == 3
+
+    def test_counts_while_removing(self, validator):
+        hierarchy = self._broken_hierarchy()
+        result = check.pass_checks(hierarchy, validator, remove_invalid=True)
+        assert not result.passed
+        assert result.invalid == 1
+        assert result.dependants == 2
+        assert hierarchy == []
+
+    def test_valid_hierarchy_reports_zero(self, validator):
+        result = check.pass_checks(
+            records(WORK, MANIFESTATION, ITEM), validator
+        )
+        assert result.passed
+        assert result.invalid == 0
+        assert result.dependants == 0
+
+    def test_result_is_truthy_along_passed(self, validator):
+        ok = check.pass_checks(records(WORK, MANIFESTATION, ITEM), validator)
+        bad = self._broken_hierarchy()
+        assert ok
+        assert not check.pass_checks(bad, validator)
+
+
+class TestCheckCommandReportsCounts:
+    """The check command reports invalid and dependant records apart."""
+
+    def _broken_file(self, tmp_path):
+        broken_work = copy.deepcopy(WORK)
+        broken_work["has_event"] = [
+            {
+                "category": "avefi:ProductionEvent",
+                "has_activity": [],
+                "located_in": [],
+                "has_date": "197/74",
+            }
+        ]
+        target = tmp_path / "records.json"
+        target.write_text(
+            json.dumps([broken_work, MANIFESTATION, ITEM]), encoding="utf-8"
+        )
+        return target
+
+    def test_no_action_reports_both_counts(self, tmp_path, caplog):
+        runner = CliRunner()
+        target = self._broken_file(tmp_path)
+        result = runner.invoke(cli_main, ["check", str(target)])
+        assert result.exit_code != 0
+        assert "1 invalid record" in caplog.text
+        assert "2 dependant records" in caplog.text
+
+    def test_no_action_does_not_rewrite_the_file(self, tmp_path):
+        runner = CliRunner()
+        target = self._broken_file(tmp_path)
+        before = target.read_text(encoding="utf-8")
+        runner.invoke(cli_main, ["check", str(target)])
+        assert target.read_text(encoding="utf-8") == before
+
+    def test_remove_invalid_reports_both_counts(self, tmp_path, caplog):
+        runner = CliRunner()
+        target = self._broken_file(tmp_path)
+        result = runner.invoke(
+            cli_main, ["check", "--remove-invalid", str(target)]
+        )
+        assert result.exit_code == 0
+        assert "1 invalid record" in caplog.text
+        assert "2 dependant records" in caplog.text
 
 
 class TestPreserveStatusRemoved:

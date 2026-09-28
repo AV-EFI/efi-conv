@@ -87,7 +87,7 @@ def check(
             if accept_placeholder_issuer
             else placeholder_issuer_records(efi_records)
         )
-        passed = pass_checks(
+        result = pass_checks(
             efi_records,
             schema_validator,
             remove_invalid=remove_invalid and not unnamed,
@@ -96,21 +96,29 @@ def check(
         )
         if unnamed:
             raise user_error(placeholder_issuer_message(efi_file, unnamed))
-        if not passed:
+        if not result.passed:
             if remove_invalid:
                 avefi.dump(efi_records, efi_file)
                 log.info(
-                    f"Successfully removed {old_count - len(efi_records)}"
-                    f" invalid records"
+                    f"Removed {result.invalid} invalid"
+                    f" {_record(result.invalid)} and {result.dependants}"
+                    f" dependant {_record(result.dependants)}"
                 )
             else:
                 log.error(
-                    f"Found {old_count - len(efi_records)} invalid records"
-                    f" (no action taken)"
+                    f"Found {result.invalid} invalid"
+                    f" {_record(result.invalid)} ({result.dependants}"
+                    f" dependant {_record(result.dependants)} would also"
+                    f" be removed; no action taken)"
                 )
                 sys.exit(1)
         else:
             log.info(f"All {old_count} records passed the checks successfully")
+
+
+def _record(count: int) -> str:
+    """Return ``record`` or ``records`` to match ``count``."""
+    return "record" if count == 1 else "records"
 
 
 def placeholder_issuer_records(
@@ -268,13 +276,41 @@ class HashableId:
         return self.name
 
 
+class CheckResult:
+    """Outcome of a single check pass.
+
+    ``passed`` is True when no record is invalid. ``invalid`` counts
+    the records that fail their own checks, ``dependants`` the records
+    that would have to be removed as a consequence (records orphaned by
+    one of the invalid ones). Both counts are computed whether or not
+    ``remove_invalid`` is set.
+
+    """
+
+    def __init__(self, passed: bool, invalid: int = 0, dependants: int = 0):
+        self.passed = passed
+        self.invalid = invalid
+        self.dependants = dependants
+
+    def __bool__(self) -> bool:
+        """Behave like the old boolean return value."""
+        return self.passed
+
+    def __repr__(self) -> str:
+        """Return a compact, readable description."""
+        return (
+            f"CheckResult(passed={self.passed}, invalid={self.invalid},"
+            f" dependants={self.dependants})"
+        )
+
+
 def pass_checks(
     efi_records: list[efi.MovingImageRecord],
     schema_validator,
     remove_invalid=False,
     preserve_status_removed=False,
     accept_placeholder_issuer=False,
-) -> bool:
+) -> CheckResult:
     """Check records against schema and additional rules.
 
     Validate against AVefi schema and check various additional rules
@@ -301,14 +337,24 @@ def pass_checks(
 
     Returns
     -------
-    bool
-        True if all checks have passed successfully, False otherwise.
+    CheckResult
+        Result carrying ``passed`` (True if all checks have passed
+        successfully), ``invalid`` (number of directly invalid records)
+        and ``dependants`` (number of records removed as a consequence).
 
     """
     id_lookup = {}
     dependants_by_ref = defaultdict(list)
     all_was_fine = True
     removed_refs = set()
+    invalid = 0
+    dependants = 0
+    # Removals always happen on this list so that the cascade they cause
+    # can be counted even when the caller does not want the file changed.
+    # When ``remove_invalid`` is set, ``working`` is the caller's list and
+    # the removals are real; otherwise it is a copy and only the analysis
+    # proceeds.
+    working = efi_records if remove_invalid else list(efi_records)
 
     # The issuer says whose collection this is, which is a property of
     # the conversion rather than of an individual record. The records
@@ -326,7 +372,7 @@ def pass_checks(
             )
 
     # Check records and track dependencies
-    for rec in efi_records.copy():
+    for rec in working.copy():
         error = best_match(schema_validator.iter_errors(rec.model_dump()))
         if error is not None:
             raise error
@@ -337,14 +383,13 @@ def pass_checks(
             if has_invalid_value(
                 rec, preserve_status_removed=preserve_status_removed
             ):
-                if all_was_fine:
-                    all_was_fine = False
-                if remove_invalid:
-                    removed_refs.update(
-                        [HashableId(id_) for id_ in rec.has_identifier]
-                    )
-                    discard_record(efi_records, rec)
-                    continue
+                all_was_fine = False
+                invalid += 1
+                removed_refs.update(
+                    [HashableId(id_) for id_ in rec.has_identifier]
+                )
+                discard_record(working, rec)
+                continue
         except Exception as e:
             raise RuntimeError(
                 f"Error while checking record {rec.has_identifier[0].id}",
@@ -354,19 +399,19 @@ def pass_checks(
         for identifier in rec.has_identifier:
             record_id = HashableId(identifier)
             if record_id in id_lookup or record_id in removed_refs:
-                if all_was_fine:
-                    all_was_fine = False
+                all_was_fine = False
                 err_msg = f"Identifier is not unique: {record_id}"
                 if remove_invalid:
                     log.error(err_msg)
+                    invalid += 1
                     removed_refs.update(
                         [HashableId(id_) for id_ in rec.has_identifier]
                     )
-                    discard_record(efi_records, rec)
+                    discard_record(working, rec)
                     # Remove the other record with that same ID as well
-                    purge_dependant_records(
+                    dependants += purge_dependant_records(
                         record_id,
-                        efi_records,
+                        working,
                         id_lookup,
                         dependants_by_ref,
                         removed_refs,
@@ -407,34 +452,31 @@ def pass_checks(
             ref not in id_lookup
             and ref.identifier.category == "avefi:LocalResource"
         ):
-            if all_was_fine:
-                all_was_fine = False
-            if remove_invalid:
-                purge_dependant_records(
-                    ref,
-                    efi_records,
-                    id_lookup,
-                    dependants_by_ref,
-                    removed_refs,
-                )
+            all_was_fine = False
+            dependants += purge_dependant_records(
+                ref,
+                working,
+                id_lookup,
+                dependants_by_ref,
+                removed_refs,
+            )
             if ref not in removed_refs:
                 log.error(f"Unresolvable reference: {ref.identifier.id}")
 
     # Check for records that should be associated with items but are not
-    for rec in efi_records.copy():
-        if (
-            dangling_record(
-                rec,
-                efi_records,
-                id_lookup,
-                dependants_by_ref,
-                removed_refs,
-                remove_dangling=remove_invalid,
-            )
-            and all_was_fine
-        ):
+    for rec in working.copy():
+        is_dangling, purged = dangling_record(
+            rec,
+            working,
+            id_lookup,
+            dependants_by_ref,
+            removed_refs,
+            remove_dangling=True,
+        )
+        if is_dangling:
             all_was_fine = False
-    return all_was_fine
+            dependants += purged
+    return CheckResult(all_was_fine, invalid=invalid, dependants=dependants)
 
 
 def purge_dependant_records(
@@ -446,7 +488,7 @@ def purge_dependant_records(
     dependants_by_ref: dict[HashableId, list[HashableId]],
     removed_refs: set[HashableId],
     visited: set[HashableId] | None = None,
-):
+) -> int:
     """Remove all records identified by or dependant on ``ref``.
 
     Check whether ``ref`` has an associated record in ``id_lookup``,
@@ -458,18 +500,22 @@ def purge_dependant_records(
     track of the identifiers already handled during one descent so that
     such a cycle terminates instead of exhausting the stack.
 
+    Returns the number of records removed from ``record_list``.
+
     """
     if visited is None:
         visited = set()
     if ref in visited:
-        return
+        return 0
     visited.add(ref)
+    removed = 0
     try:
         rec, ids = id_lookup[ref]
     except KeyError:
         ids = [ref]
     else:
         discard_record(record_list, rec)
+        removed += 1
         for record_id in ids:
             del id_lookup[record_id]
             removed_refs.add(record_id)
@@ -480,7 +526,7 @@ def purge_dependant_records(
     for record_id in ids:
         visited.add(record_id)
         for dep_ref in dependants_by_ref[record_id]:
-            purge_dependant_records(
+            removed += purge_dependant_records(
                 dep_ref,
                 record_list,
                 id_lookup,
@@ -489,6 +535,7 @@ def purge_dependant_records(
                 visited,
             )
         del dependants_by_ref[record_id]
+    return removed
 
 
 def dangling_record(
@@ -498,17 +545,17 @@ def dangling_record(
     dependants_by_ref: dict[HashableId, list[HashableId]],
     removed_refs: set[HashableId],
     remove_dangling=False,
-):
-    """Return True if record has neither items nor a PID yet.
+) -> tuple[bool, int]:
+    """Return whether the record is dangling and how many it purged.
 
-    Return False for items and records with a PID. Additionally,
-    return False for records that are referenced by some child record.
-    Otherwise, return True, except for works of type analytic provided
-    that they are linked to a parent with at least one child that is
-    not a work.
+    Return ``(is_dangling, purged)``. ``is_dangling`` is True if the
+    record has neither items nor a PID yet; False for items, records
+    with a PID, and records referenced by some child record. Excepted
+    are works of type analytic, which are dangling unless linked to a
+    parent with at least one child that is not a work.
 
-    Optionally, purge dangling records depending on the
-    ``remove_dangling`` keyword argument.
+    When ``remove_dangling`` is set, a dangling record and its
+    dependants are purged, and ``purged`` counts the records removed.
 
     Raises
     ------
@@ -517,7 +564,7 @@ def dangling_record(
 
     """
     if rec.category == "avefi:Item":
-        return False
+        return False, 0
 
     ids = [HashableId(id_) for id_ in rec.has_identifier]
     if all(
@@ -526,6 +573,7 @@ def dangling_record(
         for id_ in ids
     ):
         is_dangling = False
+        purged = 0
         if rec.category == "avefi:WorkVariant" and rec.type == "Analytic":
             # No manifestation should link to an analytic work.
             if any(
@@ -601,7 +649,7 @@ def dangling_record(
                         refs.extend(HashableId(r) for r in ref)
                     else:
                         refs.append(HashableId(ref))
-            purge_dependant_records(
+            purged = purge_dependant_records(
                 ids[0],
                 record_list,
                 id_lookup,
@@ -622,7 +670,7 @@ def dangling_record(
                     else:
                         # Check whether parent is dangling now and
                         # remove, accordingly.
-                        dangling_record(
+                        _, parent_purged = dangling_record(
                             parent,
                             record_list,
                             id_lookup,
@@ -630,8 +678,9 @@ def dangling_record(
                             removed_refs=removed_refs,
                             remove_dangling=True,
                         )
-        return is_dangling
-    return False
+                        purged += parent_purged
+        return is_dangling, purged
+    return False, 0
 
 
 def has_invalid_value(efi_record, preserve_status_removed=False):
