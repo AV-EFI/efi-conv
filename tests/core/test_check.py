@@ -156,6 +156,42 @@ class TestFieldLimits:
         assert not check.exceeds_field_limit(records(record)[0])
 
 
+class TestDateValidation:
+    """The date rules, locked in independently of the event loop."""
+
+    def _work_with_event(self, has_date=None):
+        record = copy.deepcopy(WORK)
+        event = {
+            "category": "avefi:ProductionEvent",
+            "has_activity": [],
+            "located_in": [],
+        }
+        if has_date is not None:
+            event["has_date"] = has_date
+        record["has_event"] = [event]
+        return records(record)[0]
+
+    def test_record_without_events_is_not_rejected(self, validator):
+        record = copy.deepcopy(WORK)
+        record["has_event"] = []
+        rec = records(record)[0]
+        assert not check.has_invalid_value(rec)
+
+    def test_invalid_date_is_rejected(self, validator):
+        record = self._work_with_event(has_date="19/75")
+        assert check.has_invalid_value(record)
+
+    def test_invalid_date_is_purged_on_request(self, validator):
+        bad = self._work_with_event(has_date="not-a-date")
+        record_list = [bad]
+        check.pass_checks(record_list, validator, remove_invalid=True)
+        assert record_list == []
+
+    def test_period_reversal_via_has_invalid_value(self, validator):
+        record = self._work_with_event(has_date="1976/1975")
+        assert check.has_invalid_value(record)
+
+
 class TestPreserveStatusRemoved:
     """The option used to be declared but never passed on."""
 

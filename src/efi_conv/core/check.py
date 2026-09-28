@@ -444,7 +444,7 @@ def purge_dependant_records(
         HashableId, tuple[efi.MovingImageRecord, list[HashableId]]
     ],
     dependants_by_ref: dict[HashableId, list[HashableId]],
-    removed_refs: list[HashableId],
+    removed_refs: set[HashableId],
     visited: set[HashableId] | None = None,
 ):
     """Remove all records identified by or dependant on ``ref``.
@@ -496,7 +496,7 @@ def dangling_record(
     record_list: list[efi.MovingImageRecord],
     id_lookup: dict[HashableId, efi.MovingImageRecord],
     dependants_by_ref: dict[HashableId, list[HashableId]],
-    removed_refs: list[HashableId],
+    removed_refs: set[HashableId],
     remove_dangling=False,
 ):
     """Return True if record has neither items nor a PID yet.
