@@ -2,7 +2,7 @@
 #
 # Pinned to a specific minor version rather than the floating "3" tag
 # so that two builds of the same commit produce the same interpreter.
-FROM docker.io/library/python:3.13-slim-trixie AS python-base
+FROM docker.io/library/python:3.14-slim-trixie AS python-base
 
 # Image information
 LABEL org.opencontainers.image.source=https://github.com/AV-EFI/efi-conv
