@@ -261,14 +261,13 @@ a shortened identifier can never look like a complete one.
 
 | Option | Description |
 | --- | --- |
-| `-u`, `--update-schema` | Fetch the current AVefi schema from the upstream repository |
+| `-u`, `--update-schema` | Deprecated, has no effect: the schema ships with `avefi-schema` |
 | `-r`, `--remove-invalid` | Remove invalid records, modifying the file in place |
 | `--preserve-status-removed` | Accept items with access status `Removed` that carry no PID yet |
 | `--accept-placeholder-issuer` | Accept records that still name the placeholder issuer |
 
-The schema is cached in the user cache directory and a warning is
-emitted once it is older than 30 days. Files are rewritten atomically,
-so an interrupted run cannot truncate your data.
+Files are rewritten atomically, so an interrupted run cannot truncate
+your data.
 
 A file whose `described_by.has_issuer_id` is still the documented
 placeholder `https://w3id.org/avefi/issuer/unspecified` does not pass.
@@ -439,10 +438,11 @@ record the converter recognises. Both are what the exit code of
 `efi-conv from` reflects, so a pipeline does not have to read message
 text to tell a complete run from a lossy one.
 
-The AVefi schema is fetched from a branch rather than from a release,
-so the report records a hash of the document a conversion was checked
-against. That makes it possible to reproduce a conversion later, or at
-least to tell that the schema has moved since.
+The report records a hash of the AVefi schema a conversion was checked
+against, so a conversion can be reproduced later, or at least the
+report tells that the schema has moved since. The schema ships with the
+installed `avefi-schema` package, so the hash identifies the version of
+the bindings as well.
 
 → [Handbuch, Kapitel 4](./handbuch/04-bericht-lesen.md) reads a real
 report end to end.
@@ -589,18 +589,19 @@ $ uv run ruff format --diff        # formatting check
 
 Ruff enforces a line length of 79 characters and the numpy docstring
 convention; `generated/` is excluded from linting. The test suite runs
-offline: the AVefi schema is committed as a fixture, so no network
-access is needed on a cold run. CI runs every pre-commit hook and tests
-Python 3.11 through 3.14 on Linux plus a Windows runner, because data
-providers do run this tool where the default encoding is not UTF-8.
+offline: the AVefi schema ships with the `avefi-schema` package, so no
+network access is needed on a cold run. CI runs every pre-commit hook
+and tests Python 3.11 through 3.14 on Linux plus a Windows runner,
+because data providers do run this tool where the default encoding is
+not UTF-8.
 
 ---
 
 ## Troubleshooting
 
-**The first run wants network access.** `efi-conv check` downloads the
-AVefi schema into the user cache directory on first use. Refresh it
-deliberately with `efi-conv check --update-schema`.
+**How do I check against a newer schema?** Upgrade the installed
+`avefi-schema` package; `efi-conv check` validates against the schema
+it ships.
 
 **Far fewer records than the export holds.** Almost always the work
 type vocabulary. The report says which values made the decision;

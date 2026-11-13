@@ -55,9 +55,9 @@ RECORD_ELEMENT = "efgEntity"
 COUNTRY_CODE = re.compile(r"^[A-Za-z]{2,3}$")
 
 #: Authority named by the prefix of a keywords/term/@id, and the AVefi
-#: resource class holding an identifier from it. The prefixes follow
-#: the AVefi identifier notation, so that the value can be transferred
-#: as it stands.
+#: resource class holding an identifier from it. The value is written
+#: as the authority name, a slash and the number; only the number is
+#: transferred, because AVefi's patterns describe the bare identifier.
 AUTHORITY_RESOURCES = {
     "aat": efi.AATResource,
     "gnd": efi.GNDResource,
@@ -1460,7 +1460,9 @@ def authority_resource(identifier, only, record_id):
     authority file the provider uses, written as the authority name, a
     slash and the number. AVefi has a resource class for a few
     authorities, and ``same_as`` on both Genre and Subject to hold
-    them; a genre may only link to the GND.
+    them; a genre may only link to the GND. Only the number is
+    transferred: the patterns of the resource classes describe the bare
+    identifier.
 
     Parameters
     ----------
@@ -1476,9 +1478,13 @@ def authority_resource(identifier, only, record_id):
     value = (identifier or "").strip()
     if not value:
         return None
-    prefix = value.split("/", 1)[0].lower()
-    resource = AUTHORITY_RESOURCES.get(prefix)
-    if resource is None or (only is not None and resource is not only):
+    prefix, _, local = value.partition("/")
+    resource = AUTHORITY_RESOURCES.get(prefix.lower())
+    if (
+        resource is None
+        or not local
+        or (only is not None and resource is not only)
+    ):
         report_issue(
             "warning",
             "AVefi has no resource class for this authority at this"
@@ -1489,7 +1495,7 @@ def authority_resource(identifier, only, record_id):
             raw_value=value,
         )
         return None
-    return resource(id=value)
+    return resource(id=local)
 
 
 def manifestation_notes(element):

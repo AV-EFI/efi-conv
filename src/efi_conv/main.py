@@ -25,6 +25,12 @@ logging_config = {
             "level": "DEBUG",
             "handlers": ["console"],
         },
+        # The validator is a separate distribution and logs under its
+        # own name, so it needs its own entry to reach the handler.
+        "avefi_validate": {
+            "level": "DEBUG",
+            "handlers": ["console"],
+        },
     },
     "disable_existing_loggers": False,
 }

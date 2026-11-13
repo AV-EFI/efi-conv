@@ -128,9 +128,7 @@ def test_a_keyword_identifier_becomes_an_authority_link(input_path):
         for subject in record.has_subject
     ]
     linked = next(s for s in subjects if s.has_name == "Second World War")
-    assert [resource.id for resource in linked.same_as or []] == [
-        "gnd/4079143-9"
-    ]
+    assert [resource.id for resource in linked.same_as or []] == ["4079143-9"]
     assert linked.same_as[0].category == "avefi:GNDResource"
 
 

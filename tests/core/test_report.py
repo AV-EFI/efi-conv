@@ -108,12 +108,11 @@ def test_report_validates_against_its_own_schema(tmp_path):
 
     report = ConversionReport(
         avefi_schema_version={
-            "source": "https://example.invalid/model.schema.json",
+            "source": "package:avefi_schema/model.schema.json",
             "id": "x",
             "version": None,
             "metamodel_version": "1.7.0",
             "sha256": "0" * 64,
-            "cached_at": "2026-07-27T00:00:00+00:00",
         }
     )
     with collecting(report):

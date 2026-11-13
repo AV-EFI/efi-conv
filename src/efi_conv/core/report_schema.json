@@ -22,7 +22,7 @@
       "description": "Version of the converter that produced the report."
     },
     "avefi_schema_version": {
-      "description": "Identification of the AVefi schema the conversion was checked against. Null when no schema was cached.",
+      "description": "Identification of the AVefi schema the conversion was checked against.",
       "oneOf": [
         { "type": "null" },
         {
@@ -31,7 +31,7 @@
           "properties": {
             "source": {
               "type": "string",
-              "description": "URL the schema was fetched from."
+              "description": "Identifier of where the schema came from, e.g. `package:avefi_schema/model.schema.json`."
             },
             "id": {
               "type": ["string", "null"],
@@ -47,12 +47,7 @@
             },
             "sha256": {
               "type": "string",
-              "description": "Hash of the schema document. The schema is fetched from a branch rather than a release, so this is the only reliable identification."
-            },
-            "cached_at": {
-              "type": "string",
-              "format": "date-time",
-              "description": "Time the cached schema was last written."
+              "description": "Hash of the schema document, which identifies it independently of the package version."
             }
           }
         }

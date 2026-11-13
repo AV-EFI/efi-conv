@@ -401,7 +401,7 @@
       }
     ],
     "has_duration": {
-      "has_value": "PT29M21S"
+      "has_value": "PT00H29M21S"
     },
     "has_extent": {
       "has_unit": "MegaByte",

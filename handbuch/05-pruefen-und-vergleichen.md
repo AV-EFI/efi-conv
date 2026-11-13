@@ -22,8 +22,7 @@ sollten es deshalb nach jedem Lauf ausführen, nicht nur einmal am Ende.
 > neu. Erst verstehen, warum sie beanstandet werden — sonst verschwindet
 > genau die Frage aus der Lieferung, die zu klären gewesen wäre.
 
-Der Aufruf holt das Schema aus dem Netz. Der Bericht hält fest, welche
-Fassung benutzt wurde.
+Der Bericht hält fest, welche Fassung des Schemas benutzt wurde.
 
 ## `efi-conv diff`
 

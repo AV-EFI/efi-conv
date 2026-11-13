@@ -8,6 +8,7 @@ check command depend on it.
 import json
 
 from avefi_schema import model_pydantic_v2 as efi
+from avefi_validate import io
 from pydantic import ValidationError
 import pytest
 
@@ -76,7 +77,7 @@ def test_a_failing_dump_does_not_destroy_the_previous_file(
     def boom(*args, **kwargs):
         raise OSError("disk full")
 
-    monkeypatch.setattr(avefi, "dumps", boom)
+    monkeypatch.setattr(io, "dumps", boom)
     with pytest.raises(OSError):
         avefi.dump(avefi.loads(json.dumps([ITEM])), target)
 

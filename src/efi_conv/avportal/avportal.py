@@ -296,13 +296,12 @@ def map_to_efi(input: ROOT_CLASS) -> list[efi.MovingImageRecord]:
             raise RuntimeError(
                 f"No idea how to parse duration={input.duration}"
             )
-        duration_str = ""
-        for val, suffix in zip(match.groups(), ("H", "M", "S"), strict=True):
-            i = int(val)
-            if i or (not duration_str and suffix == "S"):
-                duration_str += f"{str(i)}{suffix}"
-        duration_str = f"PT{duration_str}"
-        item.has_duration = efi.Duration(has_value=duration_str)
+        # ISODurationInHours spells out all three components, including
+        # the hours when they are zero: PT00H29M21S, not PT29M21S.
+        hours, minutes, seconds = (int(val) for val in match.groups())
+        item.has_duration = efi.Duration(
+            has_value=f"PT{hours:02d}H{minutes:02d}M{seconds:02d}S"
+        )
 
     # External identifiers
     if input.doi:
